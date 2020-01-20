@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+/**
+ * Admin Auth routes
+ */
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group (function () {
+    Route::get('/', 'AdminController@index');
+    Route::get('/login', 'LoginController@showLoginForm')->name('login');
+});
