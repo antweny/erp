@@ -48,3 +48,13 @@ html , body{
     margin: 150px 0;
 }
 
+/* Content section style */
+.content {
+    margin-top: 55px;
+}
+
+/* Sidemenu section */
+aside {
+    background: #e2e6ea;
+}
+

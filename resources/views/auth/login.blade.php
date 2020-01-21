@@ -1,5 +1,5 @@
 @extends('layouts.login')
-
+@section('title','Please Login!')
 @section('body')
 
     <div class="row justify-content-center login-form">

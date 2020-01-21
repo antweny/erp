@@ -22,8 +22,18 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">Link</a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Link</a>
+            <li class="nav-item dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="username">{{auth()->user()->name}}</span><b class="caret"></b></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#"><i class="icon_profile"></i> My Profile</a>
+                    <a class="dropdown-item" href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+                    <a class="dropdown-item" href="#"><i class="icon_clock_alt"></i> Timeline</a>
+                    <a class="dropdown-item" href="#"><i class="icon_chat_alt"></i> Chats</a>
+                    <a class="dropdown-item logout" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="icon_key_alt"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;"> @csrf</form>
+                </div>
             </li>
         </ul>
     </div>
