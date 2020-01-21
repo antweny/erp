@@ -1,0 +1,50 @@
+html , body{
+    font-family: Cambria,Georgia,serif;
+    color: #212529;
+    height:100%;
+    background: url("../img/atmosphere.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* Colors */
+.bg-blue {
+    background: #2067b0;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+}
+.form-control:focus {
+    color:#495057;
+    background-color: #fff;
+    border-color: #a1cbef;
+    outline: 0;
+    box-shadow:none;
+}
+
+/* Cards */
+.card {
+    border-radius: 0;
+}
+.card-header {
+    font-size:1.6rem;
+}
+
+/* login Form */
+.login-form {
+    padding-top: 25px;
+    margin: 150px 0;
+}
+
