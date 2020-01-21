@@ -1,5 +1,5 @@
 <!--nav-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue fixed-top">
     <div class="d-flex flex-grow-1">
         <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
         <a class="navbar-brand" href="#">

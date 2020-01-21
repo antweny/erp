@@ -1,5 +1,5 @@
 @extends('layouts.login')
-
+@section('title','Please Login!')
 @section('body')
 
     <div class="row justify-content-center login-form">
@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">Administrator Login</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('admin.login.submit') }}">
                         @csrf
 
                         <div class="form-group row">
