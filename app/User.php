@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Carbon;
 
 use App\Traits\Uuids;
 
@@ -42,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'id' => 'string'
     ];
+
+
+
+    /* ----------------
+     * CLASS ACCESSOR
+     * ----------------*/
+    public function getRegisteredAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d M, y');
+    }
 }

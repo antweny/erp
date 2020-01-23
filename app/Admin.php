@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuids;
+use Illuminate\Support\Carbon;
 
 class Admin extends Authenticatable
 {
@@ -36,4 +37,13 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'id' => 'string'
     ];
+
+
+    /* ----------------
+     * CLASS ACCESSOR
+     * ----------------*/
+    public function getRegisteredAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d M, y');
+    }
 }

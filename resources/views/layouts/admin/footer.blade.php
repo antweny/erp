@@ -3,6 +3,7 @@
 <!-- Affix Js-->
 <script src="{{ asset('js/sidemenu.js') }}" defer></script>
 
+    @yield('scripts')
 
 </body>
 </html>
