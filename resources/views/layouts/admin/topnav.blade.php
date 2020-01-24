@@ -6,10 +6,11 @@
 
     <div class="collapse navbar-collapse ml-5" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <a class="nav-link" href="{{url('admin/dashboard')}}">
-                <span class="icon"></span><i class="fa fa-tachometer-alt"></i> Dashboard
-            </a>
-
+            <li class="nav-item ">
+                <a class="nav-link" href="{{url('admin/dashboard')}}">
+                    <span class="icon"></span><i class="fa fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
             <!-- Organization and associated details management -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,6 +46,14 @@
     <div class="navbar-collapse collapse order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto right-nav">
             @role('superAdmin')
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog"></i> Settings
+                </a>
+                <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{route('activityLogs.index')}}"><i class="fa fa-list-alt"></i> Activity Logs</a>
+                </div>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-shield-alt"></i> Security
