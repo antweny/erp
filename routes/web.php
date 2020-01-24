@@ -38,4 +38,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group (function () {
 Route::namespace('Admin')->group (function () {
     Route::resource('admin', 'AdminController')->except('create','show');
     Route::resource('users', 'UserController')->except('create','show');
+    Route::resource('permissions', 'PermissionController')->except('create','show');
+    Route::resource('roles', 'RoleController')->except('create','show');
 });

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -23,23 +23,23 @@
                     {{ Form::model($admin, array('route' => array('admin.update',$admin), 'method' => 'PUT')) }}
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 control-label">Fullname</label>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
+                                <label for="name" class="col-form-label">Fullname</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$admin->name}}" required placeholder="Fullname">
                                 @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 control-label">Email</label>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
+                                <label for="email" class="col-form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$admin->email}}" readonly >
                                 @error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-12 control-label">Assign roles</label>
+                            <label for="password-confirm" class="col-md-12 col-form-label">Assign roles</label>
                             @foreach ($roles as $role)
                                 <div class="col-md-4">
                                     <label class="label">

@@ -74,14 +74,14 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="name" class="col-form-labelt">Full Name <span class="star">*</span></label>
+                                <label for="name" class="col-form-label">Full Name <span class="star">*</span></label>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus>
                                 @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="email" class="col-form-labelt">E-Mail Address <span class="star">*</span></label>
+                                <label for="email" class="col-form-label">E-Mail Address <span class="star">*</span></label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
                                 @error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-12 control-label">Assign roles</label>
+                            <label for="password-confirm" class="col-md-12 col-form-label">Assign roles</label>
                             @foreach ($roles as $role)
                                 <div class="col-md-4">
                                     <label class="label">

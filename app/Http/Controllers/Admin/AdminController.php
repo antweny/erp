@@ -15,7 +15,7 @@ class AdminController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware(['auth:admin','role:superAdmin']);
     }
 
     /**
@@ -23,7 +23,7 @@ class AdminController extends Controller
      */
     public function index(Admin $admin)
     {
-        $roles = Role::select('id','name')->get();   //Get all roles
+        $roles = Role::select('id','name')->where('guard_name','admin')->get();   //Get all roles
 
         $admins = $admin->get();  //Get all administrators
 

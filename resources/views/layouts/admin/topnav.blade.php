@@ -50,6 +50,8 @@
                     <i class="fa fa-shield-alt"></i> Security
                 </a>
                 <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{route('permissions.index')}}"><i class="fa fa-lock"></i> Permissions</a>
+                    <a class="dropdown-item" href="{{route('roles.index')}}"><i class="fa fa-shield-alt"></i> Roles</a>
                     <a class="dropdown-item" href="{{route('admin.index')}}"><i class="fa fa-user-shield"></i> Administrators</a>
                     <a class="dropdown-item" href="{{route('users.index')}}"><i class="fa fa-user-lock"></i> Users</a>
                 </div>

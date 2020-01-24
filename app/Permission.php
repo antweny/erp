@@ -10,6 +10,14 @@ class Permission extends SpatiePermission
     use Uuids;
 
     /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'name', 'guard_name', 'desc',
+    ];
+
+
+    /**
      * The attributes that should be cast to native types.
      */
     protected $casts = [

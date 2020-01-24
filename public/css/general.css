@@ -39,6 +39,9 @@ html , body{
 /* ====================
    Forms Section Style
    ====================*/
+.col-form-label {
+    font-weight:bolder ;
+}
 .form-control:focus {
     color:#495057;
     background-color: #fff;
