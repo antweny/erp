@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemCategoriesTable extends Migration
+class AddDescToRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateItemCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+        Schema::table('roles', function (Blueprint $table) {
+            $table->mediumText('desc')->nullable()->after('guard_name');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateItemCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_categories');
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn('desc');
+        });
     }
 }
