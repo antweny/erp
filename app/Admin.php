@@ -7,12 +7,14 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuids;
 use Illuminate\Support\Carbon;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Admin extends Authenticatable
 {
     use Notifiable;
     use Uuids;
     use HasRoles;
+    use LogsActivity;
 
     protected $guard = 'admin';
 
@@ -38,12 +40,28 @@ class Admin extends Authenticatable
         'id' => 'string'
     ];
 
+    /**
+     * Log all activities performed on the model
+     */
+    protected static $logFillable = true;
+    protected static $logName = 'admins';
+    protected static $logOnlyDirty = true;
 
-    /* ----------------
-     * CLASS ACCESSOR
-     * ----------------*/
+
+    /**
+     * Class Accessor
+     */
+
+    //Get date user registered
     public function getRegisteredAttribute()
     {
         return Carbon::parse($this->created_at)->format('d M, y');
+    }
+
+    //Get Admin Name on activity log
+    static function get_causer_name($id)
+    {
+        $admin = Admin::findOrFail($id);
+        return $admin->name;
     }
 }

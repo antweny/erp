@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="ca card">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-12">
@@ -21,7 +21,7 @@
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
-                <table class="table table-striped  table-sm table-hover">
+                <table class="table table-striped  table-sm table-hover" id="table">
                     <thead class="text-uppercase text-center bg-blue">
                     <tr>
                         <th scope="col">Role Names</th>

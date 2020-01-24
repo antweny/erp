@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Carbon;
-
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Traits\Uuids;
 
 class User extends Authenticatable
@@ -15,20 +15,17 @@ class User extends Authenticatable
     use Notifiable;
     use Uuids;
     use HasRoles;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'name', 'email', 'password',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * The attributes that should be hidden for arrays.y
      */
     protected $hidden = [
         'password', 'remember_token',
@@ -36,13 +33,18 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'id' => 'string'
     ];
+
+    /**
+     * Log all activities performed on the model
+     */
+    protected static $logFillable = true;
+    protected static $logName = 'users';
+    protected static $logOnlyDirty = true;
 
 
 
