@@ -42,3 +42,5 @@ Route::namespace('Admin')->group (function () {
     Route::resource('roles', 'RoleController')->except('create','show');
     Route::resource('activityLogs', 'ActivityLogController')->except('create','show','edit','update');
 });
+
+Route::resource('itemCategories','ItemCategoryController')->except('create','show');
