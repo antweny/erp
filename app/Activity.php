@@ -23,6 +23,6 @@ class Activity extends SpatieActivity
     //Activity logs are performed by different admins
     public function admin()
     {
-        return $this->belongsTo(Admin::class,'causer_id');
+        return $this->belongsTo(Admin::class,'causer_id')->withDefault();
     }
 }
