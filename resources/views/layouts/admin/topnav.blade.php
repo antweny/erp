@@ -30,7 +30,9 @@
                     <i class="fab fa-houzz"></i> Human Resource
                 </a>
                 <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#"><i class="fa fa-building"></i>Department</a>
+                    @can('department-manage')
+                        <a class="dropdown-item" href="{{route('departments.index')}}"><i class="fa fa-building"></i>Departments</a>
+                    @endcan
                     <a class="dropdown-item" href="#"><i class="fa fa-user-tag"></i>Employee</a>
                 </div>
             </li>
