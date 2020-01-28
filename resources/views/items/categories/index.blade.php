@@ -22,13 +22,30 @@
                     <thead class="text-uppercase text-center bg-blue">
                         <tr class="text-white">
                             <th scope="col">Name</th>
-                            <th scope="col">Slug</th>
+                            <th scope="col">Sort</th>
                             <th scope="col">Descriptions</th>
                             <th scope="col" >Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($itemCategories as $itemCategory)
+                            <tr>
+                                <td class="text-left">{{$itemCategory->name}}</td>
+                                <td class="text-center">{{$itemCategory->sort}}</td>
+                                <td class="text-center">{{$itemCategory->desc}}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('itemCategories.edit',$itemCategory)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <form class="form-delete" method="post" action="{{route('itemCategories.destroy',$itemCategory)}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btm-sm" onclick="return confirm('Delete {{$itemCategory->name}} role?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                        </form>
 
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -50,10 +67,15 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <label class="col-form-label">Item Category Name <span class="star">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name')}}" placeholder="Ex. Stationary, IT" required/>
                                 @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">Sort Number</label>
+                                <input type="number" name="sort" id="sort" class="form-control {{ $errors->has('sort') ? ' is-invalid' : '' }} " value="{{old('sort')}}" placeholder="0, 1, 2" />
+                                @if ($errors->has('sort'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('sort') }}</strong></span>@endif
                             </div>
                         </div>
                         <div class="form-group row">

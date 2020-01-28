@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemCategoryRequest;
 use App\ItemCategory;
-use Illuminate\Http\Request;
 
 class ItemCategoryController extends Controller
 {
@@ -20,74 +20,47 @@ class ItemCategoryController extends Controller
      */
     public function index(ItemCategory $itemCategory)
     {
-        //$itemCategories = $itemCategory->get();
+        $itemCategories = $itemCategory->get()->sortBy('sort');
 
-        return view('items.categories.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('items.categories.index',compact('itemCategories'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ItemCategoryRequest $request, ItemCategory $itemCategory)
     {
-        //
+        $itemCategory->create($request->only('name','desc','sort'));
+
+        return back()->with('success','Item Category has been saved!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ItemCategory  $itemCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ItemCategory $itemCategory)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\ItemCategory  $itemCategory
-     * @return \Illuminate\Http\Response
      */
     public function edit(ItemCategory $itemCategory)
     {
-        //
+        return view('items.categories.edit',compact('itemCategory'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ItemCategory  $itemCategory
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemCategory $itemCategory)
+    public function update(ItemCategoryRequest $request, ItemCategory $itemCategory)
     {
-        //
+        $itemCategory->update($request->only('name','sort','desc'));
+
+        return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\ItemCategory  $itemCategory
-     * @return \Illuminate\Http\Response
      */
     public function destroy(ItemCategory $itemCategory)
     {
-        //
+        $itemCategory->delete();
+
+        return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
     }
 }
