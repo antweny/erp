@@ -44,3 +44,4 @@ Route::namespace('Admin')->group (function () {
 });
 
 Route::resource('itemCategories','ItemCategoryController')->except('create','show');
+Route::resource('departments','DepartmentController')->except('create','show');
