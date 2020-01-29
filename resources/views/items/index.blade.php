@@ -46,7 +46,7 @@
                                         <form class="form-delete" method="post" action="{{route('items.destroy',$item)}}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btm-sm" onclick="return confirm('Delete {{$item->name}} item?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$item->name}} item?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
                                     @endcan
 

@@ -44,7 +44,7 @@
                                             <form class="form-delete" method="post" action="{{route('departments.destroy',$department)}}">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger btm-sm" onclick="return confirm('Delete {{$department->name}} department?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$department->name}} department?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
                                         @endcan
 

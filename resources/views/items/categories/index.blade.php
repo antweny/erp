@@ -39,7 +39,7 @@
                                         <form class="form-delete" method="post" action="{{route('itemCategories.destroy',$itemCategory)}}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btm-sm" onclick="return confirm('Delete {{$itemCategory->name}} role?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$itemCategory->name}} role?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
 
                                     </div>

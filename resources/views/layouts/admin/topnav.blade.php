@@ -12,17 +12,25 @@
                 </a>
             </li>
             <!-- Organization and associated details management -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-store"></i> Store Management
-                </a>
-                <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{route('itemCategories.index')}}"><i class="fa fa-list-alt"></i>Items Categories</a>
-                    <a class="dropdown-item" href="{{route('items.index')}}"><i class="fab fa-product-hunt"></i>Items</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-download"></i>Stock In</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-upload"></i>Stock Out</a>
-                </div>
-            </li>
+            @hasanyrole('superAdmin|Store')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-store"></i> Store Management
+                    </a>
+                    <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
+                        @can('itemCategories-read')
+                            <a class="dropdown-item" href="{{route('itemCategories.index')}}"><i class="fa fa-list-alt"></i>Items Categories</a>
+                        @endcan
+                        @can('item-read')
+                            <a class="dropdown-item" href="{{route('items.index')}}"><i class="fab fa-product-hunt"></i>Items</a>
+                        @endcan
+                        @can('itemReceived-read')
+                            <a class="dropdown-item" href="{{route('itemReceived.index')}}"><i class="fa fa-download"></i>Items Received</a>
+                        @endcan
+                        <a class="dropdown-item" href="#"><i class="fa fa-upload"></i>Stock Out</a>
+                    </div>
+                </li>
+            @endhasanyrole
 
             <!-- Organization and associated details management -->
             <li class="nav-item dropdown">
@@ -30,7 +38,7 @@
                     <i class="fab fa-houzz"></i> Human Resource
                 </a>
                 <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
-                    @can('department-manage')
+                    @can('department-read')
                         <a class="dropdown-item" href="{{route('departments.index')}}"><i class="fa fa-building"></i>Departments</a>
                     @endcan
                     <a class="dropdown-item" href="#"><i class="fa fa-user-tag"></i>Employee</a>
