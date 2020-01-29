@@ -24,6 +24,9 @@
                         @can('item-read')
                             <a class="dropdown-item" href="{{route('items.index')}}"><i class="fab fa-product-hunt"></i>Items</a>
                         @endcan
+                        @can('itemUnit-read')
+                            <a class="dropdown-item" href="{{route('itemUnits.index')}}"><i class="fab fa-untappd"></i>Item Units</a>
+                        @endcan
                         @can('itemReceived-read')
                             <a class="dropdown-item" href="{{route('itemReceived.index')}}"><i class="fa fa-download"></i>Items Received</a>
                         @endcan
