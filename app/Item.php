@@ -35,4 +35,10 @@ class Item extends BaseModel
     {
         return $this->belongsTo(ItemCategory::class)->withDefault();
     }
+
+    //Item can received many times
+    public function item_received()
+    {
+        return $this->hasMany(ItemReceived::class);
+    }
 }
