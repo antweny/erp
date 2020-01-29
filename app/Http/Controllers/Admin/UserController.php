@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $roles = Role::select('id','name')->where('guard_name','web')->get();   //Get all roles
 
-        $users = $user->get();  //Get all useristrators
+        $users = $user->get();
 
         return view('admin.users.index',compact('users','roles'));
     }

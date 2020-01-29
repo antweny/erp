@@ -4,16 +4,16 @@ namespace App;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class ItemCategory extends BaseModel
-{
 
+class Item extends BaseModel
+{
     use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'desc', 'sort',
+        'name', 'sort','item_category_id'
     ];
 
 
@@ -21,9 +21,8 @@ class ItemCategory extends BaseModel
      * Log all activities performed on the model
      */
     protected static $logFillable = true;
-    protected static $logName = 'item_categories';
+    protected static $logName = 'items';
     protected static $logOnlyDirty = true;
-
 
 
     /* ------------------------------------
@@ -32,8 +31,8 @@ class ItemCategory extends BaseModel
      */
 
     //All items belong to a particular item category
-    public function item()
+    public function item_category()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(ItemCategory::class)->withDefault();
     }
 }
