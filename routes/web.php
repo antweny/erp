@@ -11,12 +11,14 @@
 |
 */
 
-Route::get('/', function () {return view('index');});
+Route::get('/', function () {
+    return redirect()->route('admin.dashboard');
+});
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 /**
@@ -41,7 +43,24 @@ Route::namespace('Admin')->group (function () {
     Route::resource('permissions', 'PermissionController')->except('create','show');
     Route::resource('roles', 'RoleController')->except('create','show');
     Route::resource('activityLogs', 'ActivityLogController')->except('create','show','edit','update');
+
+
+    /*
+     * Human Resource and Administration
+     */
+    Route::resource('departments','DepartmentController')->except('create','show');
+
+
+
+
+    /*
+     * Store Management
+     */
+    Route::resource('items','ItemController')->except('create','show');
 });
 
+
+
 Route::resource('itemCategories','ItemCategoryController')->except('create','show');
-Route::resource('departments','DepartmentController')->except('create','show');
+
+
