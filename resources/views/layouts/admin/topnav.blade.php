@@ -18,7 +18,7 @@
                 </a>
                 <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{route('itemCategories.index')}}"><i class="fa fa-list-alt"></i>Items Categories</a>
-                    <a class="dropdown-item" href="#"><i class="fab fa-product-hunt"></i>Items</a>
+                    <a class="dropdown-item" href="{{route('items.index')}}"><i class="fab fa-product-hunt"></i>Items</a>
                     <a class="dropdown-item" href="#"><i class="fa fa-download"></i>Stock In</a>
                     <a class="dropdown-item" href="#"><i class="fa fa-upload"></i>Stock Out</a>
                 </div>

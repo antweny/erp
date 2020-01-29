@@ -63,7 +63,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{route('itemCategories.store')}}" class="form-horizontal" role="form">
+                <form method="POST" action="{{route('itemCategories.store')}}" class="form-horizontal" role="form" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
