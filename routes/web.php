@@ -57,6 +57,7 @@ Route::namespace('Admin')->group (function () {
      * Store Management
      */
     Route::resource('items','ItemController')->except('create','show');
+    Route::resource('itemReceived','ItemReceivedController')->except('show');
 });
 
 
