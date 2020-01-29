@@ -15,6 +15,7 @@ function date_to_mysql($date)
 {
     return Carbon::parse($date)->format('Y-m-d');
 }
+
 /*
  * Format a mysql date to datepicker format  date to mysql format m/d/Y
  */
@@ -62,6 +63,9 @@ function date_difference($start_date,$end_date)
 
 }
 
+/*
+ * Calculate Someone Age
+ */
 function calculate_age ($date)
 {
     if ($date != null){
@@ -73,6 +77,9 @@ function calculate_age ($date)
     else {
         return null;
     }
+}
 
-
+function multiply_two_numbers ($num1, $num2)
+{
+    return $num1 * $num2;
 }
