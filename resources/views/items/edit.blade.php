@@ -28,11 +28,22 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label class="col-form-label">Item Category <span class="star">*</span></label>
+                            <label class="col-form-label">Category <span class="star">*</span></label>
                             <select name="item_category_id" class="form-control">
                                 <option value="">Select Category...</option>
                                 @foreach($itemCategories as $itemCategory)
                                     <option value="{{$itemCategory->id}}" {{$item->item_category_id == $itemCategory->id ? 'selected' : '' }}>{{$itemCategory->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="col-form-label">Unit <span class="star">*</span></label>
+                            <select name="item_unit_id" class="form-control">
+                                <option value="">Select Unit...</option>
+                                @foreach($itemUnits as $itemUnit)
+                                    <option value="{{$itemUnit->id}}" {{$item->item_unit_id == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
                                 @endforeach
                             </select>
                         </div>

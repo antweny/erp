@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemRequest;
 use App\Item;
 use App\ItemCategory;
+use App\ItemUnit;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -27,11 +28,13 @@ class ItemController extends Controller
     {
         $this->authorize('read',$item);
 
-        $items = $item->with('item_category')->get()->sortBy('name');
+        $items = $item->with('item_category','item_unit')->get()->sortBy('name');
 
         $itemCategories = ItemCategory::select('id','name')->get();
 
-        return view('items.index',compact('items','itemCategories'));
+        $itemUnits = ItemUnit::select('id','name')->get();
+
+        return view('items.index',compact('items','itemCategories','itemUnits'));
     }
 
 
@@ -42,7 +45,7 @@ class ItemController extends Controller
     {
         $this->authorize('create',$item);
 
-        $item->create($request->only('name','desc','item_category_id'));
+        $item->create($request->only('name','desc','item_category_id','item_unit_id'));
 
         return back()->with('success','Item has been saved!');
     }
@@ -57,7 +60,9 @@ class ItemController extends Controller
 
         $itemCategories = ItemCategory::select('id','name')->get();
 
-        return view('items.edit',compact('item','itemCategories'));
+        $itemUnits = ItemUnit::select('id','name')->get();
+
+        return view('items.edit',compact('item','itemCategories','itemUnits'));
     }
 
     /**
@@ -67,7 +72,7 @@ class ItemController extends Controller
     {
         $this->authorize('update',$item);
 
-        $item->update($request->only('name','desc','item_category_id'));
+        $item->update($request->only('name','desc','item_category_id','item_unit_id'));
 
         return redirect()->route('items.index')->with('success','Item has been updated!');
     }

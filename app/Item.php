@@ -13,7 +13,7 @@ class Item extends BaseModel
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'sort','item_category_id'
+        'name', 'sort','item_unit_id','item_category_id'
     ];
 
 
@@ -34,6 +34,12 @@ class Item extends BaseModel
     public function item_category()
     {
         return $this->belongsTo(ItemCategory::class)->withDefault();
+    }
+
+    //All items belong to a particular item category
+    public function item_unit()
+    {
+        return $this->belongsTo(ItemUnit::class)->withDefault();
     }
 
     //Item can received many times

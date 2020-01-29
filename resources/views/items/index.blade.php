@@ -25,6 +25,7 @@
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Unit</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Descriptions</th>
                         <th scope="col" >Actions</th>
@@ -35,7 +36,8 @@
                         <tr>
                             <td class="text-left">{{$item->name}}</td>
                             <td class="text-center">{{$item->item_category->name}}</td>
-                            <td class="text-center">{{$item->name}}</td>
+                            <td class="text-center">{{$item->item_unit->name}}</td>
+                            <td class="text-center">{{$item->item_unit->name}}</td>
                             <td class="text-center">{{$item->desc}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
@@ -84,11 +86,22 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="col-form-label">Item Category <span class="star">*</span></label>
-                                <select name="item_category_id" class="form-control">
+                                <label class="col-form-label">Category <span class="star">*</span></label>
+                                <select name="item_category_id" class="form-control" required>
                                     <option value="">Select Category...</option>
                                     @foreach($itemCategories as $itemCategory)
                                         <option value="{{$itemCategory->id}}" {{old('item_category_id') == $itemCategory->id ? 'selected' : '' }}>{{$itemCategory->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="col-form-label">Unit <span class="star">*</span></label>
+                                <select name="item_unit_id" class="form-control" required>
+                                    <option value="">Select Unit...</option>
+                                    @foreach($itemUnits as $itemUnit)
+                                        <option value="{{$itemUnit->id}}" {{old('item_unit_id') == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

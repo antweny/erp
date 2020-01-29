@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemReceivedRequest;
 use App\ItemReceived;
 use App\Item;
+use App\ItemUnit;
 
 class ItemReceivedController extends Controller
 {
@@ -27,7 +28,9 @@ class ItemReceivedController extends Controller
 
         $itemReceiveds = $itemReceived->with('item')->get()->sortBy('date_received');
 
-        return view('items.received.index',compact('itemReceiveds'));
+        $itemUits = ItemUnit::select('id','name')->get();
+
+        return view('items.received.index',compact('itemReceiveds','itemUits'));
     }
 
 

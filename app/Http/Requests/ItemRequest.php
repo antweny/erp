@@ -36,6 +36,7 @@ class ItemRequest extends FormRequest
                     'name' => 'required|string|max:255|unique:items,name',
                     'desc' => 'string|nullable',
                     'item_category_id' => 'nullable',
+                    'item_unit_id' => 'nullable',
                 ];
             }
 
@@ -45,6 +46,7 @@ class ItemRequest extends FormRequest
                     'name' => 'required|string|max:255|unique:items,id,'.$this->item->id,
                     'desc' => 'string|nullable',
                     'item_category_id' => 'nullable',
+                    'item_unit_id' => 'nullable',
                 ];
             }
         }
