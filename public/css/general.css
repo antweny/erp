@@ -126,6 +126,14 @@ html , body{
    Tables Section Style
    ====================*/
 thead th { color:#fff;}
+.status {
+    padding: 3px 7px 3px 7px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+.status .bg-warning {
+    color: #000;
+}
 
 
 

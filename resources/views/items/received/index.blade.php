@@ -40,7 +40,7 @@
                                 <td class="text-center">{{$itemReceived->date_received}}</td>
                                 <td class="text-left">{{$itemReceived->item->name}}</td>
                                 <td class="text-left">{{$itemReceived->desc}}</td>
-                                <td class="text-right">{{$itemReceived->quantity}}</td>
+                                <td class="text-center">{{$itemReceived->quantity}}</td>
                                 <td class="text-center">{{$itemReceived->desc}}</td>
                                 <td class="text-center">{{$itemReceived->unit_rate}}</td>
                                 <td class="text-center">{{$itemReceived->amount}}</td>

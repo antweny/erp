@@ -27,16 +27,12 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label class="col-form-label">Quantity <span class="star">*</span> </label>
             <input type="number" name="quantity" class="form-control @error('date_received') is-invalid @enderror" value="{{old('quantity',$itemReceived->quantity)}}" required></input>
             @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         </div>
-        <div class="col-md-4">
-            <label class="col-form-label">Quantity Unit <span class="star">*</span> </label>
-
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label class="col-form-label">Unit Rate <span class="star">*</span> </label>
             <input type="number" name="unit_rate" class="form-control @error('unit_rate') is-invalid @enderror" value="{{old('unit_rate',$itemReceived->unit_rate)}}" required></input>
             @error('unit_rate')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
