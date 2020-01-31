@@ -30,6 +30,8 @@ class ItemReceivedController extends Controller
 
         $itemUits = ItemUnit::select('id','name')->get();
 
+        $itemUits = ItemUnit::select('id','name')->get();
+
         return view('items.received.index',compact('itemReceiveds','itemUits'));
     }
 

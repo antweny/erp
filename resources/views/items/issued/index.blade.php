@@ -25,11 +25,7 @@
                     <tr class="text-white">
                         <th scope="col">Date Issued</th>
                         <th scope="col">Item Name</th>
-                        <th scope="col">Item Desc</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col" >Unit</th>
-                        <th scope="col" >Rate</th>
-                        <th scope="col" >Amount</th>
                         <th scope="col" >Remarks</th>
                         <th scope="col" >Action</th>
                     </tr>

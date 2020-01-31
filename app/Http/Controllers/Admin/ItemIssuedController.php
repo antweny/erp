@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ItemIssuedRequest;
 use App\ItemIssued;
 use App\Item;
 
@@ -23,19 +24,45 @@ class ItemIssuedController extends Controller
     {
         //$this->authorize('read',$itemReceived);
 
-        //$itemReceiveds = $itemReceived->with('item')->get()->sortBy('date_received');
+        $itemIssueds = $itemIssued->orderBy('date_issued','desc')->get();
 
         //$itemUits = ItemUnit::select('id','name')->get();
 
-        return view('items.issued.index');
+        return view('items.issued.index',compact('itemIssueds'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //$this->authorize('create',$itemReceived);
+
+        $items = Item::select('id','name')->where('quantity','>',0)->get(); //Get List of items
+
+        return view('items.issued.create',compact('items'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ItemIssuedRequest $request, ItemIssued $itemIssued)
     {
-        //
+        //$this->authorize('create',$itemIssued);
+
+        $itemIssued = $itemIssued->create($request->all());
+
+        //Increment the Item Quantity
+        if ($this->reduce_item_quantity($itemIssued->item_id, $itemIssued->quantity) == true ) {
+
+            return back()->with('success','Item has been issued')->withInput($request);
+
+        }
+
+        else {
+            return back()->with('error','Sorry the Quantity requested is smaller than the quantity remain');
+        }
+
     }
 
     /**
@@ -69,4 +96,32 @@ class ItemIssuedController extends Controller
     {
         //
     }
+
+    /*
+    * Reduce number of stock on item when issued
+    */
+    public function reduce_item_quantity($item_id,$quantity)
+    {
+        $item = $this->get_item_id($item_id);
+
+        if($item->quantity >= $quantity) {   //Check if the Quantity requested is smallet then the quantity remain
+            $item->decrement('quantity',$quantity);
+            return true;
+        }
+        else {
+            return false; //return nothing
+        }
+    }
+
+
+    /*
+     * Get Item ID
+     */
+    public function get_item_id ($item)
+    {
+        $item = Item::where('id',$item)->first();
+
+        return $item;
+    }
+
 }
