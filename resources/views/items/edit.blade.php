@@ -20,14 +20,12 @@
                     {{ Form::model($item, array('route' => array('items.update', $item), 'method' => 'PUT','autocomplete'=>'off')) }}
                         @csrf
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <label class="col-form-label">Item Name <span class="star">*</span></label>
                             <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{$item->name}}" placeholder="Ex. Ream Paper, Staple Pins" required/>
                             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label class="col-form-label">Category <span class="star">*</span></label>
                             <select name="item_category_id" class="form-control">
                                 <option value="">Select Category...</option>
@@ -38,7 +36,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label class="col-form-label">Unit <span class="star">*</span></label>
                             <select name="item_unit_id" class="form-control">
                                 <option value="">Select Unit...</option>
@@ -46,6 +44,16 @@
                                     <option value="{{$itemUnit->id}}" {{$item->item_unit_id == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label">Quantity <span class="star">*</span> </label>
+                            <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{$item->quantity}}" required></input>
+                            @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-form-label">Min. Quantity<span class="star">*</span> </label>
+                            <input type="number" name="min_quantity" class="form-control @error('min_quantity') is-invalid @enderror" value="{{$item->min_quantity}}" required></input>
+                            @error('min_quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                         </div>
                     </div>
                     <div class="form-group row">

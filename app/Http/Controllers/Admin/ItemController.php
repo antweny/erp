@@ -45,7 +45,7 @@ class ItemController extends Controller
     {
         $this->authorize('create',$item);
 
-        $item->create($request->only('name','desc','item_category_id','item_unit_id'));
+        $item->create($request->all());
 
         return back()->with('success','Item has been saved!');
     }
@@ -72,7 +72,7 @@ class ItemController extends Controller
     {
         $this->authorize('update',$item);
 
-        $item->update($request->only('name','desc','item_category_id','item_unit_id'));
+        $item->update($request->all());
 
         return redirect()->route('items.index')->with('success','Item has been updated!');
     }

@@ -26,7 +26,9 @@
                         <th scope="col">Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Unit</th>
+                        <th scope="col">Min Quantity</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Descriptions</th>
                         <th scope="col" >Actions</th>
                     </tr>
@@ -37,7 +39,9 @@
                             <td class="text-left">{{$item->name}}</td>
                             <td class="text-center">{{$item->item_category->name}}</td>
                             <td class="text-center">{{$item->item_unit->name}}</td>
-                            <td class="text-center">{{$item->item_unit->name}}</td>
+                            <td class="text-center">{{$item->min_quantity}}</td>
+                            <td class="text-center">{{$item->quantity}}</td>
+                            <td class="text-center">{!!$item->status!!}</td>
                             <td class="text-center">{{$item->desc}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
@@ -78,14 +82,12 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-12">
+                            <div class="col-md-7">
                                 <label class="col-form-label">Item Name <span class="star">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name')}}" placeholder="Ex. Ream Paper, Staple Pins" required/>
                                 @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
+                            <div class="col-md-5">
                                 <label class="col-form-label">Category <span class="star">*</span></label>
                                 <select name="item_category_id" class="form-control" required>
                                     <option value="">Select Category...</option>
@@ -96,14 +98,27 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="col-form-label">Unit <span class="star">*</span></label>
-                                <select name="item_unit_id" class="form-control" required>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="col-form-label">Unit </label>
+                                <select name="item_unit_id" class="form-control" >
                                     <option value="">Select Unit...</option>
                                     @foreach($itemUnits as $itemUnit)
                                         <option value="{{$itemUnit->id}}" {{old('item_unit_id') == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">Quantity <span class="star">*</span> </label>
+                                <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{old('quantity')}}" required></input>
+                                @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">Min. Quantity<span class="star">*</span> </label>
+                                <input type="number" name="min_quantity" class="form-control @error('min_quantity') is-invalid @enderror" value="{{old('min_quantity')}}" required></input>
+                                @error('min_quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
                         <div class="form-group row">

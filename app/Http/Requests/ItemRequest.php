@@ -37,6 +37,9 @@ class ItemRequest extends FormRequest
                     'desc' => 'string|nullable',
                     'item_category_id' => 'nullable',
                     'item_unit_id' => 'nullable',
+                    'min_quantity' => 'required|numeric',
+                    'quantity' => 'required|numeric|gte:min_quantity',
+
                 ];
             }
 
@@ -47,6 +50,8 @@ class ItemRequest extends FormRequest
                     'desc' => 'string|nullable',
                     'item_category_id' => 'nullable',
                     'item_unit_id' => 'nullable',
+                    'min_quantity' => 'required|numeric',
+                    'quantity' => 'required|numeric|gte:min_quantity',
                 ];
             }
         }

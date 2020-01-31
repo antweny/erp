@@ -13,7 +13,7 @@ class Item extends BaseModel
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'sort','item_unit_id','item_category_id'
+        'name', 'sort','item_unit_id','item_category_id','quantity','min_quantity'
     ];
 
 
@@ -23,6 +23,32 @@ class Item extends BaseModel
     protected static $logFillable = true;
     protected static $logName = 'items';
     protected static $logOnlyDirty = true;
+
+
+    /* ------------------
+     * Accessor  Functions
+     * ------------------
+     * */
+    public function getStatusAttribute()
+    {
+        if ($this->quantity <= $this->min_quantity && $this->quantity != 0 )
+        {
+            return '<span class="status  bg-warning">Low</span>';
+        }
+        elseif ($this->quantity > $this->min_quantity) {
+            return '<span class="status text-white bg-success">Good</span>';
+        }
+        elseif ($this->quantity == 0) {
+            return '<span class="status text-white bg-danger">Order</span>';
+        }
+        else {
+            return null;
+        }
+    }
+
+
+
+
 
 
     /* ------------------------------------

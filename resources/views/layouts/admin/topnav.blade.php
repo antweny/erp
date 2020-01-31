@@ -30,7 +30,9 @@
                         @can('itemReceived-read')
                             <a class="dropdown-item" href="{{route('itemReceived.index')}}"><i class="fa fa-download"></i>Items Received</a>
                         @endcan
-                        <a class="dropdown-item" href="#"><i class="fa fa-upload"></i>Stock Out</a>
+                        @can('itemIssued-read')
+                            <a class="dropdown-item" href="{{route('itemIssued.index')}}"><i class="fa fa-upload"></i>Items Issued</a>
+                        @endcan
                     </div>
                 </li>
             @endhasanyrole
