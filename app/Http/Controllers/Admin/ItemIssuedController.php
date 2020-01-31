@@ -3,35 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\ItemIssued;
+use App\Item;
 
 class ItemIssuedController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * AdminController constructor.
      */
-    public function index()
+    function __construct()
     {
-        //
+        $this->middleware(['auth:admin']);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the resource.
      */
-    public function create()
+    public function index(ItemIssued $itemIssued)
     {
-        //
+        //$this->authorize('read',$itemReceived);
+
+        //$itemReceiveds = $itemReceived->with('item')->get()->sortBy('date_received');
+
+        //$itemUits = ItemUnit::select('id','name')->get();
+
+        return view('items.issued.index');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -40,9 +40,6 @@ class ItemIssuedController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -51,9 +48,6 @@ class ItemIssuedController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -62,10 +56,6 @@ class ItemIssuedController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -74,9 +64,6 @@ class ItemIssuedController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
