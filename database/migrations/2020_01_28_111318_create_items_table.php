@@ -19,6 +19,12 @@ class CreateItemsTable extends Migration
             
             $table->uuid('item_category_id')->nullable();
             $table->foreign('item_category_id')->references('id')->on('item_categories')->onDelete('set null')->onUpdate('cascade');
+
+            $table->uuid('item_unit_id')->nullable();
+            $table->foreign('item_unit_id')->references('id')->on('item_units')->onUpdate('cascade')->onDelete('set null');
+
+            $table->float('min_quantity')->default(0);
+            $table->float('quantity')->default(0);
             
             $table->mediumText('desc')->nullable();
             $table->timestamps();
