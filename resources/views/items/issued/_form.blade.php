@@ -3,12 +3,12 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label class="col-form-label">Date Issued <span class="star">*</span> </label>
-            <input type="date" name="date_issued" class="form-control @error('date_issued') is-invalid @enderror" value="{{old('date_issued')}}"></input>
+            <input type="date" name="date_issued" class="form-control @error('date_issued') is-invalid @enderror" value="{{old('date_issued')}}" required></input>
             @error('date_issued')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         </div>
         <div class="col-md-6">
             <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
-            <select name="item_id" class="form-control">
+            <select name="item_id" class="form-control" required>
                 <option value="">Select Category...</option>
                 @foreach($items as $item)
                     <option value="{{$item->id}}" {{old('item_id') == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
@@ -21,7 +21,7 @@
     <div class="form-group row">
         <div class="col-md-4">
             <label class="col-form-label">Quantity <span class="star">*</span> </label>
-            <input type="number" name="quantity" class="form-control @error('date_issued') is-invalid @enderror" value="{{old('quantity')}}" required></input>
+            <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{old('quantity')}}" required></input>
             @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         </div>
     </div>
