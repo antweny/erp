@@ -19,13 +19,30 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-md-4">
-            <label class="col-form-label">Quantity <span class="star">*</span> </label>
+        <div class="col-md-6">
+            <label class="col-form-label">Required <span class="star">*</span> </label>
+            <input type="number" name="required" class="form-control @error('required') is-invalid @enderror" value="{{old('required',$itemIssued->required)}}" required></input>
+            @error('required')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        </div>
+        <div class="col-md-6">
+            <label class="col-form-label">Supplied<span class="star">*</span> </label>
             <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{old('quantity')}}" required></input>
             @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         </div>
     </div>
 
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="col-form-label">Employee Name<span class="star">*</span> </label>
+            <select name="employee_id" class="form-control" required>
+                <option value="">Select Employee...</option>
+                @foreach($employees as $employee)
+                    <option value="{{$employee->id}}" {{old('employee_id') == $employee->id ? 'selected' : '' }}>{{$employee->full_name}}</option>
+                @endforeach
+            </select>
+            @error('employee')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        </div>
+    </div>
 
 
     <div class="form-group row justify-content-center">

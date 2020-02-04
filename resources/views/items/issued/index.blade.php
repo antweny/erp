@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Items Issued')
 @section('content')
 
@@ -25,7 +25,10 @@
                     <tr class="text-white">
                         <th scope="col">Date Issued</th>
                         <th scope="col">Item Name</th>
+                        <th scope="col">Required</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Issued To</th>
                         <th scope="col" >Action</th>
                     </tr>
                     </thead>
@@ -34,7 +37,10 @@
                             <tr>
                                 <td class="text-center">{{$itemIssued->date_issued}}</td>
                                 <td class="text-left">{{$itemIssued->item->name}}</td>
+                                <td class="text-center">{{$itemIssued->required}}</td>
                                 <td class="text-center">{{$itemIssued->quantity}}</td>
+                                <td class="text-center">{!! $itemIssued->item_status!!}</td>
+                                <td class="text-center">{{$itemIssued->employee->full_name}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         @can('itemIssued-update')
@@ -56,6 +62,5 @@
             </div>
         </div>
     </div>
-
 
 @endsection

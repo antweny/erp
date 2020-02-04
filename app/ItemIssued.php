@@ -2,14 +2,11 @@
 
 namespace App;
 
-use Spatie\Activitylog\Traits\LogsActivity;
-
 class ItemIssued extends BaseModel
 {
-    use LogsActivity;
 
     /**
-     * The attributes that are mass assignable.
+     * The model table.
      */
     protected $table = 'item_issued';
 
@@ -18,22 +15,39 @@ class ItemIssued extends BaseModel
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'date_issued','item_id','desc', 'unit_rate','quantity','amount','remarks'
+        'date_issued','item_id','desc', 'unit_rate','quantity','amount','remarks','employee_id','required','status'
     ];
 
     /**
      * Log all activities performed on the model
      */
-    protected static $logFillable = true;
+
     protected static $logName = 'item_issued';
-    protected static $logOnlyDirty = true;
+
 
 
 
     /* ------------------
-     * Mutator Functions
+     *  Accessor  Functions
      * ------------------
      */
+    public function getItemStatusAttribute()
+    {
+      switch ($this->status){
+
+          case 'O' :
+              return '<span class="status  bg-danger">Request</span>';
+              break;
+          case 'R' :
+              return '<span class="status  bg-primary ">Read</span>';
+              break;
+          case 'I':
+              return '<span class="status  bg-success text-white">Issued</span>';
+              break;
+          default:
+              return NULL;
+      }
+    }
 
 
 
@@ -48,6 +62,12 @@ class ItemIssued extends BaseModel
     public function item()
     {
         return $this->belongsTo(Item::class)->withDefault();
+    }
+
+    //Items must be issued to staff
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class)->withDefault();
     }
 
 

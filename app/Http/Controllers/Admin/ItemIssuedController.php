@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemIssuedRequest;
 use App\ItemIssued;
@@ -38,9 +39,13 @@ class ItemIssuedController extends Controller
     {
         $this->authorize('create',$itemIssued);
 
-        $items = Item::select('id','name')->where('quantity','>',0)->get(); //Get List of items
 
-        return view('items.issued.create',compact('items'));
+
+        $items = Item::quantity_greater_than_zero(); //Get List of items
+
+        $employees = Employee::get_full_name_and_id();
+
+        return view('items.issued.create',compact('items','itemIssued','employees'));
     }
 
     /**
@@ -49,6 +54,8 @@ class ItemIssuedController extends Controller
     public function store(ItemIssuedRequest $request, ItemIssued $itemIssued)
     {
         $this->authorize('create',$itemIssued);
+
+        $request['status'] = 'I';
 
         //Increment the Item Quantity
         if ($this->reduce_item_quantity_on_creating($request->item_id, $request->quantity) == true ) {
@@ -70,7 +77,11 @@ class ItemIssuedController extends Controller
     {
         $this->authorize('update',$itemIssued);
 
-        return view('items.issued.edit',compact('itemIssued'));
+        $items = Item::quantity_greater_than_zero(); //Get List of items
+
+        $employees = Employee::get_full_name_and_id();
+
+        return view('items.issued.edit',compact('itemIssued','employees'));
     }
 
     /**
