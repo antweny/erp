@@ -63,16 +63,30 @@ Route::namespace('Admin')->group (function () {
  * Human Resource Management
  */
 Route::prefix('hr/')->namespace('Admin')->group (function () {
-
-    Route::resource('departments','DepartmentController')->except('create','show');
-
     Route::get('/dashboard', function () {
         return redirect()->route('departments.index');
     })->name('hr.dashboard');
 
-    Route::resource('employee','EmployeeController');
+    Route::resource('departments','DepartmentController')->except('create','show');
 
+    Route::resource('employee','EmployeeController');
 });
+
+
+/*
+ * Location Management
+ */
+Route::prefix('location/')->namespace('Admin')->group (function () {
+
+    Route::get('/', function () {
+        return redirect()->route('countries.index');
+    })->name('location');
+
+    Route::post('countries/import', 'CountryController@import')->name('countries.import');
+
+    Route::resource('countries', 'CountryController')->except('create','show');
+});
+
 
 
 
