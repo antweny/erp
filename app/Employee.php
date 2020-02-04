@@ -52,4 +52,16 @@ class Employee extends BaseModel
         return $employee;
     }
 
+
+
+
+    /* ------------------------------------
+     * Model Relationship with other models
+     * -------------------------------------*/
+    //Employee has one login credentials
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class)->withDefault();
+    }
+
 }

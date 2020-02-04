@@ -11,8 +11,8 @@
                     <span class="icon"></span><i class="fa fa-tachometer-alt"></i> Dashboard
                 </a>
             </li>
-            <!-- Organization and associated details management -->
-            @hasanyrole('superAdmin|Store')
+
+            @hasanyrole('Store Manager|superAdmin')
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="{{route('store.manage')}}">
                         <i class="fa fa-store"></i>
@@ -21,14 +21,15 @@
                 </li>
             @endhasanyrole
 
-            <!-- Organization and associated details management -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('hr.dashboard')}}">
-                    <i class="fa fa-users"></i>
-                    HR Management
-                </a>
-            </li>
-
+            @hasanyrole('HR Manager|superAdmin')
+                <!-- Organization and associated details management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('hr.dashboard')}}">
+                        <i class="fa fa-users"></i>
+                        HR Management
+                    </a>
+                </li>
+            @endhasanyrole
 
 
         </ul>

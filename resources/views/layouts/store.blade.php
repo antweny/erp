@@ -7,51 +7,50 @@
                 <div class="inside-menu card">
                     <div class="card-body">
                         <ul class="list-group list-group-flush p-0">
-                            <li class="list-group-item">
-                                @can('itemCategories-read')
+                            @can('itemCategories-read')
+                                <li class="list-group-item">
                                     <a href="{{route('itemCategories.index')}}">
                                         <i class="fa fa-list-alt"></i>
                                         Items Categories
                                     </a>
-                                @endcan
-                            </li>
+                                </li>
+                            @endcan
 
-                            <li class="list-group-item">
-                                @can('item-read')
+                            @can('itemUnit-read')
+                                <li class="list-group-item">
+                                    <a href="{{route('itemUnits.index')}}">
+                                        <i class="fab fa-untappd"></i>
+                                        Item Units
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('item-read')
+                                <li class="list-group-item">
                                     <a  href="{{route('items.index')}}">
                                         <i class="fab fa-product-hunt"></i>
                                         Items
                                     </a>
-                                @endcan
-                            </li>
+                                </li>
+                            @endcan
 
-                            <li class="list-group-item">
-                                @can('itemUnit-read')
-                                    <a href="{{route('itemUnits.index')}}">
-                                        <i class="fab fa-untappd"></i>
-                                        Units
-                                    </a>
-                                @endcan
-                            </li>
-
-                            <li class="list-group-item">
-                                @can('itemReceived-read')
+                            @can('itemReceived-read')
+                                <li class="list-group-item">
                                     <a  href="{{route('itemReceived.index')}}">
                                         <i class="fa fa-download"></i>
                                         Items Received
                                     </a>
-                                @endcan
-                            </li>
+                                </li>
+                            @endcan
 
-                            <li class="list-group-item">
-                                @can('itemIssued-read')
+                            @can('itemIssued-read')
+                                <li class="list-group-item">
                                     <a  href="{{route('itemIssued.index')}}">
                                         <i class="fa fa-upload"></i>
                                         Items Issued
                                     </a>
-                                @endcan
-                            </li>
-
+                                </li>
+                            @endcan
                         </ul>
                     </div>
                 </div>
