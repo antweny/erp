@@ -24,6 +24,8 @@ class EmployeeController extends Controller
      */
     public function index(Employee $employee)
     {
+        $this->authorize('read',$employee);
+
         $employees = $employee->with('department')->get();
 
         return view('employees.index',compact('employees'));
@@ -34,6 +36,8 @@ class EmployeeController extends Controller
      */
     public function create(Employee $employee)
     {
+        $this->authorize('create',$employee);
+
         $admins = Admin::select('name','id')->get();
 
         $departments = Department::select('name','id')->get();
@@ -46,6 +50,8 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request, Employee $employee)
     {
+        $this->authorize('create',$employee);
+
         $employee->create($request->all());
 
         return back()->with('success','Employee has been saved!');
@@ -64,6 +70,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        $this->authorize('update',$employee);
+
         $admins = Admin::select('name','id')->get();
 
         $departments = Department::select('name','id')->get();
@@ -76,6 +84,8 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
+        $this->authorize('update',$employee);
+
         $employee->update($request->all());
 
         return redirect()->route('employee.index')->with('success','Employee has been saved!');
@@ -83,12 +93,11 @@ class EmployeeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        //
+        $this->authorize('delete',$employee);
+
+        $this->authorize('create',$employee);
     }
 }

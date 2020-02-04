@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Issue Item')
 @section('content')
 

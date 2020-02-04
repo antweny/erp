@@ -41,7 +41,7 @@
                                 <td class="text-left">{{$itemReceived->item->name}}</td>
                                 <td class="text-left">{{$itemReceived->desc}}</td>
                                 <td class="text-center">{{$itemReceived->quantity}}</td>
-                                <td class="text-center">{{$itemReceived->desc}}</td>
+                                <td class="text-center">{{$itemReceived->item->item_unit->name}}</td>
                                 <td class="text-center">{{$itemReceived->unit_rate}}</td>
                                 <td class="text-center">{{$itemReceived->amount}}</td>
                                 <td class="text-center">{{$itemReceived->remarks}}</td>

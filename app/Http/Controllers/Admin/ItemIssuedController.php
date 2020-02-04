@@ -25,9 +25,7 @@ class ItemIssuedController extends Controller
     {
         $this->authorize('read',$itemIssued);
 
-        $itemIssueds = $itemIssued->orderBy('date_issued','desc')->get();
-
-        //$itemUits = ItemUnit::select('id','name')->get();
+        $itemIssueds = $itemIssued->orderBy('date_issued','desc')->with('employee','item')->get();
 
         return view('items.issued.index',compact('itemIssueds'));
     }
@@ -38,8 +36,6 @@ class ItemIssuedController extends Controller
     public function create(ItemIssued $itemIssued)
     {
         $this->authorize('create',$itemIssued);
-
-
 
         $items = Item::quantity_greater_than_zero(); //Get List of items
 
