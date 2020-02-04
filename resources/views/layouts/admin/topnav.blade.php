@@ -32,6 +32,14 @@
             @endhasanyrole
 
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('location')}}">
+                    <i class="fa fa-map-marker"></i>
+                    Location
+                </a>
+            </li>
+
+
         </ul>
 
     </div>
