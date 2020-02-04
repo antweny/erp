@@ -7,13 +7,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ItemReceived extends BaseModel
 {
 
-    use LogsActivity;
-
     /**
-     * The attributes that are mass assignable.
+     * The model Table.
      */
     protected $table = 'item_received';
-
 
     /**
      * The attributes that are mass assignable.
@@ -25,9 +22,7 @@ class ItemReceived extends BaseModel
     /**
      * Log all activities performed on the model
      */
-    protected static $logFillable = true;
     protected static $logName = 'item_received';
-    protected static $logOnlyDirty = true;
 
 
 

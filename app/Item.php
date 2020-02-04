@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Spatie\Activitylog\Traits\LogsActivity;
+
 
 
 class Item extends BaseModel
 {
-    use LogsActivity;
-
     /**
      * The attributes that are mass assignable.
      */
@@ -20,9 +18,8 @@ class Item extends BaseModel
     /**
      * Log all activities performed on the model
      */
-    protected static $logFillable = true;
     protected static $logName = 'items';
-    protected static $logOnlyDirty = true;
+
 
 
     /* ------------------
@@ -72,5 +69,26 @@ class Item extends BaseModel
     public function item_received()
     {
         return $this->hasMany(ItemReceived::class);
+    }
+
+
+    /*
+     * Get Item Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $items = Item::select('id','name')->get();
+
+        return $items;
+    }
+
+    /*
+     * Get Item with Quantity greater than 0
+     */
+    static function quantity_greater_than_zero()
+    {
+        $items = Item::select('id','name')->get();
+
+        return $items;
     }
 }
