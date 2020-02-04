@@ -1,8 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Update Item')
-
 @section('content')
-
 
     <div class="row justify-content-center">
         <div class="col-md-5">

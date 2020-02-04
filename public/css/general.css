@@ -213,18 +213,45 @@ a.logo span { color: #688a7e; }
     color: white;
 }
 
+/* ====================
+    Inside Menu
+   ====================*/
+.inside-menu  .list-group-item a {
+    font-size: 16px;
+    color: #2067b0;
+}
+.inside-menu i {
+    margin-right: 5px;
+}
 
-
-/* ===========================
-   Main Content Section Style
-   ===========================*/
+    /* ===========================
+       Main Content Section Style
+       ===========================*/
 .content { margin-top: 85px; }
 
 
-/* ===========================
-   Login Page Style
-   ===========================*/
+/*
+ * ===========================
+ * Login Page Style
+ * ===========================
+ */
 .login-form {
     padding-top: 25px;
     margin: 150px 0;
+}
+
+
+/*
+ * ===========================
+ * Employee Directory
+ * ===========================
+ */
+
+.emp-details {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.emp-details i {
+    font-size: 12px;
 }

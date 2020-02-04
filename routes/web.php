@@ -56,10 +56,29 @@ Route::namespace('Admin')->group (function () {
     /*
      * Store Management
      */
+    Route::get('/store/manage', function () {
+        return redirect()->route('items.index');
+    })->name('store.manage');
     Route::resource('items','ItemController')->except('create','show');
     Route::resource('itemUnits','ItemUnitController')->except('create','show');
     Route::resource('itemReceived','ItemReceivedController')->except('show');
     Route::resource('itemIssued','ItemIssuedController')->except('show');
+
+
+
+});
+
+/*
+ * Human Resource Management
+ */
+Route::prefix('hr/')->namespace('Admin')->group (function () {
+
+    Route::get('/dashboard', function () {
+        return redirect()->route('departments.index');
+    })->name('hr.dashboard');
+
+    Route::resource('employee','EmployeeController');
+
 });
 
 

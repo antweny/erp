@@ -14,40 +14,19 @@
             <!-- Organization and associated details management -->
             @hasanyrole('superAdmin|Store')
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-store"></i> Store Management
+                    <a class="nav-link" href="{{route('store.manage')}}">
+                        <i class="fa fa-store"></i>
+                        Store Management
                     </a>
-                    <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
-                        @can('itemCategories-read')
-                            <a class="dropdown-item" href="{{route('itemCategories.index')}}"><i class="fa fa-list-alt"></i>Items Categories</a>
-                        @endcan
-                        @can('item-read')
-                            <a class="dropdown-item" href="{{route('items.index')}}"><i class="fab fa-product-hunt"></i>Items</a>
-                        @endcan
-                        @can('itemUnit-read')
-                            <a class="dropdown-item" href="{{route('itemUnits.index')}}"><i class="fab fa-untappd"></i>Item Units</a>
-                        @endcan
-                        @can('itemReceived-read')
-                            <a class="dropdown-item" href="{{route('itemReceived.index')}}"><i class="fa fa-download"></i>Items Received</a>
-                        @endcan
-                        @can('itemIssued-read')
-                            <a class="dropdown-item" href="{{route('itemIssued.index')}}"><i class="fa fa-upload"></i>Items Issued</a>
-                        @endcan
-                    </div>
                 </li>
             @endhasanyrole
 
             <!-- Organization and associated details management -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fab fa-houzz"></i> Human Resource
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('hr.dashboard')}}">
+                    <i class="fa fa-users"></i>
+                    HR Management
                 </a>
-                <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
-                    @can('department-read')
-                        <a class="dropdown-item" href="{{route('departments.index')}}"><i class="fa fa-building"></i>Departments</a>
-                    @endcan
-                    <a class="dropdown-item" href="#"><i class="fa fa-user-tag"></i>Employee</a>
-                </div>
             </li>
 
 

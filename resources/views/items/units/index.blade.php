@@ -1,7 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Item Units')
 @section('content')
-
     <div class="card">
         <div class="card-header">
             <div class="row">

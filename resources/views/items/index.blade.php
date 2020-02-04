@@ -1,71 +1,70 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Items')
 @section('content')
 
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Items</h4>
-                    </div>
-                    <div class="float-right">
-                        @can('item-create')
-                            <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item</a>
-                        @endcan
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="float-left">
+                            <h4 class="header-title">Items</h4>
+                        </div>
+                        <div class="float-right">
+                            @can('item-create')
+                                <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item</a>
+                            @endcan
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
-            @include('alerts._flash')
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
-                    <tr class="text-white">
-                        <th scope="col">Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Min Quantity</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Descriptions</th>
-                        <th scope="col" >Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($items as $item)
-                        <tr>
-                            <td class="text-left">{{$item->name}}</td>
-                            <td class="text-center">{{$item->item_category->name}}</td>
-                            <td class="text-center">{{$item->item_unit->name}}</td>
-                            <td class="text-center">{{$item->min_quantity}}</td>
-                            <td class="text-center">{{$item->quantity}}</td>
-                            <td class="text-center">{!!$item->status!!}</td>
-                            <td class="text-center">{{$item->desc}}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    @can('item-update')
-                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('items.edit',$item)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endcan
-                                    @can('item-delete')
-                                        <form class="form-delete" method="post" action="{{route('items.destroy',$item)}}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$item->name}} item?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
-                                        </form>
-                                    @endcan
-
-                                </div>
-                            </td>
+            <div class="card-body">
+                @include('alerts._flash')
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm" id="table">
+                        <thead class="text-uppercase text-center bg-blue">
+                        <tr class="text-white">
+                            <th scope="col">Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Min Quantity</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Descriptions</th>
+                            <th scope="col" >Actions</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach ($items as $item)
+                            <tr>
+                                <td class="text-left">{{$item->name}}</td>
+                                <td class="text-center">{{$item->item_category->name}}</td>
+                                <td class="text-center">{{$item->item_unit->name}}</td>
+                                <td class="text-center">{{$item->min_quantity}}</td>
+                                <td class="text-center">{{$item->quantity}}</td>
+                                <td class="text-center">{!!$item->status!!}</td>
+                                <td class="text-center">{{$item->desc}}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        @can('item-update')
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('items.edit',$item)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endcan
+                                        @can('item-delete')
+                                            <form class="form-delete" method="post" action="{{route('items.destroy',$item)}}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$item->name}} item?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                            </form>
+                                        @endcan
+
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-
 
 @can('item-create')
     <!-- start create new pillar form modal -->

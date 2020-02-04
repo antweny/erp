@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.store')
 @section('title','Update Item Received')
 @section('content')
 
@@ -78,7 +78,6 @@
             </div>
         </div>
     </div>
-
 
 @endsection
 
