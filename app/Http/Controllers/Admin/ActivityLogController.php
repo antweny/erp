@@ -20,7 +20,7 @@ class ActivityLogController extends Controller
      */
     public function index()
     {
-        $activities = Activity::with('admin')->orderBy('created_at','DESC')->get();
+        $activities = Activity::with('admin')->latest()->get();
 
         return view('admin.activities.index',compact('activities'));
     }

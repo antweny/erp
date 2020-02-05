@@ -13,12 +13,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DistrictController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
-
     /**
      * Display a listing of the resource.
      */

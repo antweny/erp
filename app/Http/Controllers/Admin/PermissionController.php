@@ -23,7 +23,7 @@ class PermissionController extends Controller
     public function index(Permission $permission)
     {
 
-        $permissions = $permission->orderBy('name','desc')->get();
+        $permissions = $permission->latest()->get();
 
         $roles = Role::orderBy('name','asc')->get();
 
