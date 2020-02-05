@@ -216,9 +216,23 @@ a.logo span { color: #688a7e; }
 /* ====================
     Inside Menu
    ====================*/
-.inside-menu  .list-group-item a {
+.inside-menu .card-body {
+    padding: 0;
+}
+.inside-menu .list-group {
+    padding: 0;
+}
+.inside-menu  .list-group-item {
+    padding: 10px 0 10px 10px;
+    width: 100%;
     font-size: 16px;
     color: #2067b0;
+}
+.inside-menu  .list-group-item:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #2067b0;
+    border: 1px solid #2067b0;
 }
 .inside-menu i {
     margin-right: 5px;

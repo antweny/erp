@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuids;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Illuminate\Support\Str;
+
 
 class BaseModel extends Model
 {
