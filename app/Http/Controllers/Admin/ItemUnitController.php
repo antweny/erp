@@ -9,13 +9,6 @@ use App\ItemUnit;
 
 class ItemUnitController extends Controller
 {
-    /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin']);
-    }
 
     /**
      * Display a listing of the resource.

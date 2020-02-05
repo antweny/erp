@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * UserController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
 
     /**
      * User index page

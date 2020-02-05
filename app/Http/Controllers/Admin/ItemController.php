@@ -13,15 +13,6 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin']);
-    }
-
-
-    /**
      * Display a listing of the resource.
      */
     public function index(Item $item)

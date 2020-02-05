@@ -10,4 +10,13 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware(['auth:admin','role:superAdmin']);
+    }
+
 }

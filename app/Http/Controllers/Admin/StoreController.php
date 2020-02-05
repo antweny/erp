@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
-    /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin']);
-    }
-
 
     public function __invoke(ItemIssued $itemIssued)
     {

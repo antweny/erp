@@ -11,14 +11,6 @@ use Illuminate\Http\Request;
 
 class ItemRequestController extends Controller
 {
-    /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin']);
-    }
-
 
     public function index(ItemIssued $itemIssued)
     {

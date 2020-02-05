@@ -7,14 +7,6 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
 
     /**
      * Admin index page
