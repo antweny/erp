@@ -40,7 +40,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('categories.index')}}">
+                <a class="nav-link" href="{{route('organizations.index')}}">
                     <i class="fa fa-building"></i>
                     Organization
                 </a>

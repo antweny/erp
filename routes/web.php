@@ -111,7 +111,7 @@ Route::prefix('organization/')->namespace('Admin')->group (function () {
     //Route::post('import', 'OrganizationController@import')->name('organizations.import');
 });
 Route::namespace('Admin')->group (function () {
-    //Route::post('import', 'OrganizationController@import')->name('organizations.import');
+    Route::post('import', 'OrganizationController@import')->name('organizations.import');
     Route::resource('organizations', 'OrganizationController');
 });
 
