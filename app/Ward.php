@@ -48,4 +48,18 @@ class Ward extends BaseModel
     {
         return $this->hasMany(Street::class);
     }
+
+
+    /* -------------------
+      *   Other Functions
+      * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $ward = Ward::select('id','name')->get();
+        return $ward;
+    }
 }

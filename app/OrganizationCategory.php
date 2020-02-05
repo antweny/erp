@@ -35,4 +35,19 @@ class OrganizationCategory extends BaseModel
         $this->attributes['slug'] = Str::slug($value,'-');
     }
 
+
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $orgCategory = OrganizationCategory::select('id','name')->get();
+
+        return $orgCategory;
+    }
+
 }
