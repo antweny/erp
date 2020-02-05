@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\City;
-use App\Http\Requests\ImportRequest;
 use App\Venue;
 use App\Http\Requests\VenueRequest;
 use App\District;
@@ -90,19 +89,6 @@ class VenueController extends Controller
         $venue->delete();
 
         return back()->with('success','Venue deleted successfully!');
-    }
-
-    /*
-   * Import Data from Excel
-   */
-    public function import (ImportRequest $request, Venue $venue)
-    {
-        $this->authorize('import',$venue);
-
-        if ($request->file('imported_file')) {
-            Excel::import(new VenueImport(), request()->file('imported_file'));
-            return back()->with('success','Country imported successfully!');
-        }
     }
 
 }
