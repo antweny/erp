@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryRequest;
 use App\Country;
+use App\Http\Requests\ImportRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CountryImport;
 
 class CountryController extends Controller
 {
@@ -83,7 +86,7 @@ class CountryController extends Controller
 
         if ($request->file('imported_file')) {
             Excel::import(new CountryImport(), request()->file('imported_file'));
-            return back()->with('success','Country imported successfully!');
+            return back()->with('success','Countries has been imported');
         }
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 
 class Country extends BaseModel
 {
+
     /* -----------------------------------------
    * The attributes that are mass assignable.
    * -----------------------------------------*/
@@ -49,5 +51,4 @@ class Country extends BaseModel
         }
         return null;
     }
-
 }
