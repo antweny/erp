@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($country, array('route' => array('countries.update', $country), 'method' => 'PUT')) }}
+                    {{ Form::model($country, array('route' => array('countries.update', $country), 'method' => 'PUT','autocomplete'=>'off')) }}
                         @include('countries._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>

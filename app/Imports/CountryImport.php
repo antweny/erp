@@ -15,6 +15,15 @@ use Ramsey\Uuid\Uuid;
 
 class CountryImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading,SkipsOnFailure
 {
+
+    //private $country;
+
+    public function _construct()
+    {
+        $country = new Country();
+        $country->create(['id' => Uuid::uuid4()]);
+    }
+
     /**
      * @param array $row
      */
