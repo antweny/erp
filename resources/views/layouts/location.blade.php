@@ -37,6 +37,20 @@
                             </a>
                         @endcan
 
+                        @can('street-read')
+                            <a class="list-group-item" href="{{route('streets.index')}}">
+                                <i class="fa fa-road"></i>
+                                Streets
+                            </a>
+                        @endcan
+
+                        @can('venue-read')
+                            <a class="list-group-item" href="{{route('venues.index')}}">
+                                <i class="fa fa-compass"></i>
+                                Venues
+                            </a>
+                        @endcan
+
                     </ul>
                 </div>
             </div>
