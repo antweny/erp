@@ -27,5 +27,16 @@ class BaseModel extends Model
 
 
 
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+    public function get_id($data)
+    {
+        if ($data != null) {
+            $model = $this->firstOrCreate(['name'=>$data]);
+            return $model->id;
+        }
+        return null;
+    }
 
 }

@@ -87,6 +87,9 @@ Route::prefix('location/')->namespace('Admin')->group (function () {
 
     Route::post('cities/import', 'CityController@import')->name('cities.import');
     Route::resource('cities', 'CityController')->except('create','show');
+
+    Route::post('districts/import', 'DistrictController@import')->name('districts.import');
+    Route::resource('districts', 'DistrictController')->except('create','show');
 });
 
 

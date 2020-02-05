@@ -18,8 +18,22 @@
 
                         @can('city-read')
                             <a class="list-group-item" href="{{route('cities.index')}}">
-                                <i class="fa fa-flag"></i>
+                                <i class="fa fa-city"></i>
                                 Cities/Regions
+                            </a>
+                        @endcan
+
+                        @can('district-read')
+                            <a class="list-group-item" href="{{route('districts.index')}}">
+                                <i class="fa fa-building"></i>
+                                Districts
+                            </a>
+                        @endcan
+
+                        @can('ward-read')
+                            <a class="list-group-item" href="{{route('wards.index')}}">
+                                <i class="fa fa-street-view"></i>
+                                Wards
                             </a>
                         @endcan
 
