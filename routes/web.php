@@ -93,6 +93,12 @@ Route::prefix('location/')->namespace('Admin')->group (function () {
 
     Route::post('wards/import', 'WardController@import')->name('wards.import');
     Route::resource('wards', 'WardController')->except('create','show');
+
+    Route::post('streets/import', 'StreetController@import')->name('streets.import');
+    Route::resource('streets', 'StreetController')->except('create','show');
+
+    Route::post('venues/import', 'VenueController@import')->name('venues.import');
+    Route::resource('venues', 'VenueController')->except('show');
 });
 
 
