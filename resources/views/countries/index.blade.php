@@ -23,7 +23,7 @@
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-primary">
+                    <thead class="text-uppercase text-center bg-blue">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
