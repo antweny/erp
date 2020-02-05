@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Admin;
 use App\Employee;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\Department;

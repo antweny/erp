@@ -46,18 +46,26 @@ Route::namespace('Admin')->group (function () {
 
 
 
-    /*
-     * Store Management
-     */
-    Route::get('/store/manage','StoreController')->name('store.manage');
-    Route::resource('items','ItemController')->except('create','show');
-    Route::resource('itemUnits','ItemUnitController')->except('create','show');
-    Route::resource('itemReceived','ItemReceivedController')->except('show');
-    Route::resource('itemIssued','ItemIssuedController')->except('show');
+
+
     //Route::resource('itemRequest','ItemRequestController')->except('show');
 
 
 });
+
+/*
+ * Store Management
+ */
+Route::prefix('store/')->namespace('Admin')->group (function () {
+    Route::get('/manage','StoreController')->name('store.manage');
+    Route::resource('itemCategories','ItemCategoryController')->except('create','show');
+    Route::resource('items','ItemController')->except('create','show');
+    Route::resource('itemUnits','ItemUnitController')->except('create','show');
+    Route::resource('itemReceived','ItemReceivedController')->except('show');
+    Route::resource('itemIssued','ItemIssuedController')->except('show');
+
+});
+
 
 /*
  * Human Resource Management
@@ -104,6 +112,6 @@ Route::prefix('location/')->namespace('Admin')->group (function () {
 
 
 
-Route::resource('itemCategories','ItemCategoryController')->except('create','show');
+
 
 
