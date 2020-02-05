@@ -43,15 +43,8 @@ Route::namespace('Admin')->group (function () {
     Route::resource('permissions', 'PermissionController')->except('create','show');
     Route::resource('roles', 'RoleController')->except('create','show');
     Route::resource('activityLogs', 'ActivityLogController')->except('create','show','edit','update');
-
-
-
-
-
-    //Route::resource('itemRequest','ItemRequestController')->except('show');
-
-
 });
+
 
 /*
  * Store Management
@@ -72,8 +65,8 @@ Route::prefix('store/')->namespace('Admin')->group (function () {
  */
 Route::prefix('hr/')->namespace('Admin')->group (function () {
     Route::get('/dashboard', function () {
-        return redirect()->route('departments.index');
-    })->name('hr.dashboard');
+            return redirect()->route('departments.index');
+        })->name('hr.dashboard');
 
     Route::resource('departments','DepartmentController')->except('create','show');
 
@@ -108,6 +101,21 @@ Route::prefix('location/')->namespace('Admin')->group (function () {
     Route::post('venues/import', 'VenueController@import')->name('venues.import');
     Route::resource('venues', 'VenueController')->except('show');
 });
+
+
+/*
+ * Organization Management
+ */
+Route::prefix('organization/')->namespace('Admin')->group (function () {
+    Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
+    //Route::post('import', 'OrganizationController@import')->name('organizations.import');
+});
+Route::namespace('Admin')->group (function () {
+    //Route::post('import', 'OrganizationController@import')->name('organizations.import');
+    Route::resource('organizations', 'OrganizationController');
+});
+
+
 
 
 
