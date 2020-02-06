@@ -8,7 +8,6 @@ use App\District;
 use App\Http\Requests\DistrictRequest;
 use App\Http\Requests\ImportRequest;
 use App\Imports\DistrictImport;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DistrictController extends Controller
@@ -86,7 +85,7 @@ class DistrictController extends Controller
 
         if ($request->file('imported_file')) {
             Excel::import(new DistrictImport(), request()->file('imported_file'));
-            return back()->with('success','Country imported successfully!');
+            return back()->with('success','District imported successfully!');
         }
     }
 }

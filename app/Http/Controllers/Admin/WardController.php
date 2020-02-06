@@ -8,7 +8,6 @@ use App\Http\Requests\ImportRequest;
 use App\Http\Requests\WardRequest;
 use App\Imports\WardImport;
 use App\Ward;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class WardController extends Controller

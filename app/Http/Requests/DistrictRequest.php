@@ -34,7 +34,7 @@ class DistrictRequest extends FormRequest
             case 'POST': {
                 return [
                     'name' => 'required|string|max:255|unique:districts,name',
-                    'city_id' => 'integer|nullable',
+                    'city_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }
@@ -43,7 +43,7 @@ class DistrictRequest extends FormRequest
             case 'PATCH': {
                 return [
                     'name' => 'required|string|max:255|unique:districts,id,'.$this->district->id,
-                    'city_id' => 'integer|nullable',
+                    'city_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }

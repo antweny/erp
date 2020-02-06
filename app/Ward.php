@@ -53,7 +53,6 @@ class Ward extends BaseModel
     /* -------------------
       *   Other Functions
       * -------------------*/
-
     /*
      * Get Name and ID
      */
