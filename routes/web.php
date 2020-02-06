@@ -110,10 +110,22 @@ Route::prefix('organization/')->namespace('Admin')->group (function () {
     Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
     //Route::post('import', 'OrganizationController@import')->name('organizations.import');
 });
+
+
 Route::namespace('Admin')->group (function () {
     Route::post('import', 'OrganizationController@import')->name('organizations.import');
     Route::resource('organizations', 'OrganizationController');
 });
+
+
+Route::prefix('individual/')->namespace('Admin')->group (function () {
+    Route::resource('educationLevels', 'EducationLevelController')->except('create','show');
+});
+
+
+
+
+
 
 
 
