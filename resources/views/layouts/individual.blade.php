@@ -15,6 +15,12 @@
                             </a>
                         @endcan
 
+                        @can('individual-read')
+                            <a class="list-group-item" href="{{route('individuals.index')}}">
+                                <i class="fa fa-users"></i>
+                                Individual
+                            </a>
+                        @endcan
                     </ul>
                 </div>
             </div>

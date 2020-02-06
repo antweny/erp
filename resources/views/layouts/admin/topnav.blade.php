@@ -47,7 +47,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('educationLevels.index')}}">
+                <a class="nav-link" href="{{route('individuals.index')}}">
                     <i class="fa fa-users"></i>
                     Individual
                 </a>
