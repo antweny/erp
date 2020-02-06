@@ -16,25 +16,30 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading, SkipsOnFailure
 {
+
+
     /**
      * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
-        return new Organization([
+        $organization = new Organization();
+
+        $organization->create([
             'name' => $row['name'],
             'founded' => $row['founded'],
             'registered' => $row['registered'],
-            'location' => $row['location'],
-            'mobile1' => $row['mobile1'],
-            'mobile2' => $row['mobile2'],
+            'mobile' => $row['mobile'],
+            'phone' => $row['phone'],
             'email' => $row['email'],
+            'contact_person' => $row['contact_person'],
+            'address' => $row['address'],
             'district_id' => $this->check_district($row['district']),
             'city_id' => $this->check_city($row['city']),
         ]);
+
     }
+
 
     public function rules(): array
     {
@@ -53,20 +58,25 @@ class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, Wit
         ];
     }
 
+
+
     public function batchSize(): int
     {
         return 250;
     }
+
 
     public function chunkSize(): int
     {
         return 250;
     }
 
+
     public function onFailure(Failure ...$failures)
     {
         return null;
     }
+
 
     /*
      * Check if resource exist get ID if not create and get ID
@@ -77,15 +87,20 @@ class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, Wit
         return $name->get_id($request);
 
     }
+
+
     public function check_district($request)
     {
         $name = new District();
         return $name->get_id($request);
     }
+
+
     public function check_ward($request)
     {
         $name = new Ward();
         return $name->get_id($request);
-
     }
+
+
 }
