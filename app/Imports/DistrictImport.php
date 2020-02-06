@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\City;
-use App\Country;
+use App\District;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Validators\Failure;
@@ -13,26 +13,29 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Ramsey\Uuid\Uuid;
 
-class CityImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading, SkipsOnFailure
+class DistrictImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading, SkipsOnFailure
 {
     /**
      * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
-        $city = new City();
-        $city->create([
+        $district = new District();
+
+        $district->create([
             'id' => Uuid::uuid4(),
             'name'     => $row['name'],
-            'country_id' => $this->check_country($row['country'])
+            'city_id' => $this->check($row['region'])
         ]);
     }
 
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:cities,name',
-            'country_id' => 'integer|nullable',
+            'name' => 'required|string|max:255|unique:districts,name',
+            'city_id' => 'nullable',
         ];
     }
 
@@ -54,11 +57,10 @@ class CityImport implements ToModel, WithValidation, WithHeadingRow, WithBatchIn
     /*
      * Check if resource exist get ID if not create and get ID
      */
-    public function check_country($request)
+    public function check($request)
     {
-        $name = new Country();
+        $name = new City();
         return $name->get_id($request);
     }
-
 
 }

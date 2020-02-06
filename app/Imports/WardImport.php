@@ -11,17 +11,19 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Ramsey\Uuid\Uuid;
 
 class WardImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading, SkipsOnFailure
 {
     /**
      * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
-        return new Ward([
+        $ward = new Ward();
+
+        $ward->create([
+            'id' => Uuid::uuid4(),
             'name'     => $row['name'],
             'district_id' => $this->check($row['district'])
         ]);
@@ -31,7 +33,7 @@ class WardImport implements ToModel, WithValidation, WithHeadingRow, WithBatchIn
     {
         return [
             'name' => 'required|string|max:255|unique:wards,name',
-            'district_id' => 'integer|nullable',
+            'district_id' => 'nullable',
         ];
     }
 
@@ -55,7 +57,8 @@ class WardImport implements ToModel, WithValidation, WithHeadingRow, WithBatchIn
      */
     public function check($request)
     {
-        $name = new District();
+        $name = new Ward();
+
         return $name->get_id($request);
     }
 
