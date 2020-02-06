@@ -42,4 +42,25 @@ class EducationLevel extends BaseModel
     {
         return $this->hasMany(Individual::class);
     }
+
+
+
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $eduLevel = EducationLevel::select('id','name')->get();
+
+        return $eduLevel;
+    }
+
+
+
+
+
 }
