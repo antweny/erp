@@ -53,6 +53,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('titles.index')}}">
+                    <i class="fa fa-heading"></i>
+                    Titles
+                </a>
+            </li>
+
 
         </ul>
 

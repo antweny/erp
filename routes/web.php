@@ -131,6 +131,14 @@ Route::namespace('Admin')->group (function () {
 });
 
 
+/*
+ * Key Databases
+ */
+Route::namespace('Admin')->group (function () {
+    Route::resource('titles', 'TitleController')->except('create','show');
+});
+
+
 
 
 
