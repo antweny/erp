@@ -15,6 +15,13 @@
                             </a>
                         @endcan
 
+                        @can('event-read')
+                            <a class="list-group-item" href="{{route('events.index')}}">
+                                <i class="fa fa-calendar"></i>
+                                Events
+                            </a>
+                        @endcan
+
                     </ul>
                 </div>
             </div>

@@ -46,4 +46,17 @@ class Venue extends BaseModel
     {
         return $this->belongsTo(District::class)->withDefault();
     }
+
+
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $data = Venue::select('id','name')->get();
+        return $data;
+    }
 }

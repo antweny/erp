@@ -142,6 +142,7 @@ Route::namespace('Admin')->group (function () {
  */
 Route::namespace('Admin')->group (function () {
     Route::resource('eventCategories', 'EventCategoryController')->except('create','show');
+    Route::resource('events', 'EventController');
 });
 
 
