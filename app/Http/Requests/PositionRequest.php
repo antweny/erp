@@ -33,11 +33,12 @@ class PositionRequest extends FormRequest
             case 'POST': {
                 return [
                     'individual_id' => 'required',
-                    'organization' => 'required|string|max:255',
+                    'organization_id' => 'required',
                     'city' => 'nullable|string|max:255',
+                    'title' => 'nullable|string|max:255',
                     'district'=>'nullable|string|max:255',
                     'ward'=>'nullable|string|max:255',
-                    'start_date' => 'required|date',
+                    'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date|after_or_equal:start_date',
                     'desc'=>'string|nullable',
                 ];
@@ -47,8 +48,9 @@ class PositionRequest extends FormRequest
             case 'PATCH': {
                 return [
                     'individual_id' => 'required',
-                    'organization' => 'required|string|max:255',
+                    'organization_id' => 'required',
                     'city' => 'nullable|string|max:255',
+                    'title' => 'nullable|string|max:255',
                     'district'=>'nullable|string|max:255',
                     'ward'=>'nullable|string|max:255',
                     'start_date' => 'required|date',

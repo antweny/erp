@@ -48,4 +48,18 @@ class Title extends BaseModel
     }
 
 
+
+    /* -------------------
+      *   Other Functions
+      * -------------------*/
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $data = Title::select('id','name')->get();
+        return $data;
+    }
+
+
 }

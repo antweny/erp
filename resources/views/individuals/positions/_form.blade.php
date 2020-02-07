@@ -1,7 +1,7 @@
 @csrf
 <div class="form-group row">
     <div class="col-md-6">
-        <label class="col-form-label">Individual Name<span class="star">*</span> </label>
+        <label class="col-form-label">Individual Name <span class="star">*</span> </label>
         <select name="individual_id" class="form-control @error('individual_id') is-invalid @enderror single-select" required>
             <option value="">Select Name....</option>
             @foreach($individuals as $individual)
@@ -9,6 +9,16 @@
             @endforeach
         </select>
         @error('individual_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+    </div>
+    <div class="col-md-6">
+        <label  class="col-form-label">Position Title <span class="star">*</span></label>
+        <input list="cities" type="text" name="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }} " value="{{old('title',$position->title->name)}}" placeholder="Ex. IT Manager, Member" required />
+        <datalist id="cities">
+            @foreach($titles as $title)
+                <option value="{{$title->name}}"/>
+            @endforeach
+        </datalist>
+        @if ($errors->has('title'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('title') }}</strong></span>@endif
     </div>
 
 </div>
@@ -67,7 +77,7 @@
 <div class="form-group row">
     <div class="col-md-6">
         <label class="col-form-label">From date</label>
-        <input type="text" id="start_date" name="start_date" value="{{old('start_date',mysql_to_date($position->start_date))}}" class="form-control" >
+        <input type="text" id="start_date" name="start_date" value="{{old('start_date',mysql_to_date($position->start_date))}}" class="form-control @error('start_date') is-invalid @enderror" >
         @error('start_date')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
     <div class="col-md-6">

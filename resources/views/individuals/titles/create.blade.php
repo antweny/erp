@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.individual')
 
 @section('title','New title')
 
@@ -20,7 +20,7 @@
                     </div>
                     @include('alerts._flash')
                     <form method="POST" action="{{route('titles.store')}}" class="form">
-                        @include('titles._form',['buttonText'=>'save new'])
+                        @include('individuals.titles._form',['buttonText'=>'save new'])
                     </form>
                 </div>
             </div>

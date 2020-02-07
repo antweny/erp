@@ -1,4 +1,4 @@
-@extends('layouts.title')
+@extends('layouts.individual')
 @section('title','Edit title')
 
 @section('content')
@@ -21,7 +21,7 @@
                     </div>
                     @include('alerts._flash')
                     {{ Form::model($title, array('route' => array('titles.update', $title), 'method' => 'PUT','autocomplete' => 'off')) }}
-                        @include('titles._form',['buttonText'=>'update'])
+                        @include('individuals.titles._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>

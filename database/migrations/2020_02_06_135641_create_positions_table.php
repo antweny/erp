@@ -32,7 +32,7 @@ class CreatePositionsTable extends Migration
             $table->uuid('organization_id');
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
 
             $table->date('end_date')->nullable();
 

@@ -19,7 +19,7 @@ class TitleController extends Controller
 
         $titles = $title->latest()->get();
 
-        return view('titles.index',compact('titles'));
+        return view('individuals.titles.index',compact('titles'));
     }
 
     /**
@@ -41,7 +41,7 @@ class TitleController extends Controller
     {
         $this->authorize('update',$title);
 
-        return view('titles.edit',compact('title'));
+        return view('individuals.titles.edit',compact('title'));
     }
 
     /**

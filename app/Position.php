@@ -8,7 +8,7 @@ class Position extends BaseModel
     /* -----------------------------------------
     * The attributes that are mass assignable.
     * -----------------------------------------*/
-    protected $fillable = ['organization_id','individual_id','start_date','end_date','desc','city_id','district_id','ward_id'];
+    protected $fillable = ['organization_id','individual_id','title_id','start_date','end_date','desc','city_id','district_id','ward_id'];
 
 
     /* ------------------------------------------
@@ -42,6 +42,10 @@ class Position extends BaseModel
     public function ward()
     {
         return $this->belongsTo(Ward::class)->withDefault();
+    }
+    public function title()
+    {
+        return $this->belongsTo(Title::class)->withDefault();
     }
 
 

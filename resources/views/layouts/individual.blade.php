@@ -22,12 +22,21 @@
                             </a>
                         @endcan
 
+                        @can('title-read')
+                            <a class="list-group-item" href="{{route('titles.index')}}">
+                                <i class="fa fa-heading"></i>
+                                Position Titles
+                            </a>
+                        @endcan
+
                         @can('position-read')
                             <a class="list-group-item" href="{{route('positions.index')}}">
                                 <i class="fa fa-briefcase"></i>
                                 Positions
                             </a>
                         @endcan
+
+
                     </ul>
                 </div>
             </div>

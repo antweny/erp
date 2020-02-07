@@ -22,10 +22,9 @@
                     <thead class="text-uppercase text-center bg-blue">
                     <tr class="text-white">
                         <th scope="col">Fullname</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Organization</th>
                         <th scope="col">City</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">End Date</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -33,10 +32,9 @@
                     @foreach ($positions as $position)
                         <tr>
                             <td class="text-left">{{ $position->individual->full_name }}</td>
+                            <td class="text-left">{{ $position->title->name }}</td>
                             <td class="text-center">{{ $position->organization->name }}</td>
                             <td class="text-center">{{ $position->city->name }}</td>
-                            <td class="text-center">{{$position->start_date}}</td>
-                            <td class="text-center">{{$position->end_date}}</td>
                             <td class="text-center">
                                 <div class="btn btn-group">
                                     @can('position-update')

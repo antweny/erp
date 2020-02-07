@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Individual;
 use App\Organization;
 use App\Position;
+use App\Title;
 use App\Ward;
 use App\Http\Requests\PositionRequest;
 
@@ -20,7 +21,7 @@ class PositionController extends Controller
     {
         $this->authorize('read',$position);
 
-        $positions = $position->get();
+        $positions = $position->with(['organization','title','city','district','individual'])->get();
 
         return view('individuals.positions.index',compact('positions'));
     }
@@ -37,11 +38,10 @@ class PositionController extends Controller
         $districts = District::get_name_and_id();
         $wards = Ward::get_name_and_id();
         $organizations = Organization::get_name_and_id();
-
         $individuals = Individual::get_name_and_id();
-        //$titles = Title::select('name')->get();
+        $titles = Title::get_name_and_id();
 
-        return view('individuals.positions.create',compact('position','cities','districts','wards','individuals','organizations'));
+        return view('individuals.positions.create',compact('position','cities','districts','wards','individuals','organizations','titles'));
     }
 
 
@@ -55,10 +55,9 @@ class PositionController extends Controller
         $request['city_id'] = $this->check_city($request['city']);
         $request['district_id'] = $this->check_district($request['district']);
         $request['ward_id'] = $this->check_ward($request['ward']);
-        //$request['title_id'] = $this->check_title($request['title']);
-        $request['organization_id'] = $this->check_organization($request['organization']);
+        $request['title_id'] = $this->check_title($request['title']);
 
-        $position->create($request->except('city','organization'));
+        $position->create($request->except('city','organization','title'));
 
         return back()->with('success','Individual Position has been added');
     }
@@ -74,10 +73,10 @@ class PositionController extends Controller
         $districts = District::get_name_and_id();
         $wards = Ward::get_name_and_id();
         $organizations = Organization::get_name_and_id();
-
+        $titles = Title::get_name_and_id();
         $individuals = Individual::get_name_and_id();
 
-        return view('individuals.positions.edit',compact('position','cities','districts','wards','individuals','organizations'));
+        return view('individuals.positions.edit',compact('position','cities','districts','wards','individuals','organizations','titles'));
 
     }
 
@@ -91,8 +90,7 @@ class PositionController extends Controller
         $request['city_id'] = $this->check_city($request['city']);
         $request['district_id'] = $this->check_district($request['district']);
         $request['ward_id'] = $this->check_ward($request['ward']);
-        //$request['title_id'] = $this->check_title($request['title']);
-        $request['organization_id'] = $this->check_organization($request['organization']);
+        $request['title_id'] = $this->check_title($request['title']);
 
         $position->update($request->except('city','organization'));
 
@@ -137,9 +135,9 @@ class PositionController extends Controller
         return $name->get_id($request);
     }
 
-    public function check_organization($request)
+    public function check_title($request)
     {
-        $name = new Organization();
+        $name = new Title();
         return $name->get_id($request);
     }
 
