@@ -119,6 +119,19 @@ html , body{
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+.select2-container--default .select2-selection--single{
+    padding:0px;
+    height: 35px;
+    font-size: 1.2em;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #ced4da;
+    border-radius: 0px 5px 5px 0px;
+}
 
 
 
