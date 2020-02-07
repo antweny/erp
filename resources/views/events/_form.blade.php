@@ -49,7 +49,7 @@
         <select name="organization_id[]" class="form-control @error('organization_id') is-invalid @enderror multiple-select-id" multiple="multiple" required >
             <option value="">Select Organiser</option>
             @foreach($organizations as $organization)
-                <option value="{{$organization->id}}" {{old('organization_id',array_pluck($event->organization, 'id')) == $organization->id ? 'selected' : ''}}>{{$organization->organization_name}}</option>
+                <option value="{{$organization->id}}" {{old('organization_id',$event->organization_id) == $organization->id ? 'selected' : ''}}>{{$organization->organization_name}}</option>
             @endforeach
         </select>
         @error('organization_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
@@ -62,7 +62,7 @@
         <select name="individual_id[]" class="form-control @error('individual_id') is-invalid @enderror multiple-select-id" required multiple="multiple">
             <option value="">Select Facilitator(s)</option>
             @foreach($individuals as $individual)
-                <option value="{{$individual->id}}" {{old('individual_id',array_pluck($event->individual)) }}>{{$individual->full_name}}</option>
+                <option value="{{$individual->id}}" {{old('individual_id',$event->individual_id) }}>{{$individual->full_name}}</option>
             @endforeach
         </select>
         @error('individual_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror

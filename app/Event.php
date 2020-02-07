@@ -103,7 +103,7 @@ class Event extends BaseModel
     //Event can be Organized by many organization
     public function organization()
     {
-        return $this->belongsToMany(Organization::class,'organisers');
+        return $this->belongsToMany(Organization::class,'organizers');
     }
 
     //Event has many facilitators
