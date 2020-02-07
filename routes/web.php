@@ -107,9 +107,12 @@ Route::prefix('location/')->namespace('Admin')->group (function () {
  * Organization Management
  */
 Route::prefix('organization/')->namespace('Admin')->group (function () {
-    Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
     //Route::post('import', 'OrganizationController@import')->name('organizations.import');
+    Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
+    Route::resource('sectors', 'SectorController')->except('create','show');
+    Route::resource('sector/fields', 'FieldController')->except('create','show');
 });
+
 Route::namespace('Admin')->group (function () {
     Route::post('import', 'OrganizationController@import')->name('organizations.import');
     Route::resource('organizations', 'OrganizationController');

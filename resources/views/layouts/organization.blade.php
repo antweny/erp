@@ -22,6 +22,20 @@
                             </a>
                         @endcan
 
+                        @can('sector-read')
+                            <a class="list-group-item" href="{{route('sectors.index')}}">
+                                <i class="fa fa-industry"></i>
+                                Sectors
+                            </a>
+                        @endcan
+
+                        @can('field-read')
+                            <a class="list-group-item" href="{{route('fields.index')}}">
+                                <i class="fa fa-bars"></i>
+                                Sector Fields
+                            </a>
+                        @endcan
+
                     </ul>
                 </div>
             </div>
