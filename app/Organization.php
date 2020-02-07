@@ -97,6 +97,22 @@ class Organization extends BaseModel
     }
 
 
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $organization = Organization::select('id','name','acronym')->get();
+
+        return $organization;
+    }
+
+
+
 
 
 }

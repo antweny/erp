@@ -26,6 +26,19 @@ class BaseModel extends Model
     protected static $logOnlyDirty = true;
 
 
+    /* ------------------
+   *  Mutator functions
+   * ------------------*/
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = date_to_mysql($value);
+    }
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = date_to_mysql($value);
+    }
+
+
 
     /* -------------------
      *   Other Functions

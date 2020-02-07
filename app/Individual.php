@@ -76,4 +76,18 @@ class Individual extends BaseModel
     {
         return $this->belongsTo(EducationLevel::class)->withDefault();
     }
+
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $individual = Individual::select('id','full_name')->get();
+
+        return $individual;
+    }
 }
