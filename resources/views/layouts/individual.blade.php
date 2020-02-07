@@ -21,6 +21,13 @@
                                 Individual
                             </a>
                         @endcan
+
+                        @can('position-read')
+                            <a class="list-group-item" href="{{route('positions.index')}}">
+                                <i class="fa fa-briefcase"></i>
+                                Positions
+                            </a>
+                        @endcan
                     </ul>
                 </div>
             </div>

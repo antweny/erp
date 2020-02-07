@@ -122,6 +122,7 @@ Route::namespace('Admin')->group (function () {
  */
 Route::prefix('individual/')->namespace('Admin')->group (function () {
     Route::resource('educationLevels', 'EducationLevelController')->except('create','show');
+    Route::resource('positions', 'PositionController')->except('show');
 });
 
 Route::namespace('Admin')->group (function () {
