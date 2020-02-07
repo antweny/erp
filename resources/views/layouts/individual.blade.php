@@ -36,6 +36,12 @@
                             </a>
                         @endcan
 
+                        @can('group-read')
+                            <a class="list-group-item" href="{{route('groups.index')}}">
+                                <i class="fa fa-user-tag"></i>
+                                Groups
+                            </a>
+                        @endcan
 
                     </ul>
                 </div>

@@ -25,7 +25,7 @@
                 <!-- Organization and associated details management -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('hr.dashboard')}}">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-users-cog"></i>
                         HR Management
                     </a>
                 </li>
@@ -53,12 +53,6 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('titles.index')}}">
-                    <i class="fa fa-heading"></i>
-                    Titles
-                </a>
-            </li>
 
 
         </ul>
