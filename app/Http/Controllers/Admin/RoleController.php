@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     function __construct()
     {
-        $this->middleware(['role:superAdmin']);
+        $this->middleware(['auth:admin','role:superAdmin']);
     }
 
     /**
