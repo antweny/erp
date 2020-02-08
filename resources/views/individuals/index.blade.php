@@ -47,7 +47,7 @@
                                 <td class="text-left">{{$individual->occupation}}</td>
                                 <td class="text-center">{{$individual->education_level->name}}</td>
                                 <td class="text-center">{{$individual->mobile}}</td>
-                                <td class="text-center">
+                                <td class="text-center p-0">
                                     <div class="btn btn-group">
                                         
                                             <a class="btn btn-secondary btn-sm mr-2" href="{{route('individuals.show',$individual)}}" title="View">

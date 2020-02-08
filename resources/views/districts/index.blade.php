@@ -42,11 +42,11 @@
                                 <td class="text-center">{{$district->slug}}</td>
                                 <td class="text-center">{{$district->city->name}}</td>
                                 <td class="text-left">{{$district->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
 
                                         @can('district-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('districts.edit',$district)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('districts.edit',$district)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endcan
 
                                         @can('district-delete')

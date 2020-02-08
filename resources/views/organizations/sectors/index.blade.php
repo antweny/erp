@@ -36,8 +36,8 @@
                                 <td class="text-left">{{$sector->name}}</td>
                                 <td class="text-center">{{$sector->slug}}</td>
                                 <td class="text-left">{{$sector->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
 
                                         @can('sector-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('sectors.edit',$sector)}}" title="Edit"><i class="fa fa-edit"></i></a>

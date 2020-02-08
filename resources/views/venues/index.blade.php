@@ -48,8 +48,8 @@
                                 <td class="text-center">{{$venue->capacity}}</td>
                                 <td class="text-center">{{$venue->contact_person}}</td>
                                 <td class="text-center">{{$venue->contact_person_number}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
 
                                         @can('venue-update')
                                             <a class="btn btn-primary btn-sm mr-3" href="{{route('venues.edit',$venue)}}" title="Edit"><i class="fa fa-edit"></i></a>

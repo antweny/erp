@@ -40,8 +40,8 @@
                                 <td class="text-left">{{$group->name}}</td>
                                 <td class="text-center">{{$group->slug}}</td>
                                 <td class="text-left">{{$group->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
                                         @can('group-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('groups.edit',$group)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endcan

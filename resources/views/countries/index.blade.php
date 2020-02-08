@@ -38,11 +38,11 @@
                                 <td class="text-left">{{$country->name}}</td>
                                 <td class="text-center">{{$country->slug}}</td>
                                 <td class="text-left">{{$country->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
 
                                         @can('country-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('countries.edit',$country)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('countries.edit',$country)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endcan
 
                                         @can('country-delete')

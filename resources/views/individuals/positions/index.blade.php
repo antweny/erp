@@ -35,7 +35,7 @@
                             <td class="text-left">{{ $position->title->name }}</td>
                             <td class="text-center">{{ $position->organization->name }}</td>
                             <td class="text-center">{{ $position->city->name }}</td>
-                            <td class="text-center">
+                            <td class="text-center p-0">
                                 <div class="btn btn-group">
                                     @can('position-update')
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('positions.edit',$position)}}" title="Edit">

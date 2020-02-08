@@ -42,11 +42,11 @@
                                 <td class="text-center">{{$street->slug}}</td>
                                 <td class="text-center">{{$street->ward->name}}</td>
                                 <td class="text-left">{{$street->desc}}</td>
-                                <td class="text-center ">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class=" btn btn-group">
 
                                         @can('street-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('streets.edit',$street)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('streets.edit',$street)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endcan
 
                                         @can('street-delete')

@@ -49,8 +49,8 @@
                                 <td class="text-center">{{$organization->contact_person}}</td>
                                 <td class="text-center">{{$organization->contact_person_number}}</td>
 
-                                <th class="text-center" >
-                                    <div class="btn-group">
+                                <th class="text-center p-0" >
+                                    <div class=" btn btn-group">
                                             <a class="btn btn-info text-white btn-sm mr-2" href="{{route('organizations.show',$organization)}}" title="View"><i class="fa fa-info-circle"></i></a>
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('organizations.edit',$organization)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                             <form class="form-delete" method="post" action="{{route('organizations.destroy',$organization)}}">

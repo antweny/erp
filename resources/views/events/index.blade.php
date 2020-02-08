@@ -40,7 +40,7 @@
                             <td class="text-center">{{  get_day_month_and_year($event->end_date) }}</td>
                             <td class="text-center">{!! $event->event_status !!}</td>
                             <td class="text-center"><a href="#" title="View Participants"></a></td>
-                            <td class="text-center">
+                            <td class="text-center p-0">
 
                                 <div class="btn btn-group">
                                     @can('participant-create')

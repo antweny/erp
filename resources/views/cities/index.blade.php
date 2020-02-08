@@ -40,11 +40,11 @@
                                 <td>{{$city->slug}}</td>
                                 <td class="text-center">{{$city->country->name}}</td>
                                 <td class="text-left">{{$city->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                                <td class="text-center p-0">
+                                    <div class="btn btn-group">
 
                                         @can('city-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('cities.edit',$city)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endcan
 
                                         @can('city-delete')
