@@ -41,6 +41,7 @@
                             <td class="text-center">{!! $event->event_status !!}</td>
                             <td class="text-center"><a href="#" title="View Participants"></a></td>
                             <td class="text-center">
+
                                 <div class="btn btn-group">
                                     @can('participant-create')
                                         <a class="btn btn-success btn-sm mr-2 " href="{{route('event.participants.create',$event)}}" title="Add Participant">
