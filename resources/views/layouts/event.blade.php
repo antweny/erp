@@ -22,6 +22,13 @@
                             </a>
                         @endcan
 
+                        @can('genderSeries-read')
+                            <a class="list-group-item" href="{{route('genderSeries.index')}}">
+                                <i class="fa fa-street-view"></i>
+                                Gender Series (GDSS)
+                            </a>
+                        @endcan
+
                     </ul>
                 </div>
             </div>
