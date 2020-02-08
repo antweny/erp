@@ -29,6 +29,13 @@
                             </a>
                         @endcan
 
+                        @can('participantRole-read')
+                            <a class="list-group-item" href="{{route('participantRoles.index')}}">
+                                <i class="fa fa-user-circle"></i>
+                                Participant Roles
+                            </a>
+                        @endcan
+
                     </ul>
                 </div>
             </div>
