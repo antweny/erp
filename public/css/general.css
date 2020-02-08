@@ -20,15 +20,21 @@ html , body{
 /* Cards */
 .card {
     border-radius: 0;
-    background: #fff;
+    background: transparent;
     padding: 0;
+    border: 0;
 }
 .ca { min-height: 500px;}
-.card-header {
-    background: #fff;
-    font-size: 1.4rem;
-}
 
+.card-header {
+    background: transparent;
+    color: #fff;
+    font: 26px/26px "OpenSans-Light",Helvetica,Arial,sans-serif;
+    padding: 0 0 10px 0;
+}
+.card-body {
+    background: #fff;
+}
 
 /* ====================
     Buttons Section Style
@@ -229,8 +235,11 @@ a.logo span { color: #688a7e; }
 /* ====================
     Inside Menu
    ====================*/
+.inside-menu{
+}
 .inside-menu .card-body {
     padding: 0;
+
 }
 .inside-menu .list-group {
     padding: 0;
