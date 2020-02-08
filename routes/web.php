@@ -147,6 +147,10 @@ Route::namespace('Admin')->group (function () {
 Route::prefix('event/')->namespace('Admin')->group (function () {
     //Route::get('GDSS/participants/create/{gender}','GenderSeriesController@participant_create')->name('gender.participants.create');
     Route::resource('genderSeries', 'GenderSeriesController');
+
+    Route::resource('participantRoles', 'ParticipantRoleController')->except('create','show');
+
+    Route::resource('genderSeriesParticipants', 'GenderSeriesParticipantController');
 });
 
 

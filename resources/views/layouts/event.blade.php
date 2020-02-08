@@ -36,6 +36,13 @@
                             </a>
                         @endcan
 
+                            @can('genderSeriesParticipant-read')
+                                <a class="list-group-item" href="{{route('genderSeriesParticipants.index')}}">
+                                    <i class="fa fa-user-circle"></i>
+                                    Gender Series Participants
+                                </a>
+                            @endcan
+
                     </ul>
                 </div>
             </div>
