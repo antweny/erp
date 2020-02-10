@@ -55,26 +55,20 @@ class GenderSeriesParticipantController extends Controller
 
         $request['ward_id'] = $this->check_ward($request['ward']);
 
-        // assume it won't work
-        $success = false;
-
         DB::beginTransaction();
 
         try {
-            if ($this->check_unique_individual_and_gender_series($request) < 0) {
-                $genderSeriesParticipant->create($request->only('individual_id','organization_id','ward_id','gender_series_id'));
-                $success = true;
-            }
-        }
-        catch (\Exception $e) {
-            return $e->getMessage();
-        }
-        if ($success) {
+            //Check if user has already assigned to the particual topic
+            $this->check_unique_individual_and_gender_series($request) ;
+            //Store data
+            $genderSeriesParticipant->create($request->only('individual_id','organization_id','ward_id','gender_series_id'));
+
             DB::commit();
             return back()->with('success','Participants has been added');
-        } else {
+        }
+        catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error','This User already added')->withInput($request->input());
+            return back()->with('error','This User already attended this event')->withInput($request->input());
         }
 
     }
@@ -107,34 +101,14 @@ class GenderSeriesParticipantController extends Controller
 
         $request['ward_id'] = $this->check_ward($request['ward']);
 
-        $success = false;
+        $genderSeriesParticipant->update($request->only('individual_id','organization_id','ward_id','gender_series_id'));
 
-        DB::beginTransaction();
-
-        try {
-            if ($this->check_unique_individual_and_gender_series($request) < 0) {
-                $genderSeriesParticipant->update($request->only('individual_id','organization_id','ward_id','gender_series_id'));
-                $success = true;
-            }
-        }
-        catch (\Exception $e) {
-            return $e->getMessage();
-        }
-        if ($success) {
-            DB::commit();
-            return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants has been updated');
-        } else {
-            DB::rollback();
-            return back()->with('error','This User already added')->withInput($request->input());
-        }
+        return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants has been updated');
 
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\GenderSeriesParticipant  $genderSeriesParticipant
-     * @return \Illuminate\Http\Response
      */
     public function destroy(GenderSeriesParticipant $genderSeriesParticipant)
     {
@@ -156,13 +130,19 @@ class GenderSeriesParticipantController extends Controller
 
         //}
        // else {
-            $query = GenderSeriesParticipant::where('individual_id',$request['individual_id'])
-                ->where('gender_series_id',$request['gender_series_id'])
-                ->count();;
+        $query = GenderSeriesParticipant::where('individual_id',$request['individual_id'])
+            ->where('gender_series_id',$request['gender_series_id'])
+            ->count();;
 
-            return $query;
+        if($query <= 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+        //return $query;
         //}
-
     }
 
     /*
