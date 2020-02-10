@@ -16,7 +16,7 @@ class Controller extends BaseController
      */
     function __construct()
     {
-        $this->middleware(['auth:admin','role:superAdmin']);
+        $this->middleware(['auth:admin']);
     }
 
 }

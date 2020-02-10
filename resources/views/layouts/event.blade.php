@@ -36,12 +36,19 @@
                             </a>
                         @endcan
 
-                            @can('genderSeriesParticipant-read')
-                                <a class="list-group-item" href="{{route('genderSeriesParticipants.index')}}">
-                                    <i class="fa fa-user-circle"></i>
-                                    Gender Series Participants
-                                </a>
-                            @endcan
+                        @can('genderSeriesParticipant-read')
+                            <a class="list-group-item" href="{{route('genderSeriesParticipants.index')}}">
+                                <i class="fa fa-user-circle"></i>
+                                Gender Series Participants
+                            </a>
+                        @endcan
+
+                        @can('participant-read')
+                            <a class="list-group-item" href="{{route('participants.index')}}">
+                                <i class="fa fa-user-circle"></i>
+                                Participants
+                            </a>
+                        @endcan
 
                     </ul>
                 </div>

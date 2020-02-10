@@ -43,11 +43,6 @@
                             <td class="text-center p-0">
 
                                 <div class="btn btn-group">
-                                    @can('participant-create')
-                                        <a class="btn btn-success btn-sm mr-2 " href="{{route('event.participants.create',$event)}}" title="Add Participant">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
-                                    @endcan
 
                                     @can('event-read')
                                         <a class="btn btn-secondary btn-sm mr-2 " href="{{route('events.show',$event)}}" title="View">

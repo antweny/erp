@@ -114,7 +114,17 @@ class Event extends BaseModel
 
 
 
-
+    /* -------------------
+     *   Other Functions
+     * -------------------*/
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $data = Event::select('id','name')->get();
+        return $data;
+    }
 
 
 

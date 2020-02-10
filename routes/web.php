@@ -151,6 +151,8 @@ Route::prefix('event/')->namespace('Admin')->group (function () {
     Route::resource('participantRoles', 'ParticipantRoleController')->except('create','show');
 
     Route::resource('genderSeriesParticipants', 'GenderSeriesParticipantController');
+
+    Route::resource('participants', 'ParticipantController');
 });
 
 

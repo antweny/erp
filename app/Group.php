@@ -32,4 +32,21 @@ class Group extends BaseModel
         $this->attributes['name'] = ucwords($value);
         $this->attributes['slug'] = Str::slug($value,'-');
     }
+
+
+
+
+    /* -------------------
+          *   Other Functions
+          * -------------------*/
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
+    {
+        $data = Group::select('id','name')->get();
+        return $data;
+    }
+
+
 }

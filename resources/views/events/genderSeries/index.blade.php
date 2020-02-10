@@ -38,9 +38,7 @@
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
                                     @can('participant-create')
-                                        <a class="btn btn-success btn-sm mr-2 " href="{{route('gender.participants.create',$gender)}}" title="Add Participant">
-                                            <i class="fa fa-user-plus"></i>
-                                        </a>
+
                                     @endcan
                                     @can('genderSeries-update')
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('genderSeries.edit',$gender)}}" title="Edit">

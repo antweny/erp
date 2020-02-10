@@ -247,10 +247,11 @@ a.logo span { color: #688a7e; }
 .inside-menu  .list-group-item {
     padding: 10px 10px !important;
     width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     color: #2067b0;
     font-family: 'Lato', sans-serif;
     border-bottom: 1px solid #EBEBEB !important;
+
 }
 .inside-menu  .list-group-item:hover {
     text-decoration: none;

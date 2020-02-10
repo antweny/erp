@@ -37,6 +37,10 @@ class BaseModel extends Model
     {
         $this->attributes['end_date'] = date_to_mysql($value);
     }
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = date_to_mysql($value);
+    }
 
 
 
