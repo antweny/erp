@@ -8,6 +8,15 @@ use Illuminate\Support\Carbon;
  */
 
 
+
+/*
+ * Get current logged in user
+ */
+function currentLogged()
+{
+    return auth()->user();
+}
+
 /*
  * Format a datepicker date to mysql format YYYY-mm-dd
  */
@@ -83,3 +92,4 @@ function multiply_two_numbers ($num1, $num2)
 {
     return $num1 * $num2;
 }
+
