@@ -17,7 +17,7 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    {{ Form::model($department, array('route' => array('departments.update', $department), 'method' => 'PUT')) }}
+                    {{ Form::model($department, array('route' => array('departments.update', $department->id), 'method' => 'PUT')) }}
                         @csrf
                         <div class="form-group row">
                             <div class="col-md-8">

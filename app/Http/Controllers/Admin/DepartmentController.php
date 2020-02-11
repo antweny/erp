@@ -19,7 +19,7 @@ class DepartmentController extends Controller
 
         $departments = $department->get()->sortBy('sort');
 
-        return view('departments.index',compact('departments'));
+        return view('hr.departments.index',compact('departments'));
     }
 
     /**
@@ -29,7 +29,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('create',$department);
 
-        $department->create($request->only('name','desc','sort'));
+        $department->create($request->all());
 
         return back()->with('success','Department has been saved!');
     }
@@ -38,34 +38,64 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit($id)
     {
-        $this->authorize('update',$department);
+        $this->authorize('update',$this->model());
+        try {
+            $department = $this->getID($id);
+            return view('hr.departments.edit',compact('department'));
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
 
-        return view('departments.edit',compact('department'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DepartmentRequest $request, Department $department)
+    public function update(DepartmentRequest $request, $id)
     {
-        $this->authorize('update',$department);
-
-        $department->update($request->only('name','sort','desc'));
-
-        return redirect()->route('departments.index')->with('success','Department has been updated!');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('departments.index')->with('success','Department has been updated!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        $this->authorize('delete',$department);
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return redirect()->route('departments.index')->with('success','Department has been updated!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
+    }
 
-        $department->delete();
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Department::findOrFail($id);
+        return $data;
+    }
 
-        return redirect()->route('departments.index')->with('success','Department has been updated!');
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Department::class;
     }
 }

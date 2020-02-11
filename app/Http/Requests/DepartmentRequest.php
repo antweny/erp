@@ -42,7 +42,7 @@ class DepartmentRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:departments,id,'.$this->department->id,
+                    'name' => 'required|string|max:255|unique:departments,id,'.$this->id,
                     'desc' => 'string|nullable',
                     'sort' => 'integer|nullable',
                 ];

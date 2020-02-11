@@ -10,9 +10,9 @@
                         <h4 class="header-title">Departments</h4>
                     </div>
                     <div class="float-right">
-                        @can('department-create')
+                        @if(checkPermission('department-create'))
                             <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Department</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -37,12 +37,12 @@
                                 <td class="text-center">{{$department->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @if(currentLogged()->hasPermissionTo('department-update'))
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('departments.edit',$department)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @if(checkPermission('department-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('departments.edit',$department->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endif
 
-                                        @if(currentLogged()->hasPermissionTo('department-delete'))
-                                            <form class="form-delete" method="post" action="{{route('departments.destroy',$department)}}">
+                                        @if(checkPermission('department-delete'))
+                                            <form class="form-delete" method="post" action="{{route('departments.destroy',$department->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$department->name}} department?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-@can('department-create')
+@if(checkPermission('department-create'))
     <!-- start create new pillar form modal -->
     <div class="modal fade" id="newRecord" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -102,6 +102,6 @@
         </div>
     </div>
     <!-- end create new pillar form modal -->
-@endcan
+@endif
 
 @endsection
