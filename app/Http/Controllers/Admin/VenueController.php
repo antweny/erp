@@ -96,7 +96,6 @@ class VenueController extends Controller
     }
 
 
-
     /*
      * Populate dropdowns values from different tables and return to forms
      */
