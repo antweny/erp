@@ -102,7 +102,7 @@ class CityController extends Controller
      */
     public function model ()
     {
-        return Country::class;
+        return City::class;
     }
 
     /*

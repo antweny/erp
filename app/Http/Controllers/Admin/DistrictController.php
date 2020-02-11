@@ -21,9 +21,9 @@ class DistrictController extends Controller
 
         $districts = $district->orderBy('name','desc')->with('city')->get();
 
-        $cities = City::select('name','id')->get();
+        $cities = City::get_name_and_id(); // Get cities list
 
-        return view('districts.index',compact('districts','cities'));
+        return view('location.districts.index',compact('districts','cities'));
     }
 
 
@@ -43,37 +43,67 @@ class DistrictController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(District $district,City $city)
+    public function edit($id)
     {
-        $this->authorize('update',$district);
+        $this->authorize('update',$this->model());
 
-        $cities = City::select('name','id')->get(); // Get cities list
+        $cities = City::get_name_and_id(); // Get cities list
 
-        return view('districts.edit',compact('district','cities'));
+        try {
+            $district = $this->getID($id);
+            return view('location.districts.edit',compact('district','cities'));
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DistrictRequest $request, District $district)
+    public function update(DistrictRequest $request, $id)
     {
-        $this->authorize('update',$district);
+        $this->authorize('update',$this->model());
 
-        $district->update($request->only('name', 'desc', 'city_id'));
-
-        return redirect()->route('districts.index')->with('success',' District has been updated.');
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('districts.index')->with('success',' District has been updated.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(District $district)
+    public function destroy($id)
     {
-        $this->authorize('delete',$district);
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','District deleted successfully!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
+    }
 
-        $district->delete();
+    /*
+    * Get requested record ID
+    */
+    public function getID($id)
+    {
+        $data = District::findOrFail($id);
+        return $data;
+    }
 
-        return back()->with('success','District deleted successfully!');
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return District::class;
     }
 
     /*

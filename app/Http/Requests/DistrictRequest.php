@@ -42,7 +42,7 @@ class DistrictRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:districts,id,'.$this->district->id,
+                    'name' => 'required|string|max:255|unique:districts,id,'.$this->id,
                     'city_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];

@@ -18,8 +18,8 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($district, array('route' => array('districts.update', $district), 'method' => 'PUT')) }}
-                        @include('districts._form',['buttonText'=>'update'])
+                    {{ Form::model($district, array('route' => array('districts.update', $district->id), 'method' => 'PUT')) }}
+                        @include('location.districts._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>

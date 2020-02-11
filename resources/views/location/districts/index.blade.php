@@ -10,12 +10,12 @@
                         <h4 class="header-title">Districts</h4>
                     </div>
                     <div class="float-right">
-                        @can('district-import')
+                        @if(checkPermission('district-import'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('district-create')
+                        @endif
+                        @if(checkPermission('district-create'))
                             <a class="btn btn-primary" href="#newDistrict" data-toggle="modal"><i class="fa fa-plus"></i> New district</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -45,17 +45,18 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('district-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('districts.edit',$district)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('district-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('districts.edit',$district['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('district-delete')
-                                            <form class="form-delete" method="post" action="{{route('districts.destroy',$district)}}">
+                                        @if(checkPermission('district-delete'))
+                                            <form class="form-delete" method="post" action="{{route('districts.destroy',$district['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
+
                                     </div>
                                 </td>
                             </tr>
@@ -66,7 +67,7 @@
         </div>
     </div>
 
-    @can('district-create')
+    @if(checkPermission('district-create'))
         <!-- start create new city form modal -->
         <div class="modal fade" id="newDistrict" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -77,7 +78,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="POST" action="{{route('districts.store')}}" class="form-horizontal" role="form" id="districtForm" name="districtForm" >
+                    <form method="POST" action="{{route('districts.store')}}" class="form-horizontal" role="form" id="districtForm" name="districtForm" autocomplete="off">
                         @csrf
                         <div class="modal-body">
 
@@ -91,7 +92,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label class="col-form-label">City</label>
-                                    <select class="form-control @error('city_id') is-invalid @enderror" name="city_id">
+                                    <select class="form-control @error('city_id') is-invalid @enderror single-select" style="width: 100%;" name="city_id">
                                         <option value="">Select city...</option>
                                         @foreach($cities as $city)
                                             <option value="{{$city->id}}">{{$city->name}}</option>
@@ -120,9 +121,9 @@
         </div>
         <!-- end create new city form modal -->
 
-    @endcan
+    @endif
 
-    @can('district-import')
+    @if(checkPermission('district-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -153,6 +154,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection
