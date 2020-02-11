@@ -17,9 +17,7 @@ class CountryController extends Controller
     public function index(Country $country)
     {
         $this->authorize('read',$country);
-
         $countries = $country->orderBy('name','asc')->get();
-
         return view('location.countries.index',compact('countries'));
     }
 

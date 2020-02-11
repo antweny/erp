@@ -24,7 +24,7 @@ class CityController extends Controller
 
         $countries = Country::select('name','id')->get(); //Get countries list
 
-        return view('cities.index',compact('countries','cities'));
+        return view('location.cities.index',compact('countries','cities'));
     }
 
     /**
@@ -33,46 +33,76 @@ class CityController extends Controller
     public function store(CityRequest $request, City $city)
     {
         $this->authorize('create',$city);
-
-        $city->create($request->only('name','desc','country_id'));
-
-        return back()->with('success',' City has been saved');
+        try {
+            $city->create($request->only('name','desc','country_id'));
+            return back()->with('success',' City has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(City $city)
+    public function edit($id)
     {
-        $this->authorize('update',$city);
-
+        $this->authorize('update',$this->model());
         $countries = Country::select('name','id')->get(); //Get countires list
-
-        return view('cities.edit',compact('countries','city'));
+        try {
+            $city = $this->getID($id);
+            return view('location.cities.edit',compact('city','countries'));
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CityRequest $request, City $city)
+    public function update(CityRequest $request, $id)
     {
-        $this->authorize('update',$city);
-
-        $city->update($request->only('name','desc','country_id'));
-
-        return redirect()->route('cities.index')->with('success',' City has been updated.');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('cities.index')->with('success',' City has been updated.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(City $city)
+    public function destroy($id)
     {
-        $this->authorize('delete',$city);
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','City has been deleted');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
+    }
 
-        $city->delete();
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = City::findOrFail($id);
+        return $data;
+    }
 
-        return back()->with('success','City has been deleted');
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Country::class;
     }
 
     /*

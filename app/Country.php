@@ -38,17 +38,17 @@ class Country extends BaseModel
     }
 
 
-
-    /* ------------------
+    /* -------------------
      *   Other Functions
-     * ------------------*/
-    //Check if resource exist get ID if not create and get ID
-    public function get_id($data)
+     * -------------------*/
+
+    /*
+     * Get Name and ID
+     */
+    static function get_name_and_id()
     {
-        if ($data != null) {
-            $model = $this->firstOrCreate(['name'=>$data]);
-            return $model->id;
-        }
-        return null;
+        $data = Country::select('id','name')->get();
+        return $data;
     }
+
 }

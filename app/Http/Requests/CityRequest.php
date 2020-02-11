@@ -34,7 +34,7 @@ class CityRequest extends FormRequest
             case 'POST': {
                 return [
                     'name' => 'required|string|max:255|unique:cities,name',
-                    'country_id' => 'integer|nullable',
+                    'country_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }
@@ -42,8 +42,8 @@ class CityRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:countries,id,'.$this->city->id,
-                    'country_id' => 'integer|nullable',
+                    'name' => 'required|string|max:255|unique:cities,id,'.$this->id,
+                    'country_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }

@@ -10,10 +10,10 @@
                         <h4 class="header-title">Cities</h4>
                     </div>
                     <div class="float-right">
-                        @can('city-create')
+                        @if (checkPermission('city-create'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
                             <a class="btn btn-primary" href="#newCity" data-toggle="modal"><i class="fa fa-plus"></i> New city</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -42,18 +42,16 @@
                                 <td class="text-left">{{$city->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-
-                                        @can('city-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
-
-                                        @can('city-delete')
-                                            <form class="form-delete" method="post" action="{{route('cities.destroy',$city)}}">
+                                        @if(checkPermission('city-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if(checkPermission('city-delete'))
+                                            <form class="form-delete" method="post" action="{{route('cities.destroy',$city->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" title="delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -64,7 +62,7 @@
         </div>
     </div>
 
-    @can('city-create')
+    @if(checkPermission('city-create'))
         <!-- start create new city form modal -->
         <div class="modal fade" id="newCity" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -89,7 +87,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label class="col-form-label">Country</label>
-                                    <select class="form-control @error('country_id') is-invalid @enderror" name="country_id">
+                                    <select class="form-control @error('country_id') is-invalid @enderror single-select" style="width: 100%;" name="country_id">
                                         <option value="">Select country...</option>
                                         @foreach($countries as $country)
                                             <option value="{{$country->id}}">{{$country->name}}</option>
@@ -148,6 +146,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection
