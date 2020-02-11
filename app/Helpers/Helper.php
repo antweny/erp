@@ -17,6 +17,16 @@ function currentLogged()
     return auth()->user();
 }
 
+
+/*
+ * Check user if has permission
+ */
+function checkPermission($string)
+{
+    return auth()->user()->hasPermissionTo($string);
+}
+
+
 /*
  * Format a datepicker date to mysql format YYYY-mm-dd
  */
