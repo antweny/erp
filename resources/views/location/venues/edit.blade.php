@@ -18,8 +18,8 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($venue, array('route' => array('venues.update', $venue), 'method' => 'PUT','autocomplete'=>'off')) }}
-                             @include('venues._form',['buttonText'=>'update'])
+                    {{ Form::model($venue, array('route' => array('venues.update', $venue->id), 'method' => 'PUT','autocomplete'=>'off')) }}
+                             @include('location.venues._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>

@@ -44,7 +44,7 @@ class VenueRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:venues,id,'.$this->venue->id,
+                    'name' => 'required|string|max:255|unique:venues,id,'.$this->id,
                     'phone'=>'numeric|nullable',
                     'email'=>'email|nullable',
                     'city_id' => 'nullable',

@@ -18,7 +18,7 @@
                 <div class="card-body">
                     @include('alerts._flash')
                     <form method="POST" action="{{route('venues.store')}}" class="form" autocomplete="off">
-                        @include('venues._form',['buttonText'=>'save'])
+                        @include('location.venues._form',['buttonText'=>'save'])
                     </form>
                 </div>
             </div>

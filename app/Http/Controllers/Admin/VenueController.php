@@ -21,7 +21,7 @@ class VenueController extends Controller
 
         $venues = $venue->latest()->with('city','district')->paginate(30);
 
-        return view('venues.index',compact('venues'));
+        return view('location.venues.index',compact('venues'));
     }
 
     /**
@@ -31,11 +31,8 @@ class VenueController extends Controller
     {
         $this->authorize('create',$venue);
 
-        $cities = City::select('name','id')->get();
+        return $this->populate(__FUNCTION__, $venue);
 
-        $districts = District::select('name','id')->get();
-
-        return view('venues.create',compact('venue','cities','districts'));
     }
 
 
@@ -56,39 +53,79 @@ class VenueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Venue $venue)
+    public function edit($id)
     {
-        $this->authorize('update',$venue);
-
-        $cities = City::select('name','id')->get();
-
-        $districts = District::select('name','id')->get();
-
-        return view('venues.edit',compact('venue','cities','districts'));
+        $this->authorize('update',$this->model());
+        try {
+            $venue = $this->getID($id);
+            return $this->populate(__FUNCTION__, $venue);
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(VenueRequest $request, Venue $venue)
+    public function update(VenueRequest $request, $id)
     {
-        $this->authorize('update',$venue);
-
-        $venue->update($request->all());
-
-        return redirect()->route('venues.index')->with('success',' Venue has been updated.');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('venues.index')->with('success',' Venue has been updated.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Venue $venue)
+    public function destroy($id)
     {
         $this->authorize('delete',$venue);
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Venue deleted successfully!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
+    }
 
-        $venue->delete();
 
-        return back()->with('success','Venue deleted successfully!');
+
+    /*
+     * Populate dropdowns values from different tables and return to forms
+     */
+    public function populate ($function_name,$venue)
+    {
+        $cities = City::select('name','id')->get();
+
+        $districts = District::select('name','id')->get();
+
+        $data = compact('cities','districts','venue');
+
+        return view('location.venues.' .$function_name, $data);
+    }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Venue::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Venue::class;
     }
 
 }

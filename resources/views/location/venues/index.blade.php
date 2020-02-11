@@ -10,12 +10,9 @@
                         <h4 class="header-title">Venues</h4>
                     </div>
                     <div class="float-right">
-                        @can('venue-import')
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('venue-create')
+                        @if(checkPermission('venue-create'))
                             <a class="btn btn-primary" href="{{route('venues.create')}}"><i class="fa fa-plus"></i> New venue</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -51,17 +48,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('venue-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('venues.edit',$venue)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('venue-update'))
+                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('venues.edit',$venue->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('venue-delete')
-                                            <form class="form-delete" method="post" action="{{route('venues.destroy',$venue)}}">
+                                        @if(checkPermission('venue-delete'))
+                                            <form class="form-delete" method="post" action="{{route('venues.destroy',$venue->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -71,39 +68,5 @@
             </div>
         </div>
     </div>
-
-
-    @can('venue-import')
-        <!-- start create new permission form modal -->
-        <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import venues</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="{{route('venues.import')}}" class="form-horizontal" enctype="multipart/form-data" >
-                        @csrf
-                        <div class="modal-body">
-
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 control-label">Choose file..</label>
-                                <div class="col-md-8">
-                                    <input type="file" class="form-control @error('imported_file') is-invalid @enderror" name="imported_file" value="{{old('imported_file')}}" required placeholder="name">
-                                    @error('imported_file')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- end create new permission form modal -->
-    @endcan
 
 @endsection

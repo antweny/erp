@@ -10,7 +10,7 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label class="col-form-label">City</label>
-            <select class="form-control @error('city_id') is-invalid @enderror" name="city_id">
+            <select class="form-control @error('city_id') is-invalid @enderror single-select" style="width: 100%;"name="city_id">
                 <option value="">Select city...</option>
                 @foreach($cities as $city)
                     <option value="{{$city->id}}" {{old('city_id',$venue->city_id) == $city->id ? 'selected' : ''}}>{{$city->name}}</option>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-6">
             <label class="col-form-label">District</label>
-            <select class="form-control @error('district_id') is-invalid @enderror" name="district_id">
+            <select class="form-control @error('district_id') is-invalid @enderror single-select" style="width: 100%;" name="district_id">
                 <option value="">Select district...</option>
                 @foreach($districts as $district)
                     <option value="{{$district->id}}" {{old('district_id',$venue->district_id) == $district->id ? 'selected' : ''}}>{{$district->name}}</option>
