@@ -4,7 +4,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-5">
             <div class="card">
                 <div class="card-body">
                     <div class="row hd">
@@ -18,8 +18,8 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($country, array('route' => array('countries.update', $country), 'method' => 'PUT','autocomplete'=>'off')) }}
-                        @include('countries._form',['buttonText'=>'update'])
+                    {{ Form::model($country, array('route' => array('countries.update', $country->id), 'method' => 'PUT','autocomplete'=>'off')) }}
+                        @include('location.countries._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>

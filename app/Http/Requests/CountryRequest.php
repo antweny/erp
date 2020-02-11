@@ -41,7 +41,7 @@ class CountryRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:countries,id,'.$this->country->id,
+                    'name' => 'required|string|max:255|unique:countries,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }

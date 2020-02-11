@@ -11,8 +11,6 @@ use App\Imports\CountryImport;
 
 class CountryController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      */
@@ -22,7 +20,7 @@ class CountryController extends Controller
 
         $countries = $country->orderBy('name','asc')->get();
 
-        return view('countries.index',compact('countries'));
+        return view('location.countries.index',compact('countries'));
     }
 
     /**
@@ -31,45 +29,81 @@ class CountryController extends Controller
     public function store(CountryRequest $request, Country $country)
     {
         $this->authorize('create',$country);
-
-        $country->create($request->all());
-
-        return back()->with('success','Country has been saved');
+        try {
+            $country->create($request->all());
+            return back()->with('success','Country has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
-        $this->authorize('update',$country);
-
-        return view('locations.countries.edit',compact('country'));
+        $this->authorize('update',$this->model());
+        try {
+            $country = $this->getID($id);
+            return view('location.countries.edit',compact('country'));
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CountryRequest $request, Country $country)
+    public function update(CountryRequest $request, $id)
     {
-        $this->authorize('update',$country);
-
-        $country->update($request->all());
-
-        return redirect()->route('countries.index')->with('success',' Country has been updated.');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('countries.index')->with('success',' Country has been updated.');
+        }
+        catch (\Exception $e) {
+            return redirect()->route('countries.index')->with('error','something went Wrong')->withInput($request->all());
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        $this->authorize('delete',$country);
-
-        $country->delete();
-
-        return back()->with('success','Country has been deleted');
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Country has been deleted');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
+
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Country::findOrFail($id);
+        return $data;
+    }
+
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Country::class;
+    }
+
 
     /*
    * Import Data from Excel

@@ -1,6 +1,6 @@
     @csrf
     <div class="form-group row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <label class="col-form-label">Country Name <span class="star">*</span></label>
             <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name',$country->name)}}" placeholder="Ex. Tanzania, Kenya" required/>
             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif

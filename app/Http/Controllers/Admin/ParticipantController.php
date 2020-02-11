@@ -81,7 +81,6 @@ class ParticipantController extends Controller
         try {
             $participant = $this->getID($id);
             return $this->populate(__FUNCTION__,$participant);
-
         }
         catch (\Exception $e) {
             return back()->with('error','something went wrong');
@@ -102,12 +101,10 @@ class ParticipantController extends Controller
 
         try {
             $this->getID($id)->update($request->only('individual_id','organization_id','ward_id','event_id','date','slug','level','participant_role_id','individual_group_id'));
-            DB::commit();
             return redirect()->route('participants.index')->with('success',' Participants hass been updated');
 
         }
         catch (\Exception $e) {
-            DB::rollBack();
             return redirect()->route('participants.index')->with('error','something went wrong')->withInput($request->all());
         }
     }
@@ -121,6 +118,7 @@ class ParticipantController extends Controller
         $this->authorize('delete',$this->model());
         try {
             $this->getID($id)->delete();
+            DB::commit();
             return back()->with('success',' Participants has been deleted');
         }
         catch (\Exception $e) {

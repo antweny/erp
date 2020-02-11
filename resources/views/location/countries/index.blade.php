@@ -10,10 +10,10 @@
                         <h4 class="header-title">Countries</h4>
                     </div>
                     <div class="float-right">
-                        @can('country-create')
+                        @if(checkPermission('country-create'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
                             <a class="btn btn-primary" href="#newCountry" data-toggle="modal"><i class="fa fa-plus"></i> New country</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -24,13 +24,12 @@
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
-                    <tr class="text-white">
-                        <th scope="col">Name</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Descriptions</th>
-                        <th scope="col" >Actions</th>
-                    </tr>
-                    {{ csrf_field() }}
+                        <tr class="text-white">
+                            <th scope="col">Name</th>
+                            <th scope="col">Slug</th>
+                            <th scope="col">Descriptions</th>
+                            <th scope="col" >Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($countries as $country)
@@ -40,18 +39,16 @@
                                 <td class="text-left">{{$country->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-
-                                        @can('country-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('countries.edit',$country)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
-
-                                        @can('country-delete')
-                                            <form class="form-delete" method="post" action="{{route('countries.destroy',$country)}}">
+                                        @if(checkPermission('country-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('countries.edit',$country['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if(checkPermission('country-delete'))
+                                            <form class="form-delete" method="post" action="{{route('countries.destroy',$country['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -62,7 +59,7 @@
         </div>
     </div>
 
-    @can('country-create')
+    @if(checkPermission('country-create'))
         <!-- start create new country form modal -->
         <div class="modal fade" id="newCountry" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -135,6 +132,6 @@
         <!-- end create new permission form modal -->
 
 
-    @endcan
+    @endif
 
 @endsection
