@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6">
             <label class="col-form-label">District</label>
-            <select class="form-control @error('district_id') is-invalid @enderror" name="district_id">
+            <select class="form-control @error('district_id') is-invalid @enderror single-select" style="width: 100%;" name="district_id">
                 <option value="">Select district...</option>
                 @foreach($districts as $district)
                     <option value="{{$district->id}}" {{$ward->district_id == $district->id ? 'selected' : ''}}>{{$district->name}}</option>

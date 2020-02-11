@@ -11,12 +11,12 @@
                         <h4 class="header-title">Wards</h4>
                     </div>
                     <div class="float-right">
-                        @can('ward-import')
+                        @if(checkPermission('ward-import'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('ward-create')
+                        @endif
+                        @if(checkPermission('ward-create'))
                             <a class="btn btn-primary" href="#newWard" data-toggle="modal"><i class="fa fa-plus"></i> New ward</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -34,7 +34,6 @@
                         <th scope="col">Descriptions</th>
                         <th scope="col" >Actions</th>
                     </tr>
-                    {{ csrf_field() }}
                     </thead>
                     <tbody>
                         @foreach ($wards as $ward)
@@ -46,17 +45,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('ward-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('wards.edit',$ward)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('ward-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('wards.edit',$ward->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('ward-delete')
-                                            <form class="form-delete" method="post" action="{{route('wards.destroy',$ward)}}">
+                                        @if(checkPermission('ward-delete'))
+                                            <form class="form-delete" method="post" action="{{route('wards.destroy',$ward->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -67,7 +66,7 @@
         </div>
     </div>
 
-    @can('ward-create')
+    @if(checkPermission('ward-create'))
         <!-- start create new district form modal -->
         <div class="modal fade" id="newWard" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -92,7 +91,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label class="col-form-label">District</label>
-                                    <select class="form-control @error('district_id') is-invalid @enderror" name="district_id">
+                                    <select class="form-control @error('district_id') is-invalid @enderror single-select" style="width: 100%;" name="district_id">
                                         <option value="">Select district...</option>
                                         @foreach($districts as $district)
                                             <option value="{{$district->id}}">{{$district->name}}</option>
@@ -120,9 +119,9 @@
             </div>
         </div>
         <!-- end create new district form modal -->
-    @endcan
+    @endif
 
-    @can('ward-import')
+    @if(checkPermission('ward-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -153,6 +152,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection

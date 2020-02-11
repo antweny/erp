@@ -15,7 +15,7 @@ class DistrictController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(District $district, City $city)
+    public function index(District $district)
     {
         $this->authorize('read',$district);
 
@@ -64,7 +64,6 @@ class DistrictController extends Controller
     public function update(DistrictRequest $request, $id)
     {
         $this->authorize('update',$this->model());
-
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('districts.index')->with('success',' District has been updated.');

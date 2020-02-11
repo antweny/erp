@@ -16,8 +16,8 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($ward, array('route' => array('wards.update', $ward), 'method' => 'PUT')) }}
-                        @include('wards._form',['buttonText'=>'update'])
+                    {{ Form::model($ward, array('route' => array('wards.update', $ward->id), 'method' => 'PUT')) }}
+                        @include('location.wards._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>

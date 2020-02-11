@@ -19,11 +19,11 @@ class WardController extends Controller
     {
         $this->authorize('read',$ward);
 
-        $districts = District::select('name','id')->get();
+        $districts = District::get_name_and_id();
 
         $wards = $ward->orderBy('name', 'desc')->with('district')->get();
 
-        return view('wards.index',compact('districts','wards'));
+        return view('location.wards.index',compact('districts','wards'));
     }
 
 
@@ -43,37 +43,47 @@ class WardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ward $ward, District $district)
+    public function edit($id)
     {
-        $this->authorize('update',$ward);
-
-        $districts = District::select('name','id')->get(); //Get countires list
-
-        return view('wards.edit',compact('districts','ward'));
+        $this->authorize('update',$this->model());
+        $districts = District::get_name_and_id(); //Get districts list
+        try {
+            $ward = $this->getID($id);
+            return view('location.wards.edit',compact('districts','ward'));
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(WardRequest $request, Ward $ward)
+    public function update(WardRequest $request, $id)
     {
-        $this->authorize('update',$ward);
-
-        $ward->update($request->only('name', 'desc', 'district_id'));
-
-        return redirect()->route('wards.index')->with('success',' Ward has been updated.');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('wards.index')->with('success',' Ward has been updated.');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ward $ward)
+    public function destroy($id)
     {
-        $this->authorize('delete',$ward);
-
-        $ward->delete();
-
-        return back()->with('success','Ward has been deleted');
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Ward has been deleted');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /*
@@ -82,10 +92,26 @@ class WardController extends Controller
     public function import (ImportRequest $request, Ward $ward)
     {
         $this->authorize('import',$ward);
-
         if ($request->file('imported_file')) {
             Excel::import(new WardImport(), request()->file('imported_file'));
             return back()->with('success','Ward imported successfully!');
         }
+    }
+
+    /*
+    * Get requested record ID
+    */
+    public function getID($id)
+    {
+        $data = Ward::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Ward::class;
     }
 }

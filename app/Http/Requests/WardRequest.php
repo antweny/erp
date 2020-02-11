@@ -8,8 +8,6 @@ class WardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize()
     {
@@ -18,23 +16,19 @@ class WardRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules()
     {
         switch ($this->method())
         {
-
             case 'GET':
             case 'DELETE': {
                 return [];
             }
-
             case 'POST': {
                 return [
                     'name' => 'required|string|max:255|unique:wards,name',
-                    'district_id' => 'integer|nullable',
+                    'district_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }
@@ -42,8 +36,8 @@ class WardRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:wards,id,'.$this->ward->id,
-                    'district_id' => 'integer|nullable',
+                    'name' => 'required|string|max:255|unique:wards,id,'.$this->id,
+                    'district_id' => 'nullable',
                     'desc' => 'string|nullable',
                 ];
             }
