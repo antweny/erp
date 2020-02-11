@@ -10,12 +10,12 @@
                         <h4 class="header-title">Streets</h4>
                     </div>
                     <div class="float-right">
-                        @can('street-import')
+                        @if(checkPermission('street-import'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('street-create')
+                        @endif
+                        @if(checkPermission('street-create'))
                             <a class="btn btn-primary" href="#newStreet" data-toggle="modal"><i class="fa fa-plus"></i> New street</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -33,7 +33,6 @@
                         <th scope="col">Descriptions</th>
                         <th scope="col" >Actions</th>
                     </tr>
-                    {{ csrf_field() }}
                     </thead>
                     <tbody>
                         @foreach ($streets as $street)
@@ -45,17 +44,18 @@
                                 <td class="text-center p-0">
                                     <div class=" btn btn-group">
 
-                                        @can('street-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('streets.edit',$street)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
-
-                                        @can('street-delete')
-                                            <form class="form-delete" method="post" action="{{route('streets.destroy',$street)}}">
+                                        @if(checkPermission('street-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('streets.edit',$street->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if(checkPermission('street-delete'))
+                                            <form class="form-delete" method="post" action="{{route('streets.destroy',$street->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
+
+
                                     </div>
                                 </td>
                             </tr>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    @can('street-create')
+    @if(checkPermission('street-create'))
         <!-- start create new district form modal -->
         <div class="modal fade" id="newStreet" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -91,7 +91,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label class="col-form-label">Ward</label>
-                                    <select class="form-control @error('ward_id') is-invalid @enderror" name="ward_id">
+                                    <select class="form-control @error('ward_id') is-invalid @enderror single-select" style="width: 100%" name="ward_id">
                                         <option value="">Select street...</option>
                                         @foreach($wards as $ward)
                                             <option value="{{$ward->id}}" {{old('ward_id') == $ward->id ? 'selected' : ''}}>{{$ward->name}}</option>
@@ -119,11 +119,11 @@
             </div>
         </div>
         <!-- end create new district form modal -->
-    @endcan
+    @endif
 
 
 
-    @can('street-import')
+    @if(checkPermission('street-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -154,7 +154,7 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 
 

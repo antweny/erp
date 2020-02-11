@@ -17,8 +17,8 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($street, array('route' => array('streets.update', $street), 'method' => 'PUT','autocomplete'=>'off')) }}
-                        @include('streets._form',['buttonText'=>'update'])
+                    {{ Form::model($street, array('route' => array('streets.update', $street->id), 'method' => 'PUT','autocomplete'=>'off')) }}
+                        @include('location.streets._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
             </div>
