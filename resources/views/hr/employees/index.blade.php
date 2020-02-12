@@ -10,36 +10,51 @@
                         <h4 class="header-title">Employee List</h4>
                     </div>
                     <div class="float-right">
-                        @can('item-create')
+                        @if(checkPermission('item-create'))
                             <a class="btn btn-primary" href="{{route('employee.create')}}"><i class="fa fa-plus"></i> New Employee</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-            <div class="row">
-                @foreach($employees as $employee)
-                    <div class="col-md-4 col-sm-6 mb-4">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12">
-                                        bvmvbmbvmnbv
-                            </div>
-                            <div class="col-md-8 col-sm-12 emp-details ">
-                                <div class="h4 mt-2">{{$employee->full_name}}
-                                    @can('employee-update')
-                                        <a class="float-right btn btn-outline-secondary btn-sm" href="{{route('employee.edit',$employee)}}"  ><i class="fa fa-pencil-alt"></i> edit</a>
-                                    @endcan
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm" id="table">
+                    <thead class="text-uppercase text-center bg-blue">
+                        <tr class="text-white">
+                            <th scope="col">Emp. No</th>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($employees as $employee)
+                        <tr>
+                            <td class="text-center">{{ $employee->employee_no}}</td>
+                            <td class="text-left">{{ $employee->full_name}}</td>
+                            <td class="text-center">{{ $employee->email }}</td>
+                            <td class="text-center">{{$employee->mobile}}</td>
+                            <td class="text-center">{{$employee->mobile}}</td>
+                            <td class="text-center">{{$employee->department->name}}</td>
+                            <td class="text-center p-0">
+                                <div class="btn btn-group">
+                                    @if(checkPermission('employee-update'))
+                                        <a class="float-right btn btn-outline-secondary btn-sm" href="{{route('employee.edit',$employee->id)}}"  >
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </a>
+
+                                    @endif
                                 </div>
-                                <div class="h5">{{$employee->full_name}}</div>
-                                <div class="h6"><strong>Department: </strong></strong>{{$employee->department->name}}</div>
-                                <div><strong>Email:</strong> {{$employee->email}}</div>
-                                <div><strong>Mobile:</strong> {{$employee->mobile}}</div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

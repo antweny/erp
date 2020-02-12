@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Employee extends BaseModel
 {
     /**
@@ -63,5 +65,9 @@ class Employee extends BaseModel
     {
         return $this->belongsTo(Admin::class)->withDefault();
     }
+
+
+
+
 
 }

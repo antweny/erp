@@ -21,7 +21,7 @@ class EmployeeController extends Controller
 
         $employees = $employee->with('department')->get();
 
-        return view('employees.index',compact('employees'));
+        return view('hr.employees.index',compact('employees'));
     }
 
     /**
@@ -31,11 +31,7 @@ class EmployeeController extends Controller
     {
         $this->authorize('create',$employee);
 
-        $admins = Admin::select('name','id')->get();
-
-        $departments = Department::select('name','id')->get();
-
-        return view('employees.create',compact('employee','departments','admins'));
+        return $this->populate(__FUNCTION__,$employee);
     }
 
     /**
@@ -61,27 +57,32 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
-        $this->authorize('update',$employee);
+        $this->authorize('update',$this->model());
 
-        $admins = Admin::select('name','id')->get();
-
-        $departments = Department::select('name','id')->get();
-
-        return view('employees.edit',compact('employee','departments','admins'));
+        try {
+            $employee = $this->getID($id);
+            return $this->populate(__FUNCTION__,$employee);
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeRequest $request, Employee $employee)
+    public function update(EmployeeRequest $request,$id)
     {
-        $this->authorize('update',$employee);
-
-        $employee->update($request->all());
-
-        return redirect()->route('employee.index')->with('success','Employee has been saved!');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('employee.index')->with('success','Employee has been saved!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong')->withInput($request->all());
+        }
     }
 
     /**
@@ -89,8 +90,38 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $this->authorize('delete',$employee);
-
         $this->authorize('create',$employee);
+    }
+
+
+    /*
+    * Populate dropdowns values from different tables and return to forms
+    */
+    public function populate ($function_name,$employee)
+    {
+        $admins = Admin::select('name','id')->get();
+
+        $departments = Department::get_name_and_id();
+
+        $data = compact('admins','departments','employee');
+
+        return view('hr.employees.' .$function_name, $data);
+    }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Employee::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Employee::class;
     }
 }

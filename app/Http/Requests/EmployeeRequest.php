@@ -50,16 +50,16 @@ class EmployeeRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'employee_no' => 'required|string|unique:employees,id,'.$this->employee->id,
+                    'employee_no' => 'required|string|unique:employees,id,'.$this->id,
                     'first_name' => 'required|string|max:20',
                     'middle_name' => 'required|string|max:20',
                     'last_name' => 'required|string|max:20',
                     'dob' => 'required|date',
-                    'email' => 'required|email|unique:employees,id,'.$this->employee->id,
+                    'email' => 'required|email|unique:employees,id,'.$this->id,
                     'mobile' => 'required',
                     'department_id' => 'required',
                     'hire_date' => 'required|date',
-                    'admin_id' => 'nullable|unique:employees,id,'.$this->employee->id,
+                    'admin_id' => 'nullable|unique:employees,id,'.$this->id,
                 ];
             }
         }

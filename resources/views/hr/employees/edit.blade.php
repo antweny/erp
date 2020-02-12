@@ -15,9 +15,9 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    {{ Form::model($employee, array('route' => array('employee.update', $employee), 'method' => 'PUT','autocomplete'=>'off')) }}
+                    {{ Form::model($employee, array('route' => array('employee.update', $employee->id), 'method' => 'PUT','autocomplete'=>'off')) }}
 
-                        @include('employees._form',['buttonText'=>'Update'])
+                        @include('hr.employees._form',['buttonText'=>'Update'])
 
                     {{Form::close()}}
                 </div>
