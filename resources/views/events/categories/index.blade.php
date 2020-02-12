@@ -10,9 +10,9 @@
                         <h4 class="header-title">Event Categories</h4>
                     </div>
                     <div class="float-right">
-                        @can('eventCategory-create')
+                        @if(checkPermission('eventCategory-create'))
                             <a class="btn btn-primary" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -39,17 +39,17 @@
                                 <td class="text-left">{{$eventCategory->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @can('eventCategory-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('eventCategories.edit',$eventCategory)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('eventCategory-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('eventCategories.edit',$eventCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('eventCategory-delete')
-                                            <form class="form-delete" method="post" action="{{route('eventCategories.destroy',$eventCategory)}}">
+                                        @if(checkPermission('eventCategory-delete'))
+                                            <form class="form-delete" method="post" action="{{route('eventCategories.destroy',$eventCategory->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    @can('eventCategory-create')
+    @if(checkPermission('eventCategory-create'))
         <!-- start create new eventCategory form modal -->
         <div class="modal fade" id="newEventCategory" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -99,6 +99,6 @@
             </div>
         </div>
         <!-- end create new eventCategory form modal -->
-    @endcan
+    @endif
 
 @endsection

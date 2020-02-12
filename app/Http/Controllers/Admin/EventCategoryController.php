@@ -17,10 +17,13 @@ class EventCategoryController extends Controller
     public function index(EventCategory $eventCategory)
     {
         $this->authorize('read',$eventCategory);
-
-        $eventCategories  = $eventCategory->latest()->get();
-
-        return view('events.categories.index',compact('eventCategories'));
+        try {
+            $eventCategories  = $eventCategory->latest()->get();
+            return view('events.categories.index',compact('eventCategories'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -29,44 +32,83 @@ class EventCategoryController extends Controller
     public function store(EventCategoryRequest $request, EventCategory $eventCategory)
     {
         $this->authorize('create',$eventCategory);
-
-        $eventCategory->create($request->only('name','desc'));
-
-        return back()->with('success',' Event category has been saved');
+        try {
+            $eventCategory->create($request->only('name','desc'));
+            return back()->with('success',' Event category has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EventCategory $eventCategory)
+    public function edit($id)
     {
-        $this->authorize('update',$eventCategory);
-
-        return view('events.categories.edit',compact('eventCategory'));
+        $this->authorize('update',$this->model());
+        try{
+            $eventCategory = $this->getID($id);
+            return view('events.categories.edit',compact('eventCategory'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventCategoryRequest $request, EventCategory $eventCategory)
+    public function update(EventCategoryRequest $request, $id)
     {
-        $this->authorize('update',$eventCategory);
-
-        $eventCategory->update($request->only('name','desc'));
-
-        return redirect()->route('eventCategories.index')->with('success',' Event category has been updated');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('eventCategories.index')->with('success',' Event category has been updated');
+        }
+        catch (\Exception $e) {
+           return $this->errorReturn();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EventCategory $eventCategory)
+    public function destroy($id)
     {
-        $this->authorize('delete',$eventCategory);
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Event category has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
-        $eventCategory->delete();
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = EventCategory::findOrFail($id);
+        return $data;
+    }
 
-        return back()->with('success','Event category has been deleted');
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return EventCategory::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('eventCategories.index')->with('error','something went wrong');
     }
 }

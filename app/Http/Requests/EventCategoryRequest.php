@@ -41,7 +41,7 @@ class EventCategoryRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:event_categories,id,'.$this->eventCategory->id,
+                    'name' => 'required|string|max:255|unique:event_categories,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }
