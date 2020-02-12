@@ -46,7 +46,6 @@ class ParticipantController extends Controller
         return $this->populate(__FUNCTION__,$participant);
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -56,20 +55,14 @@ class ParticipantController extends Controller
 
         $request['ward_id'] = $this->check_ward($request['ward']); //Get ward ID
 
-        DB::beginTransaction();
-
         try {
             $participant->create($request->only('individual_id','organization_id','ward_id','event_id','date','slug','level','participant_role_id','individual_group_id'));
-            DB::commit();
             return back()->with('success',' Participants has been saved');
         }
         catch (\Exception $e) {
-            DB::rollBack();
             return back()->with('error','The user hass already been added')->withInput($request->all());
         }
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -77,16 +70,14 @@ class ParticipantController extends Controller
     public function edit($id)
     {
         $this->authorize('update',$this->model());  //Check current logged user has this permission
-
         try {
             $participant = $this->getID($id);
             return $this->populate(__FUNCTION__,$participant);
         }
         catch (\Exception $e) {
-            return back()->with('error','something went wrong');
+            return redirect()->route('participants.index')->with('error','something went wrong')
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -97,15 +88,12 @@ class ParticipantController extends Controller
 
         $request['ward_id'] = $this->check_ward($request['ward']);   //Get ward ID
 
-        DB::beginTransaction();
-
         try {
             $this->getID($id)->update($request->only('individual_id','organization_id','ward_id','event_id','date','slug','level','participant_role_id','individual_group_id'));
             return redirect()->route('participants.index')->with('success',' Participants hass been updated');
-
         }
         catch (\Exception $e) {
-            return redirect()->route('participants.index')->with('error','something went wrong')->withInput($request->all());
+            return redirect()->route('participants.index')->with('error','something went wrong');
         }
     }
 
@@ -118,12 +106,10 @@ class ParticipantController extends Controller
         $this->authorize('delete',$this->model());
         try {
             $this->getID($id)->delete();
-            DB::commit();
             return back()->with('success',' Participants has been deleted');
         }
         catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error','something went Wrong');
+            return redirect()->route('participants.index')->with('error','something went wrong');
         }
     }
 
