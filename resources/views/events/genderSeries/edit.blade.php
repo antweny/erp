@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    {{ Form::model($genderSeries, array('route' => array('genderSeries.update', $genderSeries), 'method' => 'PUT')) }}
+                    {{ Form::model($genderSeries, array('route' => array('genderSeries.update', $genderSeries->id), 'method' => 'PUT')) }}
                             @include('events.genderSeries._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
