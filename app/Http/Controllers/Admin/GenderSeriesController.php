@@ -87,6 +87,7 @@ class GenderSeriesController extends Controller
     public function destroy(GenderSeries $genderSeries)
     {
         $this->authorize('delete',$genderSeries);
+
         try {
             $this->getID($id)->delete();
             return back()->with('success','Gender Series topic has been deleted');
