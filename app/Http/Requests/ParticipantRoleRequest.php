@@ -41,7 +41,7 @@ class ParticipantRoleRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:participant_roles,id,'.$this->participantRole->id,
+                    'name' => 'required|string|max:255|unique:participant_roles,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }

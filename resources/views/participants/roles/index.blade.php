@@ -10,9 +10,9 @@
                         <h4 class="header-title">Participant Roles</h4>
                     </div>
                     <div class="float-right">
-                        @can('participantRole-create')
+                        @if(checkPermission('participantRole-create'))
                             <a class="btn btn-primary" href="#newParticipantRole" data-toggle="modal"><i class="fa fa-plus"></i> New role</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -39,17 +39,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('participantRole-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('participantRoles.edit',$participantRole)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('participantRole-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('participantRoles.edit',$participantRole->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('participantRole-delete')
-                                            <form class="form-delete" method="post" action="{{route('participantRoles.destroy',$participantRole)}}">
+                                        @if(checkPermission('participantRole-delete'))
+                                            <form class="form-delete" method="post" action="{{route('participantRoles.destroy',$participantRole->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    @can('participantRole-create')
+    @if(checkPermission('participantRole-create'))
         <!-- start create new participantRole form modal -->
         <div class="modal fade" id="newParticipantRole" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -99,6 +99,6 @@
             </div>
         </div>
         <!-- end create new participantRole form modal -->
-    @endcan
+    @endif
 
 @endsection
