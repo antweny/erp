@@ -139,7 +139,6 @@ class ParticipantController extends Controller
         return $name->get_id($request);
     }
 
-
     /*
      * Populate dropdowns values from different tables and return to forms
      */
