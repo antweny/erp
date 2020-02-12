@@ -24,10 +24,13 @@ class EventController extends Controller
     public function index(Event $event)
     {
         $this->authorize('read',$event);
-
-        $events = $event->with('event_category','employee')->get();
-
-        return view('events.index',compact('events'));
+        try {
+            $events = $event->with('event_category','employee')->get();
+            return view('events.index',compact('events'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -36,17 +39,13 @@ class EventController extends Controller
     public function create(Event $event)
     {
         $this->authorize('create',$event);
-
-        $eventCategories = EventCategory::get_name_and_id();
-        $venues = Venue::get_name_and_id();
-        $individuals = Individual::get_name_and_id();
-        $organizations = Organization::get_name_and_id();
-        $employees = Employee::get_full_name_and_id();
-
-
-        return view('events.create',compact('event','eventCategories','venues','individuals','organizations','employees'));
+        try {
+            return $this->populate(__FUNCTION__,$event);
+        }
+        catch (\Exception $e) {
+           abort(404);
+        }
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -56,31 +55,19 @@ class EventController extends Controller
         $this->authorize('create',$event);
 
         $request['venue_id'] = $this->check_venue($request['venue']);   //Get Venue ID
-
         $organizations = $request['organization_id'];  //Get array of organization as organisers
-
         $individuals = $request['individual_id']; //Get array of individuals as facilitator
-
-        // assume it won't work
-        $success = false;
-
 
         DB::beginTransaction();
 
         try {
-            if ($event = $event->create($request->all())) {
-                $event->organization()->attach($organizations);
-                $event->individual()->attach($individuals);
-                $success = true;
-            }
-        }
-        catch (\Exception $e) {
-            return $e->getMessage();
-        }
-        if ($success) {
+            $event = $event->create($request->all());
+            $event->organization()->attach($organizations);
+            $event->individual()->attach($individuals);
             DB::commit();
             return back()->with('success',' Event has been saved');
-        } else {
+        }
+        catch (\Exception $e) {
             DB::rollback();
             return back()->with('error',' Something went wrong')->withInput($request->input());
         }
@@ -88,9 +75,6 @@ class EventController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
     {
@@ -100,54 +84,42 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        $this->authorize('update',$event);
-
-        $eventCategories = EventCategory::get_name_and_id();
-        $venues = Venue::get_name_and_id();
-        $individuals = Individual::get_name_and_id();
-        $organizations = Organization::get_name_and_id();
-        $employees = Employee::get_full_name_and_id();
-
-        return view('events.edit',compact('event','eventCategories','venues','individuals','organizations','employees'));
+        $this->authorize('update',$this->model());
+        try{
+            $event = $this->getID($id);
+            return $this->populate(__FUNCTION__,$event);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventRequest $request, Event $event)
+    public function update(EventRequest $request, $id)
     {
-        $this->authorize('update',$event);
+        $this->authorize('update',$this->model());
 
         $request['venue_id'] = $this->check_venue($request['venue']);
         $organizations = $request['organization_id'];
         $individuals = $request['individual_id'];
 
-        // assume it won't work
-        $success = false;
-
-
         DB::beginTransaction();
 
         try {
-            if ($event->update($request->all())) {
-                $event->organization()->sync($organizations);
-                $event->individual()->sync($individuals);
-                $success = true;
-            }
-        }
-        catch (\Exception $e) {
-            return $e->getMessage();
-        }
-        if ($success) {
+            $this->getID($id)->update($request->all());
+            $this->getID($id)->organization()->sync($organizations);
+            $this->getID($id)->individual()->sync($individuals);
             DB::commit();
             return  redirect()->route('events.index')->with('success',' Event has been updated');
-        } else {
-            DB::rollback();
-            return back()->with('error',' Something went wrong')->withInput($request->input());
         }
-
+        catch (\Exception $e) {
+            DB::rollback();
+            return $this->errorReturn();
+        }
     }
 
     /**
@@ -156,12 +128,14 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $this->authorize('delete',$event);
-
-        $event->delete();
-
-        return back()->with('success','Event has been deleted');
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Event has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
-
 
 
     /*
@@ -170,11 +144,44 @@ class EventController extends Controller
     public function check_venue($request)
     {
         $name = new Venue();
-
         return $name->get_id($request);
     }
 
-    public function organization($request){
+    /*
+    * Populate dropdowns values from different tables and return to forms
+    */
+    public function populate($function_name, $event) {
+        $eventCategories = EventCategory::get_name_and_id();
+        $venues = Venue::get_name_and_id();
+        $individuals = Individual::get_name_and_id();
+        $organizations = Organization::get_name_and_id();
+        $employees = Employee::get_full_name_and_id();
+        $data = compact('event','eventCategories','venues','individuals','organizations','employees');
+        return view('events.' .$function_name , $data);
+    }
 
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Event::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Event::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('events.index')->with('error','something went wrong');
     }
 }

@@ -44,7 +44,7 @@ class EventRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:100|unique:events,id,'.$this->event->id,
+                    'name' => 'required|string|max:100|unique:events,id,'.$this->id,
                     'venue'=>'nullable|string',
                     'event_category_id' => 'required',
                     'employee_id' => 'required',
