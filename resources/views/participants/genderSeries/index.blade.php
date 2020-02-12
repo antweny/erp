@@ -8,9 +8,9 @@
                 <h1 class="h4">Gender Series Participants</h1>
             </div>
             <div class="float-right">
-                @can('genderSeriesParticipant-create')
+                @if(checkPermission('genderSeriesParticipant-create'))
                     <a class="btn btn-primary" href="{{route('genderSeriesParticipants.create')}}" title="create"><i class="fa fa-plus"></i> GDSS Participant</a>
-                @endcan
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -40,18 +40,18 @@
                             <td class="text-center">{{ $genderParticipant->ward->name }}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @can('genderSeriesParticipant-update')
-                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('genderSeriesParticipants.edit',$genderParticipant)}}" title="view">
+                                    @if(checkPermission('genderSeriesParticipant-update'))
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('genderSeriesParticipants.edit',$genderParticipant->id)}}" title="view">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endcan
-                                    @can('genderSeriesParticipant-delete')
-                                        <form class="form-delete" method="post" action="{{route('genderSeriesParticipants.destroy',$genderParticipant)}}">
+                                    @endif
+                                    @if(checkPermission('genderSeriesParticipant-delete'))
+                                        <form class="form-delete" method="post" action="{{route('genderSeriesParticipants.destroy',$genderParticipant->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Participant?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endcan
+                                    @endif
                                 </div>
                             </td>
                         </tr>

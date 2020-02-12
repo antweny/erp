@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    <form method="POST" action="{{route('genderSeriesParticipants.update',$genderSeriesParticipant)}}" class="form" autocomplete="off">
+                    <form method="POST" action="{{route('genderSeriesParticipants.update',$genderSeriesParticipant->id)}}" class="form" autocomplete="off">
                         @method('PUT')
                         @include('participants.genderSeries._form',['buttonText'=>'Update'])
                     </form>

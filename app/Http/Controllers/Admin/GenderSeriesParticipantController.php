@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\GenderSeries;
 use App\Http\Controllers\Controller;
-
 use App\GenderSeriesParticipant;
 use App\Http\Requests\GenderSeriesParticipantRequest;
 use App\Individual;
 use App\Organization;
 use App\Ward;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GenderSeriesParticipantController extends Controller
 {
@@ -33,16 +30,7 @@ class GenderSeriesParticipantController extends Controller
     public function create(GenderSeriesParticipant $genderSeriesParticipant)
     {
         $this->authorize('create',$genderSeriesParticipant);
-
-        $wards = Ward::get_name_and_id();
-
-        $individuals = Individual::get_name_and_id();
-
-        $organizations = Organization::get_name_and_id();
-
-        $genders = GenderSeries::select('topic','id')->get();
-
-        return view('participants.genderSeries.create', compact('genders','wards','individuals','organizations','genderSeriesParticipant'));
+        return $this->populate(__FUNCTION__, $genderSeriesParticipant);
     }
 
 
@@ -55,94 +43,61 @@ class GenderSeriesParticipantController extends Controller
 
         $request['ward_id'] = $this->check_ward($request['ward']);
 
-        DB::beginTransaction();
-
         try {
-            //Check if user has already assigned to the particual topic
-            $this->check_unique_individual_and_gender_series($request) ;
-            //Store data
             $genderSeriesParticipant->create($request->only('individual_id','organization_id','ward_id','gender_series_id'));
-
-            DB::commit();
             return back()->with('success','Participants has been added');
         }
         catch (\Exception $e) {
-            DB::rollback();
-            return back()->with('error','This User already attended this event')->withInput($request->input());
+            return back()->with('error','This user already attended this event')->withInput($request->input());
         }
-
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GenderSeriesParticipant $genderSeriesParticipant)
+    public function edit($id)
     {
-        $this->authorize('update',$genderSeriesParticipant);
-
-        $wards = Ward::get_name_and_id();
-
-        $individuals = Individual::get_name_and_id();
-
-        $organizations = Organization::get_name_and_id();
-
-        $genders = GenderSeries::select('topic','id')->get();
-
-        return view('participants.genderSeries.edit', compact('genders','wards','individuals','organizations','genderSeriesParticipant'));
+        $this->authorize('update',$this->model());
+        try{
+            $genderSeriesParticipant = $this->getID($id);
+            return $this->populate(__FUNCTION__,$genderSeriesParticipant);
+        }
+        catch (\Exception $e) {
+            return redirect()->route('genderSeriesParticipants.index')->with('error','Sorry record not found');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(GenderSeriesParticipantRequest $request, GenderSeriesParticipant $genderSeriesParticipant)
+    public function update(GenderSeriesParticipantRequest $request, $id)
     {
-        $this->authorize('update',$genderSeriesParticipant);
+        $this->authorize('update',$this->model());
 
-        $request['ward_id'] = $this->check_ward($request['ward']);
+        $request['ward_id'] = $this->check_ward($request['ward']);  //Get the Ward Name
 
-        $genderSeriesParticipant->update($request->only('individual_id','organization_id','ward_id','gender_series_id'));
-
-        return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants has been updated');
-
+        try {
+            $this->getID($id)->update($request->only('individual_id','organization_id','ward_id','gender_series_id'));
+            return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants hass been updated');
+        }
+        catch (\Exception $e) {
+            return redirect()->route('genderSeriesParticipants.index')->with('error','something went wrong')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GenderSeriesParticipant $genderSeriesParticipant)
+    public function destroy($id)
     {
-        $this->authorize('delete',$genderSeriesParticipant);
-
-        $genderSeriesParticipant->delete();
-
-        return back()->with('success',' Participants deleted successfully');
-    }
-
-
-
-    /*
-     * Check if user already added as participant on the event on the same day
-     */
-    public function check_unique_individual_and_gender_series ($request)
-    {
-        //if(!empty($genderSeriesPartcipant)) {
-
-        //}
-       // else {
-        $query = GenderSeriesParticipant::where('individual_id',$request['individual_id'])
-            ->where('gender_series_id',$request['gender_series_id'])
-            ->count();;
-
-        if($query <= 0){
-            return true;
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success',' Participants has been deleted');
         }
-        else {
-            return false;
+        catch (\Exception $e) {
+            return redirect()->route('genderSeriesParticipants.index')->with('error','something went wrong');
         }
-
-        //return $query;
-        //}
     }
 
     /*
@@ -153,4 +108,38 @@ class GenderSeriesParticipantController extends Controller
         $name = new Ward();
         return $name->get_id($request);
     }
+
+    /*
+     * Populate dropdowns values from different tables and return to forms
+     */
+    public function populate($function_name, $genderSeriesParticipant) {
+        $wards = Ward::get_name_and_id();
+        $individuals = Individual::get_name_and_id();
+        $organizations = Organization::get_name_and_id();
+        $genders = GenderSeries::select('topic','id')->get();
+        $data = compact('genders','wards','individuals','organizations','genderSeriesParticipant');
+        return view('participants.genderSeries.' .$function_name , $data);
+    }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = GenderSeriesParticipant::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return GenderSeriesParticipant::class;
+    }
+
+
+
+
+
 }
