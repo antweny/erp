@@ -75,7 +75,7 @@ class ParticipantController extends Controller
             return $this->populate(__FUNCTION__,$participant);
         }
         catch (\Exception $e) {
-            return redirect()->route('participants.index')->with('error','something went wrong')
+            return redirect()->route('participants.index')->with('error','something went wrong');
         }
     }
 
