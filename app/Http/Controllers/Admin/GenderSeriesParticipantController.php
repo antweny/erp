@@ -84,7 +84,7 @@ class GenderSeriesParticipantController extends Controller
             return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants hass been updated');
         }
         catch (\Exception $e) {
-            return  $this->errorReturn();
+            return back()->with('error','This user already attended this event')->withInput($request->input());
         }
     }
 
