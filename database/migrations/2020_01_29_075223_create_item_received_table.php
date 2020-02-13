@@ -23,10 +23,10 @@ class CreateItemReceivedTable extends Migration
             $table->mediumText('desc')->nullable();
 
 
-            $table->decimal('unit_rate',13,2);
-            $table->bigInteger('quantity');
+            $table->unsignedDecimal('unit_rate',13,2);
+            $table->unsignedInteger('quantity');
 
-            $table->decimal('amount',13,2);
+            $table->unsignedDecimal('amount',13,2);
             $table->mediumText('remarks')->nullable();
             $table->timestamps();
         });
