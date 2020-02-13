@@ -11,9 +11,9 @@
                         <h4 class="header-title">Sector Fields</h4>
                     </div>
                     <div class="float-right">
-                        @can('field-create')
+                        @if(checkPermission('field-create'))
                             <a class="btn btn-primary" href="#newField" data-toggle="modal"><i class="fa fa-plus"></i> New field</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -43,17 +43,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('field-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('fields.edit',$field)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('field-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('fields.edit',$field->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('field-delete')
-                                            <form class="form-delete" method="post" action="{{route('fields.destroy',$field)}}">
+                                        @if(checkPermission('field-delete'))
+                                            <form class="form-delete" method="post" action="{{route('fields.destroy',$field->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this field?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    @can('field-create')
+    @if(checkPermission('field-create'))
         <!-- start create new field form modal -->
         <div class="modal fade" id="newField" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -116,6 +116,6 @@
             </div>
         </div>
         <!-- end create new field form modal -->
-    @endcan
+    @endif
 
 @endsection

@@ -42,7 +42,7 @@ class FieldRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:fields,id,'.$this->field->id,
+                    'name' => 'required|string|max:255|unique:fields,id,'.$this->id,
                     'sector_id' =>'nullable',
                     'desc' => 'string|nullable',
                 ];

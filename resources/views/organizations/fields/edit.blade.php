@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($field, array('route' => array('fields.update', $field), 'method' => 'PUT')) }}
+                    {{ Form::model($field, array('route' => array('fields.update', $field->id), 'method' => 'PUT')) }}
                         @include('organizations.fields._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
