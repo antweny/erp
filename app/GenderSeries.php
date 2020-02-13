@@ -52,5 +52,17 @@ class GenderSeries extends BaseModel
         return $this->belongsTo(Employee::class,'coordinator')->withDefault();
     }
 
+    /*
+     * Get Name and ID
+     */
+    //Check if resource exist get ID if not create and get ID
+    public function get_id($data)
+    {
+        if ($data != null) {
+            $model = $this->firstOrCreate(['topic'=>$data]);
+            return $model->id;
+        }
+        return null;
+    }
 
 }

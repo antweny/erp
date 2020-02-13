@@ -6,9 +6,12 @@ use App\GenderSeries;
 use App\Http\Controllers\Controller;
 use App\GenderSeriesParticipant;
 use App\Http\Requests\GenderSeriesParticipantRequest;
+use App\Http\Requests\ImportRequest;
+use App\Imports\GenderSeriesParticipantsImport;
 use App\Individual;
 use App\Organization;
 use App\Ward;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GenderSeriesParticipantController extends Controller
 {
@@ -63,7 +66,7 @@ class GenderSeriesParticipantController extends Controller
             return $this->populate(__FUNCTION__,$genderSeriesParticipant);
         }
         catch (\Exception $e) {
-            return redirect()->route('genderSeriesParticipants.index')->with('error','Sorry record not found');
+            return  $this->errorReturn();
         }
     }
 
@@ -81,7 +84,7 @@ class GenderSeriesParticipantController extends Controller
             return redirect()->route('genderSeriesParticipants.index')->with('success',' Participants hass been updated');
         }
         catch (\Exception $e) {
-            return redirect()->route('genderSeriesParticipants.index')->with('error','something went wrong')->withInput($request->all());
+            return  $this->errorReturn();
         }
     }
 
@@ -96,7 +99,22 @@ class GenderSeriesParticipantController extends Controller
             return back()->with('success',' Participants has been deleted');
         }
         catch (\Exception $e) {
-            return redirect()->route('genderSeriesParticipants.index')->with('error','something went wrong');
+            return  $this->errorReturn();
+        }
+    }
+
+    /*
+     * Import Data from Excel
+     */
+    public function import (ImportRequest $request)
+    {
+        $this->authorize('create',$this->model());
+        try {
+            Excel::import(new GenderSeriesParticipantsImport,request()->file('imported_file'));
+            return back()->with('success','Gender Participants have been imported');
+        }
+        catch (\Exception $e){
+            return redirect()->route('genderSeriesParticipants.index')->with('error',$e->getMessage());
         }
     }
 
@@ -138,6 +156,13 @@ class GenderSeriesParticipantController extends Controller
         return GenderSeriesParticipant::class;
     }
 
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('genderSeriesParticipants.index')->with('error','something went wrong');
+    }
 
 
 
