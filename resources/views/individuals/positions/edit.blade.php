@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    {{ Form::model($position, array('route' => array('positions.update', $position), 'method' => 'PUT')) }}
+                    {{ Form::model($position, array('route' => array('positions.update', $position->id), 'method' => 'PUT')) }}
                             @include('individuals.positions._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>

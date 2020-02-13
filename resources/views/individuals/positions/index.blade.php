@@ -9,9 +9,9 @@
                 <h1 class="h4">Position</h1>
             </div>
             <div class="float-right">
-                @can('position-create')
+                @if(checkPermission('position-create'))
                     <a class="btn btn-primary" href="{{route('positions.create')}}" title="create"><i class="fa fa-plus"></i> Position</a>
-                @endcan
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -37,18 +37,18 @@
                             <td class="text-center">{{ $position->city->name }}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @can('position-update')
-                                        <a class="btn btn-primary btn-sm mr-2 " href="{{route('positions.edit',$position)}}" title="Edit">
+                                    @if(checkPermission('position-update'))
+                                        <a class="btn btn-primary btn-sm mr-2 " href="{{route('positions.edit',$position->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endcan
-                                    @can('position-delete')
-                                        <form class="form-delete" method="post" action="{{route('positions.destroy',$position)}}">
+                                    @endif
+                                    @if(checkPermission('position-delete'))
+                                        <form class="form-delete" method="post" action="{{route('positions.destroy',$position->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this Position?')" title="delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endcan
+                                    @endif
                                 </div>
                             </td>
                         </tr>

@@ -28,7 +28,6 @@ class CreatePositionsTable extends Migration
             $table->uuid('ward_id')->nullable();
             $table->foreign('ward_id')->references('id')->on('wards')->onDelete('set null')->onUpdate('cascade');
 
-
             $table->uuid('organization_id');
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade')->onUpdate('cascade');
 

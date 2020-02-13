@@ -12,8 +12,8 @@
     </div>
     <div class="col-md-6">
         <label  class="col-form-label">Position Title <span class="star">*</span></label>
-        <input list="cities" type="text" name="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }} " value="{{old('title',$position->title->name)}}" placeholder="Ex. IT Manager, Member" required />
-        <datalist id="cities">
+        <input list="titles" type="text" name="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }} " value="{{old('title',$position->title->name)}}" placeholder="Ex. IT Manager, Member" required />
+        <datalist id="titles">
             @foreach($titles as $title)
                 <option value="{{$title->name}}"/>
             @endforeach
