@@ -7,6 +7,7 @@ use App\Http\Requests\ItemReceivedRequest;
 use App\ItemReceived;
 use App\Item;
 use App\ItemUnit;
+use Illuminate\Support\Facades\DB;
 
 class ItemReceivedController extends Controller
 {
@@ -17,16 +18,14 @@ class ItemReceivedController extends Controller
     public function index(ItemReceived $itemReceived)
     {
         $this->authorize('read',$itemReceived);
-
-        $itemReceiveds = $itemReceived->with('item')->get()->sortBy('date_received');
-
-        $itemUits = ItemUnit::select('id','name')->get();
-
-        $itemUits = ItemUnit::select('id','name')->get();
-
-        return view('items.received.index',compact('itemReceiveds','itemUits'));
+        try {
+            $itemReceiveds = $itemReceived->with('item.item_unit')->latest()->get();
+            return view('store.itemReceived.index',compact('itemReceiveds'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -34,10 +33,13 @@ class ItemReceivedController extends Controller
     public function create(ItemReceived $itemReceived)
     {
         $this->authorize('create',$itemReceived);
-
-        $items = Item::select('id','name')->get(); //Get List of items
-
-        return view('items.received.create',compact('itemReceived','items'));
+        try {
+            $items = Item::select('id','name')->get(); //Get List of items
+            return view('store.itemReceived.create',compact('itemReceived','items'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
 
@@ -47,123 +49,157 @@ class ItemReceivedController extends Controller
     public function store(ItemReceivedRequest $request, ItemReceived $itemReceived)
     {
         $this->authorize('create',$itemReceived);
+        DB::beginTransaction();
+        try {
+            $this->multiply_quantity_and_unit_rate($request); //Multiply Quantity and Unite Rate to get total amount of the items received
 
-        //Multiply Quantity and Unite Rate to get total amount of the items received
-        $request['amount'] = multiply_two_numbers($request->quantity,$request->unit_rate);
+            $itemReceived = $itemReceived->create($request->all());
 
-        $itemReceived = $itemReceived->create($request->all());
+            $this->increment_item_quantity($request);//Increment the Item Quantity
 
-        //Increment the Item Quantity
-        $this->item_quantity($itemReceived->item_id, $itemReceived->quantity);
-
-        return back()->with('success','Item has been received');
+            DB::commit();
+            return back()->with('success','Item has been received');
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemReceived $itemReceived)
+    public function edit($id)
     {
-        $this->authorize('update',$itemReceived);
-
-        $items = Item::select('id','name')->get(); //Get List of items
-
-        return view('items.received.edit',compact('itemReceived','items'));
+        $this->authorize('update',$this->model());
+        try{
+            $items = Item::select('id','name')->get(); //Get List of items
+            $itemReceived = $this->getID($id);
+            return view('store.itemReceived.edit',compact('itemReceived','items'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
-
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemReceivedRequest $request, ItemReceived $itemReceived)
+    public function update(ItemReceivedRequest $request,$id)
     {
-        $this->authorize('update',$itemReceived);
-
-        //Multiply Quantity and Unite Rate to get total amount of the items received
-        $request['amount'] = multiply_two_numbers($request->quantity,$request->unit_rate);
-
-        $itemReceived->update($request->all());
-
-        //Check if Item Quantity Updated
-        if($request->quantity != $request->old_quantity)
-        {
-            $this->update_item_quantity($request->item_id,$request->quantity,$request->old_quantity);
+        $this->authorize('update',$this->model());
+        DB::beginTransaction();
+        try {
+            $this->multiply_quantity_and_unit_rate($request); //Multiply Quantity and Unite Rate to get total amount of the items received
+            $itemReceived = $this->getID($id); //Get delatis of updating item received
+            //Check if user update the item received quqntity
+            if($request->quantity != $itemReceived->quantity)
+            {
+                $this->update_item_quantity($request,$itemReceived->quantity);
+            }
+            $itemReceived->update($request->all());
+            DB::commit();
+            return redirect()->route('itemReceived.index')->with('success','Received Item has been Updated');
         }
-
-        return redirect()->route('itemReceived.index')->with('success','Received Item has been Updated');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemReceived $itemReceived)
+    public function destroy($id)
     {
-        if($this->check_before_delete_item_received ($itemReceived->item_id,$itemReceived->quantity) == false) {
+        $this->authorize('delete',$this->model());
+        try {
+            $itemReceived = $this->getID($id);
+
+            //Before Delete check the item recived quantity is less than the remain item quantity
+            $this->decrement_item_quantity($itemReceived->item_id,$itemReceived->quantity);
             $itemReceived->delete();
+            DB::commit();
             return redirect()->route('itemReceived.index')->with('success','Received Item has been deleted');
         }
-        else {
-            return redirect()->route('itemReceived.index')->with('error','Received Item can not be deleted');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return $this->errorReturn();
         }
+    }
 
+    /*
+     * Multiply quantity and unit rate
+     */
+    public function multiply_quantity_and_unit_rate ($request)
+    {
+        $request['amount'] = multiply_two_numbers($request['quantity'],$request['unit_rate']);
+        return $request;
     }
 
     /*
      * Increment Item Quantity Number
      */
-    public function item_quantity($item_id, $quantity)
+    public function increment_item_quantity ($request)
     {
-        $item = $this->get_item_id($item_id);   //Initialize the class
+        $item = $this->get_item_id($request['item_id']);   //Initialize the class
 
-        $item->increment('quantity',$quantity);
-
-        return null; //return nothing
+        return $item->increment('quantity',$request['quantity']);
     }
 
     /*
      * Update the Item Quantity
      */
-    public function update_item_quantity($item_id,$quantity,$old_quantity)
+    public function update_item_quantity($request,$old)
     {
-        $item = $this->get_item_id($item_id);
+        $item = $this->get_item_id($request['item_id']);
 
-        $item->decrement('quantity',$old_quantity);
+        $item->decrement('quantity',$old);
 
-        $item->increment('quantity',$quantity);
-
-        return null; //return nothing
+        return $item->increment('quantity',$request['quantity']);
     }
 
     /*
      * Delete the Item Quantity
      */
-    public function check_before_delete_item_received ($item_id, $quantity)
+    public function decrement_item_quantity ($id, $quantity)
     {
-        $item = $this->get_item_id($item_id);
-
-        if($item->quantity < $quantity )
-        {
-            return true;
-        }
-        else {
-            $item->decrement('quantity',$quantity);
-
-            return false;
-        }
+        $item = $this->get_item_id($id);
+        return $item->decrement('quantity',$quantity);
     }
 
     /*
-     * Get Item ID
+     * Get selected dropdown item ID
      */
-    public function get_item_id ($item)
+    public function get_item_id ($id)
     {
-        $item = Item::where('id',$item)->first();
-
-        return $item;
+        return Item::findOrFail($id);
     }
 
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = ItemReceived::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controller model class
+     */
+    public function model ()
+    {
+        return ItemReceived::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('itemReceived.index')->with('error','something went wrong');
+    }
 
 
 }
