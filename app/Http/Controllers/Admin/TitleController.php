@@ -7,6 +7,7 @@ use App\Http\Requests\ImportRequest;
 use App\Http\Requests\TitleRequest;
 use App\Imports\TitleImport;
 use App\Title;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TitleController extends Controller
 {
@@ -16,10 +17,13 @@ class TitleController extends Controller
     public function index(Title $title)
     {
         $this->authorize('read',$title);
-
-        $titles = $title->latest()->get();
-
-        return view('individuals.titles.index',compact('titles'));
+        try {
+            $titles = $title->latest()->get();
+            return view('individuals.titles.index',compact('titles'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -28,59 +32,99 @@ class TitleController extends Controller
     public function store(TitleRequest $request, Title $title)
     {
         $this->authorize('create',$title);
-
-        $title->create($request->only('name','desc'));
-
-        return back()->with('success',' Title has been saved');
+        try {
+            $title->create($request->only('name','desc'));
+            return back()->with('success',' Title has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Title $title)
+    public function edit($id)
     {
-        $this->authorize('update',$title);
-
-        return view('individuals.titles.edit',compact('title'));
+        $this->authorize('update',$this->model());
+        try{
+            $title = $this->getID($id);
+            return view('individuals.titles.edit',compact('title'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(TitleRequest $request, Title $title)
+    public function update(TitleRequest $request,$id)
     {
-        $this->authorize('update',$title);
-
-        $title->update($request->only('name','desc'));
-
-        return redirect()->route('titles.index')->with('success',' Title has been updated');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->only('name','desc'));
+            return redirect()->route('titles.index')->with('success',' Title has been updated');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Title $title)
+    public function destroy($id)
     {
-        $this->authorize('delete',$title);
-
-        $title->delete();
-
-        return back()->with('success','Title has been deleted');
-    }
-
-    /*
-   * Import Data from Excel
-   */
-    public function import (ImportRequest $request, Title $title)
-    {
-        $this->authorize('import',$title);
-
-        if ($request->file('imported_file')) {
-            Excel::import(new TitleImport(), request()->file('imported_file'));
-            return back()->with('success','titles imported successfully!');
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Position title has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
         }
     }
 
+    /*
+    * Get requested record ID
+    */
+    public function getID($id)
+    {
+        $data = Title::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Title::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('titles.index')->with('error','something went wrong');
+    }
+
+   /*
+    * Import Data from Excel
+    */
+    public function import (ImportRequest $request)
+    {
+        $this->authorize('create',$this->model());
+        try {
+            Excel::import(new TitleImport, request()->file('imported_file'));
+            return back()->with('success','titles imported successfully!');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
 
 }

@@ -127,6 +127,9 @@ Route::prefix('individual/')->namespace('Admin')->group (function () {
     Route::resource('educationLevels', 'EducationLevelController')->except('create','show');
     Route::resource('positions', 'PositionController')->except('show');
     Route::resource('groups', 'GroupController')->except('create','show');
+
+
+    Route::post('titles/import', 'TitleController@import')->name('titles.import');
     Route::resource('titles', 'TitleController')->except('create','show');
 });
 

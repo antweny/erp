@@ -10,12 +10,10 @@
                         <h4 class="header-title">Titles</h4>
                     </div>
                     <div class="float-right">
-                        @can('title-import')
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('title-create')
+                        @if(checkPermission('title-create'))
+                            <a class="btn btn-secondary mr-3 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                             <a class="btn btn-primary" href="#newTitle" data-toggle="modal"><i class="fa fa-plus"></i> New title</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -42,17 +40,17 @@
                                 <td class="text-left">{{$title->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @can('title-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('titles.edit',$title)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('title-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('titles.edit',$title->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('title-delete')
-                                            <form class="form-delete" method="post" action="{{route('titles.destroy',$title)}}">
+                                        @if(checkPermission('title-delete'))
+                                            <form class="form-delete" method="post" action="{{route('titles.destroy',$title->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete title {{$title->name}}')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -63,7 +61,7 @@
         </div>
     </div>
 
-    @can('title-create')
+    @if(checkPermission('title-create'))
         <!-- start create new title form modal -->
         <div class="modal fade" id="newTitle" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -104,9 +102,7 @@
             </div>
         </div>
         <!-- end create new title form modal -->
-    @endcan
 
-    @can('title-import')
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -137,6 +133,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection
