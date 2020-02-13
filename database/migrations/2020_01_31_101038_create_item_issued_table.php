@@ -18,8 +18,8 @@ class CreateItemIssuedTable extends Migration
 
             $table->date('date_issued');
 
-            $table->uuid('item_id')->nullable();
-            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('SET NULL');
+            $table->uuid('item_id');
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
 
             $table->float('quantity');
 

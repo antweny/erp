@@ -36,7 +36,7 @@ class Item extends BaseModel
             return '<span class="status text-white bg-success">Good</span>';
         }
         elseif ($this->quantity == 0) {
-            return '<span class="status text-white bg-danger">Order</span>';
+            return '<span class="status text-white bg-danger">Out of Stock</span>';
         }
         else {
             return null;

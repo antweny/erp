@@ -38,7 +38,7 @@ class ItemRequest extends FormRequest
                     'item_category_id' => 'nullable',
                     'item_unit_id' => 'nullable',
                     'min_quantity' => 'required|numeric',
-                    'quantity' => 'required|numeric|gte:min_quantity',
+                    'quantity' => 'required|numeric',
 
                 ];
             }
@@ -46,12 +46,12 @@ class ItemRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:items,id,'.$this->item->id,
+                    'name' => 'required|string|max:255|unique:items,id,'.$this->id,
                     'desc' => 'string|nullable',
                     'item_category_id' => 'nullable',
                     'item_unit_id' => 'nullable',
                     'min_quantity' => 'required|numeric',
-                    'quantity' => 'required|numeric|gte:min_quantity',
+                    'quantity' => 'required|numeric',
                 ];
             }
         }

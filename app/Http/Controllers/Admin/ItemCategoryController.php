@@ -76,7 +76,7 @@ class ItemCategoryController extends Controller
         $this->authorize('delete',$this->model());
         try {
             $this->getID($id)->delete();
-            return redirect()->route('itemCategories.index')->with('success','item category has been delete!');
+            return redirect()->route('itemCategories.index')->with('success','item category has been deleted!');
         }
         catch (\Exception $e) {
             return $this->errorReturn();

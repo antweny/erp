@@ -17,8 +17,8 @@ class CreateItemReceivedTable extends Migration
             $table->uuid('id')->primary();
             $table->date('date_received');
 
-            $table->uuid('item_id')->nullable();
-            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('SET NULL');
+            $table->uuid('item_id');
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
 
             $table->mediumText('desc')->nullable();
 
