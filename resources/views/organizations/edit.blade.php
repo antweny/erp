@@ -5,7 +5,7 @@
 
 
     <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
                     <div class="row hd">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($organization, array('route' => array('organizations.update', $organization), 'method' => 'PUT')) }}
+                    {{ Form::model($organization, array('route' => array('organizations.update', $organization->id), 'method' => 'PUT')) }}
                         @csrf
                         @include('organizations._form',['buttonText'=>'update'])
                     {{Form::close()}}

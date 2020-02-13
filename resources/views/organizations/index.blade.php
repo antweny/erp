@@ -12,12 +12,13 @@
                         <h4 class="header-title">Organizations</h4>
                     </div>
                     <div class="float-right">
-                        @can('organization-import')
+                        @if(checkPermission('organization-import'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('organization-create')
+                        @endif
+
+                        @if(checkPermission('organization-create'))
                             <a class="btn btn-primary" href="{{route('organizations.create')}}"><i class="fa fa-plus"></i> New organization</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -51,15 +52,17 @@
 
                                 <th class="text-center p-0" >
                                     <div class=" btn btn-group">
-                                            <a class="btn btn-info text-white btn-sm mr-2" href="{{route('organizations.show',$organization)}}" title="View"><i class="fa fa-info-circle"></i></a>
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('organizations.edit',$organization)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <form class="form-delete" method="post" action="{{route('organizations.destroy',$organization)}}">
+                                        @if(checkPermission('organization-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('organizations.edit',$organization->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if(checkPermission('organization-delete'))
+                                            <form class="form-delete" method="post" action="{{route('organizations.destroy',$organization->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this organization {{$organization->organization_name}}?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
+                                        @endif
                                     </div>
-
                                 </th>
                             </tr>
                         @endforeach
@@ -70,7 +73,7 @@
     </div>
 
 
-    @can('organization-import')
+    @if(checkPermission('organization-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -101,7 +104,7 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 
 @endsection

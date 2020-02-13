@@ -26,7 +26,7 @@
 <div class="form-group row">
     <div class="col-md-6">
         <label class="col-form-label">Category </label>
-        <select name="organization_category_id" class="form-control @error('organization_category_id') is-invalid @enderror">
+        <select name="organization_category_id" class="form-control @error('organization_category_id') is-invalid @enderror single-select">
             <option value="">Select....</option>
             @foreach($categories as $category)
                 <option value="{{$category->id}}" {{old('organization_category_id',$organization->organization_category_id) == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
@@ -67,7 +67,7 @@
 <div class="form-group row">
     <div class="col-md-4">
         <label class="col-form-label">City/Region </label>
-        <select name="city_id" class="form-control @error('city_id') is-invalid @enderror">
+        <select name="city_id" class="form-control @error('city_id') is-invalid @enderror single-select">
             <option value="">Select....</option>
             @foreach($cities as $city)
                 <option value="{{$city->id}}" {{old('city_id',$organization->city_id) == $city->id ? 'selected' : ''}}>{{$city->name}}</option>
@@ -77,7 +77,7 @@
     </div>
     <div class="col-md-4">
         <label class="col-form-label">District</label>
-        <select name="district_id" class="form-control @error('district_id') is-invalid @enderror">
+        <select name="district_id" class="form-control @error('district_id') is-invalid @enderror single-select">
             <option value="">Select....</option>
             @foreach($districts as $district)
                 <option value="{{$district->id}}" {{old('district_id',$organization->district_id) == $district->id ? 'selected' : ''}}>{{$district->name}}</option>
@@ -87,7 +87,7 @@
     </div> 
     <div class="col-md-4">
         <label class="col-form-label">Ward</label>
-        <select name="ward_id" class="form-control @error('ward_id') is-invalid @enderror">
+        <select name="ward_id" class="form-control @error('ward_id') is-invalid @enderror single-select">
             <option value="">Select....</option>
             @foreach($wards as $ward)
                 <option value="{{$ward->id}}" {{old('ward_id',$organization->ward_id) == $ward->id ? 'selected' : ''}}>{{$ward->name}}</option>

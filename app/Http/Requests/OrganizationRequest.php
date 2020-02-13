@@ -54,7 +54,7 @@ class OrganizationRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:100|unique:organizations,name,'.$this->organization->id,
+                    'name' => 'required|string|max:100|unique:organizations,name,'.$this->id,
                     'acronym' => 'nullable|string|max:15',
                     'founded'=>'nullable|integer',
                     'registered'=>'nullable|integer',
