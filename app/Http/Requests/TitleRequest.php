@@ -41,7 +41,7 @@ class TitleRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:titles,id,'.$this->title->id,
+                    'name' => 'required|string|max:255|unique:titles,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }
