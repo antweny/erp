@@ -41,7 +41,7 @@ class GroupRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:groups,id,'.$this->group->id,
+                    'name' => 'required|string|max:255|unique:groups,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }

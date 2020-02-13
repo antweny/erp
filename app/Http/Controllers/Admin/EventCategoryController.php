@@ -111,4 +111,6 @@ class EventCategoryController extends Controller
     {
         return redirect()->route('eventCategories.index')->with('error','something went wrong');
     }
+
+
 }

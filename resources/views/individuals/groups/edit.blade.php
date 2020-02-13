@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($group, array('route' => array('groups.update', $group), 'method' => 'PUT','autocomplete' => 'off')) }}
+                    {{ Form::model($group, array('route' => array('groups.update', $group->id), 'method' => 'PUT','autocomplete' => 'off')) }}
                         @include('individuals.groups._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>
