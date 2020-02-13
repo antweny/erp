@@ -16,11 +16,11 @@ class CreateGenderSeriesParticipantsTable extends Migration
         Schema::create('gender_series_participants', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('gender_series_id')->nullable();
-            $table->foreign('gender_series_id')->references('id')->on('gender_series')->onDelete('set null')->onUpdate('cascade');
+            $table->uuid('gender_series_id');
+            $table->foreign('gender_series_id')->references('id')->on('gender_series')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->uuid('individual_id')->nullable();
-            $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('set null')->onUpdate('cascade');
+            $table->uuid('individual_id');
+            $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('cascade')->onUpdate('cascade');
 
             $table->uuid('organization_id')->nullable();
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null')->onUpdate('cascade');

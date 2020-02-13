@@ -10,19 +10,18 @@
                         <h4 class="header-title">Individuals</h4>
                     </div>
                     <div class="float-right">
-                        @can('individual-import')
+                        @if(checkPermission('individual-import'))
                             <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endcan
-                        @can('individual-create')
+                        @endif
+                        @if(checkPermission('individual-create'))
                             <a class="btn btn-primary" href="{{route('individuals.create')}}"><i class="fa fa-plus"></i> New individual</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
@@ -40,31 +39,27 @@
                     <tbody>
                         @foreach ($individuals as $individual)
                             <tr>
-                                <td class="text-left">{{ $individual->full_name }}</td>
-                                <td class="text-center">{{ $individual->sex }}</td>
-                                <td class="text-center">{{$individual->age_group}}</td>
-                                <td class="text-center">{{$individual->district->name}}</td>
-                                <td class="text-left">{{$individual->occupation}}</td>
-                                <td class="text-center">{{$individual->education_level->name}}</td>
-                                <td class="text-center">{{$individual->mobile}}</td>
+                                <td class="text-left">{{ $individual['full_name'] }}</td>
+                                <td class="text-center">{{ $individual['sex'] }}</td>
+                                <td class="text-center">{{$individual['age_group']}}</td>
+                                <td class="text-center">{{$individual['district']}}</td>
+                                <td class="text-left">{{$individual['occupation']}}</td>
+                                <td class="text-center">{{$individual['education']}}</td>
+                                <td class="text-center">{{$individual['mobile']}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        
-                                            <a class="btn btn-secondary btn-sm mr-2" href="{{route('individuals.show',$individual)}}" title="View">
-                                                <i class="fa fa-info-circle"></i>
-                                            </a>
-
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('individuals.edit',$individual)}}" title="Edit">
+                                        @if(checkPermission('individual-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('individuals.edit',$individual['id'])}}" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                        
-                                            @can('individual-delete')
-                                                <form class="form-delete" method="post" action="{{route('individuals.destroy',$individual)}}">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this individual {{$individual->full_name}}?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
-                                                </form>
-                                            @endcan
+                                        @endif
+                                        @if(checkPermission('individual-delete'))
+                                            <form class="form-delete" method="post" action="{{route('individuals.destroy',$individual['id'])}}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this individual {{$individual['full_name']}}?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -76,7 +71,7 @@
         </div>
     </div>
 
-    @can('district-import')
+    @if(checkPermission('individual-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -107,6 +102,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection

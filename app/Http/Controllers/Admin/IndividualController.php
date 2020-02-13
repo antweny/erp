@@ -6,27 +6,38 @@ use App\City;
 use App\District;
 use App\EducationLevel;
 use App\Http\Requests\ImportRequest;
-use App\Imports\IndividualImport;
 use App\Http\Controllers\Controller;
+use App\Imports\IndividualsImport;
 use App\Individual;
+use App\Repositories\IndividualRepository;
 use App\Ward;
 use App\Http\Requests\IndividualRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
 class IndividualController extends Controller
 {
+    protected $individual = null;
+
+    public function __construct(IndividualRepository $individual)
+    {
+        parent::__construct();
+        $this->individual = $individual;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Individual $individual)
+    public function index()
     {
-        $this->authorize('read',$individual);
-
-        $individuals = $individual->orderBy('full_name','asc')->with(['country','city','district','ward','street','education_level'])->get();
-
-        return view('individuals.index',compact('individuals'));
+        $this->authorize('read',$this->model());
+        try {
+            $individuals = $this->individual->all();
+            return view('individuals.index',compact('individuals'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -34,13 +45,12 @@ class IndividualController extends Controller
     public function create(Individual $individual)
     {
         $this->authorize('create',$individual);
-
-        $cities = City::get_name_and_id();
-        $districts = District::get_name_and_id();
-        $wards = Ward::get_name_and_id();
-        $levels = EducationLevel::get_name_and_id();
-
-        return view('individuals.create',compact('individual','cities','districts','wards','levels'));
+        try {
+            return $this->populate(__FUNCTION__,$individual);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
@@ -49,94 +59,77 @@ class IndividualController extends Controller
     public function store(IndividualRequest $request, Individual $individual)
     {
         $this->authorize('create',$individual);
-
-        $request['city_id'] = $this->check_city($request['city']);
-        $request['district_id'] = $this->check_district($request['district']);
-        $request['ward_id'] = $this->check_ward($request['ward']);
-
-
-        //Check if Individual Already Exist in the system
-        if ($this->check_name_mobile_unique($request) > 0)
-        {
-            return back()->with('error','This user '.$request['full_name'].' already exists');
+        try {
+            $this->get_select_ids($request);
+            $individual->create($request->except('district','ward','city'));
+            return back()->with('success',' Individual has been saved ');
         }
-
-        $individual->create($request->except('district','ward','city'));
-
-        return back()->with('success',' Individual has been saved ');
-
+        catch (\Exception $e) {
+            return back()->with('error','This user '.$request['full_name'].' already exists')->withInput($request->all());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Individual $individual)
+    public function edit($id)
     {
-        $this->authorize('update',$individual);
-
-        $cities = City::get_name_and_id();
-        $districts = District::get_name_and_id();
-        $wards = Ward::get_name_and_id();
-        $levels = EducationLevel::get_name_and_id();
-
-        return view('individuals.edit',compact('individual','cities','districts','wards','levels'));
+        $this->authorize('update',$this->model());
+        try {
+            $individual = $this->getID($id);
+            return $this->populate(__FUNCTION__,$individual);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(IndividualRequest $request, Individual $individual)
+    public function update(IndividualRequest $request, $id)
     {
-        $this->authorize('update',$individual);
-
-        $request['city_id'] = $this->check_city($request['city']);
-        $request['district_id'] = $this->check_district($request['district']);
-        $request['ward_id'] = $this->check_ward($request['ward']);
-
-        $individual->update($request->except('district','ward','city'));
-
-        return redirect()->route('individuals.index')->with('success',' Individual has been updated');
-
+        $this->authorize('update',$this->model());
+        try {
+            $this->get_select_ids($request);
+            $this->getID($id)->update($request->except('district','ward','city'));
+            return back()->with('success',' Individual has been saved ');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','This user '.$request['full_name'].' already exists')->withInput($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Individual $individual)
+    public function destroy($id)
     {
-        $this->authorize('delete',$individual);
-
-        $individual->delete();
-
-        return back()->with('success',' individual deleted successfully');
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success',' individual deleted successfully');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /*
      * Import Data from Excel
      */
-    public function import (ImportRequest $request, Individual $individual)
+    public function import (ImportRequest $request)
     {
-        $this->authorize('import',$individual);
-
-        if ($request->file('imported_file')) {
-            Excel::import(new IndividualImport(), request()->file('imported_file'));
+        $this->authorize('import',$this->model());
+        try {
+            Excel::import(new IndividualsImport,request()->file('imported_file'));
             return back()->with('success','Individual imported successfully!');
         }
+        catch (\Exception $e){
+            //return $this->errorReturn();
+            return redirect()->route('individuals.index')->with('error',$e->getMessage());
+        }
     }
-
-
-    /*
-     * Check if user already added as participant on the event on the same day
-     */
-    public function check_name_mobile_unique($request)
-    {
-        $query = Individual::where('full_name','LIKE','%' .$request['full_name']. '%')
-            ->where('mobile',$request['mobile'])
-            ->count();
-
-        return $query;
-    }
-
 
     /*
      * Check if resource exist get ID if not create and get ID
@@ -145,7 +138,6 @@ class IndividualController extends Controller
     {
         $name = new City();
         return $name->get_id($request);
-
     }
     public function check_district($request)
     {
@@ -159,24 +151,54 @@ class IndividualController extends Controller
 
     }
 
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $participant = Individual::findOrFail($id);
+        return $participant;
+    }
 
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return Individual::class;
+    }
 
+    /*
+    * Populate dropdowns values from different tables and return to forms
+    */
+    public function populate($function_name, $individual) {
+        $cities = City::get_name_and_id();
+        $districts = District::get_name_and_id();
+        $wards = Ward::get_name_and_id();
+        $levels = EducationLevel::get_name_and_id();
 
+        $data = compact('individual','cities','districts','wards','levels');
+        return view('individuals.' .$function_name , $data);
+    }
 
+    /*
+    * Exception Error return back
+    */
+    public function errorReturn()
+    {
+        return redirect()->route('individuals.index')->with('error','something went wrong');
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /*
+     * Get dropdown select ID submitted by a user
+     */
+    public function get_select_ids ($request)
+    {
+        $request['city_id'] = $this->check_city($request['city']);
+        $request['district_id'] = $this->check_district($request['district']);
+        $request['ward_id'] = $this->check_ward($request['ward']);
+        return $request;
+    }
 
 
 }

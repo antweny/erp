@@ -10,8 +10,8 @@ class Individual extends BaseModel
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['full_name','age_group','mobile','gender','address','email','occupation','education_level_id',
-        'city_id','district_id','ward_id'];
+    protected $fillable = ['full_name', 'age_group', 'mobile', 'gender', 'address', 'email', 'occupation', 'education_level_id',
+        'city_id', 'district_id', 'ward_id'];
 
 
     /*
@@ -34,8 +34,7 @@ class Individual extends BaseModel
      */
     public function getSexAttribute()
     {
-        switch ($this->gender)
-        {
+        switch ($this->gender) {
             case 'M':
                 return 'Male';
                 break;
@@ -56,22 +55,27 @@ class Individual extends BaseModel
     {
         return $this->belongsTo(Country::class)->withDefault();
     }
+
     public function city()
     {
         return $this->belongsTo(City::class)->withDefault();
     }
+
     public function district()
     {
         return $this->belongsTo(District::class)->withDefault();
     }
+
     public function ward()
     {
         return $this->belongsTo(Ward::class)->withDefault();
     }
+
     public function street()
     {
         return $this->belongsTo(Street::class)->withDefault();
     }
+
     public function education_level()
     {
         return $this->belongsTo(EducationLevel::class)->withDefault();
@@ -86,7 +90,7 @@ class Individual extends BaseModel
      */
     static function get_name_and_id()
     {
-        $individual = Individual::select('id','full_name')->get();
+        $individual = Individual::select('id', 'full_name')->get();
 
         return $individual;
     }
@@ -98,9 +102,27 @@ class Individual extends BaseModel
     public function get_id($data)
     {
         if ($data != null) {
-            $model = $this->firstOrCreate(['full_name'=>$data]);
+            $model = $this->firstOrCreate(['full_name' => $data]);
             return $model->id;
         }
         return null;
+    }
+
+    /*
+     * Format the data to display
+     */
+    public function format()
+    {
+        return [
+            'id' => $this->id,
+            'full_name' => $this->full_name,
+            'sex' => $this->sex,
+            'age_group' => $this->age_Group,
+            'district' => $this->district->name,
+            'occupation' => $this->occupation,
+            'education' => $this->education_level->name,
+            'mobile' => $this->mobile,
+        ];
+
     }
 }
