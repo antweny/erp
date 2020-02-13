@@ -38,7 +38,7 @@ class ItemCategoryRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:item_categories,id,'.$this->itemCategory->id,
+                    'name' => 'required|string|max:255|unique:item_categories,id,'.$this->id,
                     'desc' => 'string|nullable',
                     'sort' => 'integer|nullable',
                 ];

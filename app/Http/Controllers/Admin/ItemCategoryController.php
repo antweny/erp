@@ -9,21 +9,18 @@ use App\ItemCategory;
 class ItemCategoryController extends Controller
 {
     /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin']);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index(ItemCategory $itemCategory)
     {
-        $itemCategories = $itemCategory->get()->sortBy('sort');
-
-        return view('items.categories.index',compact('itemCategories'));
+        $this->authorize('read',$itemCategory);
+        try {
+            $itemCategories = $itemCategory->get()->sortBy('sort');
+            return view('store.itemCategories.index',compact('itemCategories'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -31,37 +28,83 @@ class ItemCategoryController extends Controller
      */
     public function store(ItemCategoryRequest $request, ItemCategory $itemCategory)
     {
-        $itemCategory->create($request->only('name','desc','sort'));
-
-        return back()->with('success','Item Category has been saved!');
+        $this->authorize('create',$itemCategory);
+        try {
+            $itemCategory->create($request->only('name','desc','sort'));
+            return back()->with('success','Item Category has been saved!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemCategory $itemCategory)
+    public function edit($id)
     {
-        return view('items.categories.edit',compact('itemCategory'));
+        $this->authorize('update',$this->model());
+        try{
+            $itemCategory = $this->getID($id);
+            return view('store.itemCategories.edit',compact('itemCategory'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemCategoryRequest $request, ItemCategory $itemCategory)
+    public function update(ItemCategoryRequest $request, $id)
     {
-        $itemCategory->update($request->only('name','sort','desc'));
-
-        return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->only('name','sort','desc'));
+            return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemCategory $itemCategory)
+    public function destroy($id)
     {
-        $itemCategory->delete();
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return redirect()->route('itemCategories.index')->with('success','item category has been delete!');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
-        return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = ItemCategory::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return ItemCategory::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('itemCategories.index')->with('error','something went wrong');
     }
 }
