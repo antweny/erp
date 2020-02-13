@@ -90,4 +90,17 @@ class Individual extends BaseModel
 
         return $individual;
     }
+
+    /*
+     * Get Name and ID
+     */
+    //Check if resource exist get ID if not create and get ID
+    public function get_id($data)
+    {
+        if ($data != null) {
+            $model = $this->firstOrCreate(['full_name'=>$data]);
+            return $model->id;
+        }
+        return null;
+    }
 }
