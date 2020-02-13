@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
@@ -15,24 +15,22 @@
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')
-                    {{ Form::model($itemIssued, array('route' => array('itemIssued.update', $itemIssued), 'method' => 'PUT')) }}
+                    {{ Form::model($itemIssued, array('route' => array('itemIssued.update', $itemIssued->id), 'method' => 'PUT')) }}
                         @csrf
                         <div class="form-group row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="col-form-label">Date Issued <span class="star">*</span> </label>
                                 <input type="date" name="date_issued" class="form-control @error('date_issued') is-invalid @enderror" value="{{$itemIssued->date_issued}}" required></input>
                                 @error('date_issued')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
                                 <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
                                 <input type="text" name="item_name" class="form-control" value="{{$itemIssued->item->name}}" required readonly></input>
-                                <input type="hidden" name="item_id" class="form-control" value="{{$itemIssued->item_id}}"></input></div>
+                                <input type="hidden" name="item_id" class="form-control" value="{{$itemIssued->item_id}}"></input>
                             </div>
-
-                        <div class="form-group row">
-
                         </div>
-
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="col-form-label">Required <span class="star">*</span> </label>
@@ -46,7 +44,6 @@
                                 @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="col-form-label">Employee Name<span class="star">*</span> </label>
@@ -70,6 +67,7 @@
                                 </div>
                             </div>
                         </div>
+
                     {{Form::close()}}
                 </div>
             </div>

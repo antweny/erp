@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemIssuedRequest;
 use App\ItemIssued;
 use App\Item;
+use Illuminate\Support\Facades\DB;
 
 class ItemIssuedController extends Controller
 {
@@ -17,10 +18,13 @@ class ItemIssuedController extends Controller
     public function index(ItemIssued $itemIssued)
     {
         $this->authorize('read',$itemIssued);
-
-        $itemIssueds = $itemIssued->orderBy('date_issued','desc')->with('employee','item')->get();
-
-        return view('items.issued.index',compact('itemIssueds'));
+        try {
+            $itemIssueds = $itemIssued->orderBy('date_issued','desc')->with('employee','item')->get();
+            return view('store.itemIssued.index',compact('itemIssueds'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -29,12 +33,12 @@ class ItemIssuedController extends Controller
     public function create(ItemIssued $itemIssued)
     {
         $this->authorize('create',$itemIssued);
-
-        $items = Item::quantity_greater_than_zero(); //Get List of items
-
-        $employees = Employee::get_full_name_and_id();
-
-        return view('items.issued.create',compact('items','itemIssued','employees'));
+        try {
+            return $this->populate(__FUNCTION__, $itemIssued);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
@@ -43,18 +47,18 @@ class ItemIssuedController extends Controller
     public function store(ItemIssuedRequest $request, ItemIssued $itemIssued)
     {
         $this->authorize('create',$itemIssued);
-
         $request['status'] = 'I';
 
-        //Increment the Item Quantity
-        if ($this->reduce_item_quantity_on_creating($request->item_id, $request->quantity) == true ) {
-
-            $itemIssued = $itemIssued->create($request->all());
-
+        DB::beginTransaction();
+        try {
+            $this->decrement_item_quantity($request);    //Reduced quantity number on item on issuee
+            $itemIssued->create($request->all());
+            DB::commit();
             return back()->with('success','Item has been issued');
         }
-        else {
-            return back()->withInput($request->input())->with('error','Sorry the Quantity requested is greaterr than the remain quantity!');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error','Something went wrong')->withInput($request->input());
         }
     }
 
@@ -62,130 +66,139 @@ class ItemIssuedController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemIssued $itemIssued)
+    public function edit($id)
     {
-        $this->authorize('update',$itemIssued);
-
-        $items = Item::quantity_greater_than_zero(); //Get List of items
-
-        $employees = Employee::get_full_name_and_id();
-
-        return view('items.issued.edit',compact('itemIssued','employees'));
+        $this->authorize('update',$this->model());
+        try {
+            $itemIssued = $this->getID($id);
+            return $this->populate(__FUNCTION__, $itemIssued);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemIssuedRequest $request, ItemIssued $itemIssued)
+    public function update(ItemIssuedRequest $request, $id)
     {
-        $this->authorize('update',$itemIssued);
+        $this->authorize('update',$this->model());
+        DB::beginTransaction();
+        try {
+            $request['status'] = 'I';
 
-        //Check if Quantity has been updated
-        if($request->quantity != $request->old_quantity) { //Check if the Quantity Updated
-
-            //Check if quantity requested is smaller than the remaining quantity
-            if($this->check_quantity_smaller_than_remaining_quantity($request->item_id,$request->quantity,$request->old_quantity) == true){
-
-                $itemIssued->update($request->all()); //Update item issued table
-
-                $this->reduce_item_quantity_on_updating($request->item_id,$request->quantity,$request->old_quantity);
-
-                return redirect()->route('itemIssued.index')->with('success','Issued Item has been Updated');
+            $itemIssued = $this->getID($id); //Get delatis of updating item received
+            //Check if user update the item received quqntity
+            if($request->quantity != $itemIssued->quantity)
+            {
+                $this->update_item_quantity($request,$itemIssued->quantity);
             }
-            else {
-                return back()->withInput($request->input())->with('error','Sorry the Quantity requested is greater than the remain quantity!');
-            }
-
-        }
-        else {
             $itemIssued->update($request->all());
-            return redirect()->route('itemIssued.index')->with('success','Issued Item has been Updated');
+            DB::commit();
+            return redirect()->route('itemIssued.index')->with('success','Item Issued has been Updated');
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error',' Something went wrong')->withInput($request->input());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemIssued $itemIssued)
+    public function destroy($id)
     {
-        $this->authorize('delete',$itemIssued);
+        $this->authorize('delete',$this->model());
+        try {
+            $itemIssued = $this->getID($id);
 
-        $this->reduce_item_quantity_on_deleting($itemIssued->item_id,$itemIssued->quantity);
-
-        $itemIssued->delete();
-
-        return redirect()->route('itemIssued.index')->with('success','Issued Item has been deleted');
-
+            //Update the Item Table
+            $this->increment_item_quantity($itemIssued->item_id,$itemIssued->quantity);
+            $itemIssued->delete();
+            DB::commit();
+            return redirect()->route('itemIssued.index')->with('success','Issued Item has been deleted');
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return $this->errorReturn();
+        }
     }
 
     /*
-    * Reduce number of stock on item when issued
+    * Reduce number of quantity on item when issued
     */
-    public function reduce_item_quantity_on_creating ($item_id,$quantity)
+    public function decrement_item_quantity ($request)
     {
-        $item = $this->get_item_id($item_id);
+        $item = $this->get_item_id($request['item_id']);
 
-        if($item->quantity >= $quantity) {   //Check if the Quantity requested is smallet then the quantity remain
-            $item->decrement('quantity',$quantity);
-            return true;
-        }
-        else {
-            return false; //return nothing
-        }
+        return $item->decrement('quantity',$request['quantity']);
     }
 
     /*
-     * Update the Item Quantity
+     * Update the Item Quantity when updating issued quantity
      */
-    public function reduce_item_quantity_on_updating ($item_id,$quantity,$old_quantity)
+    public function update_item_quantity ($request,$quantity)
     {
-        $item = $this->get_item_id($item_id);
-
-        $item->increment('quantity',$old_quantity);
-
-        $item->decrement('quantity',$quantity);
-
-        return null; //return nothing
+        $item = $this->get_item_id($request['item_id']);
+        $item->increment('quantity',$quantity);
+        return $item->decrement('quantity',$request['quantity']);
     }
 
     /*
      * Delete the Item Quantity
      */
-    public function reduce_item_quantity_on_deleting ($item_id, $quantity)
+    public function increment_item_quantity ($id, $quantity)
     {
-        $item = $this->get_item_id($item_id);
-
-        $item->increment('quantity',$quantity);
-
-        return;
-
-    }
-
-    /*
-     * Check if the Quantity issued is greater than the item remain quantity
-    */
-    public function check_quantity_smaller_than_remaining_quantity ($item_id, $quantity, $old_quantity)
-    {
-        $item = $this->get_item_id($item_id);
-
-        $item_quantity = $item->quantity + $old_quantity;
-
-        if($item_quantity >= $quantity) {   //Check if the Quantity requested is smallet then the quantity remain
-            return true;
-        }
-        else {
-            return false; //return nothing
-        }
+        $item = $this->get_item_id($id);
+        return $item->increment('quantity',$quantity);
     }
 
     /*
      * Get Item ID
      */
-    public function get_item_id ($item)
+    public function get_item_id ($id)
     {
-        $item = Item::where('id',$item)->first();
-
+        $item = Item::findOrFail($id);
         return $item;
     }
+
+    /*
+    * Populate dropdowns values from different tables and return to forms
+    */
+    public function populate($function_name, $itemIssued) {
+
+        $items = Item::quantity_greater_than_zero(); //Get List of items
+        $employees = Employee::get_full_name_and_id();
+
+        $data = compact('items','itemIssued','employees');
+        return view('store.itemIssued.'.$function_name , $data);
+    }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = ItemIssued::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controller model class
+     */
+    public function model ()
+    {
+        return ItemIssued::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('itemIssued.index')->with('error','something went wrong');
+    }
+
 
 }

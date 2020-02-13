@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-      <div class="col-md-5">
+      <div class="col-md-6">
          <div class="card">
             <div class="card-header">
                <div class="float-left">
@@ -16,7 +16,7 @@
             <div class="card-body">
                @include('alerts._flash')
                <form method="POST" action="{{route('itemIssued.store')}}" class="form" autocomplete="off">
-                   @include('items.issued._form',['buttonText'=>'Save Record'])
+                   @include('store.itemIssued._form',['buttonText'=>'Save Record'])
                </form>
             </div>
          </div>

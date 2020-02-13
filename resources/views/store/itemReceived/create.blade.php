@@ -16,7 +16,7 @@
             <div class="card-body">
                @include('alerts._flash')
                <form method="POST" action="{{route('itemReceived.store')}}" class="form" autocomplete="off">
-                   @include('items.received._form',['buttonText'=>'Save Record'])
+                   @include('store.itemReceived._form',['buttonText'=>'Save Record'])
                </form>
             </div>
          </div>

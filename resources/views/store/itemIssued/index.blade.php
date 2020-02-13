@@ -10,9 +10,9 @@
                         <h4 class="header-title">Items Issued</h4>
                     </div>
                     <div class="float-right">
-                        @can('itemIssued-create')
+                        @if(checkPermission('itemIssued-create'))
                             <a class="btn btn-primary" href="{{route('itemIssued.create')}}" ><i class="fa fa-plus"></i> Issue Item</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -43,16 +43,16 @@
                                 <td class="text-center">{{$itemIssued->employee->full_name}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @can('itemIssued-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('itemIssued.edit',$itemIssued)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
-                                        @can('itemIssued-delete')
-                                            <form class="form-delete" method="post" action="{{route('itemIssued.destroy',$itemIssued)}}">
+                                        @if(checkPermission('itemIssued-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('itemIssued.edit',$itemIssued->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
+                                        @if(checkPermission('itemIssued-delete'))
+                                            <form class="form-delete" method="post" action="{{route('itemIssued.destroy',$itemIssued->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

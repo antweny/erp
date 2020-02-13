@@ -15,7 +15,7 @@ class StoreController extends Controller
 
             $itemIssueds = $itemIssued->orderBy('date_issued','desc')->with('employee','item')->get();
 
-            return view('items.issued.index',compact('itemIssueds'));
+            return view('store.itemIssued.index',compact('itemIssueds'));
         //}
         //else {
         //    $itemIssueds = $itemIssued->where('employee_id',auth()->user()->employee->id)->orderBy('date_issued','desc')->with('employee','item')->get();
