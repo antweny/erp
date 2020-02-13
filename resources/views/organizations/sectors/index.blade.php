@@ -8,12 +8,9 @@
                 <h4 class="header-title">Sectors</h4>
             </div>
             <div class="float-right">
-                @can('sector-import')
-                    <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                @endcan
-                @can('sector-create')
+                @if(checkPermission('sector-create'))
                     <a class="btn btn-primary" href="#newSector" data-toggle="modal"><i class="fa fa-plus"></i> New sector</a>
-                @endcan
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -39,17 +36,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @can('sector-update')
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('sectors.edit',$sector)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('sector-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('sectors.edit',$sector->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('sector-delete')
-                                            <form class="form-delete" method="post" action="{{route('sectors.destroy',$sector)}}">
+                                        @if(checkPermission('sector-delete'))
+                                            <form class="form-delete" method="post" action="{{route('sectors.destroy',$sector->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -60,7 +57,7 @@
         </div>
     </div>
 
-    @can('sector-create')
+    @if(checkPermission('sector-create'))
         <!-- start create new sector form modal -->
         <div class="modal fade" id="newSector" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -99,39 +96,6 @@
             </div>
         </div>
         <!-- end create new sector form modal -->
-    @endcan
-
-    @can('sector-import')
-        <!-- start create new permission form modal -->
-        <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import sectors</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="{{route('sectors.import')}}" class="form-horizontal" enctype="multipart/form-data" >
-                        @csrf
-                        <div class="modal-body">
-
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 control-label">Choose file..</label>
-                                <div class="col-md-8">
-                                    <input type="file" class="form-control @error('imported_file') is-invalid @enderror" name="imported_file" value="{{old('imported_file')}}" required placeholder="name">
-                                    @error('imported_file')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- end create new permission form modal -->
-    @endcan
+    @endif
 
 @endsection

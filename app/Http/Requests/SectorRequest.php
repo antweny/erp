@@ -41,7 +41,7 @@ class SectorRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:sectors,id,'.$this->sector->id,
+                    'name' => 'required|string|max:255|unique:sectors,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }
