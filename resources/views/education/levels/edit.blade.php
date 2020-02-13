@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     @include('alerts._flash')
-                    {{ Form::model($educationLevel, array('route' => array('educationLevels.update', $educationLevel), 'method' => 'PUT','autocomplete' => 'off')) }}
+                    {{ Form::model($educationLevel, array('route' => array('educationLevels.update', $educationLevel->id), 'method' => 'PUT','autocomplete' => 'off')) }}
                         @include('education.levels._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>

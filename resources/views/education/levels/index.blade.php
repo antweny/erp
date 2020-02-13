@@ -11,9 +11,9 @@
                         <h4 class="header-title">Education Levels</h4>
                     </div>
                     <div class="float-right">
-                        @can('educationLevel-create')
+                        @if(checkPermission('educationLevel-create'))
                             <a class="btn btn-primary" href="#newEducationLevel" data-toggle="modal"><i class="fa fa-plus"></i> New education level</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -40,17 +40,17 @@
                                 <td class="text-center">
                                     <div class="btn-group">
 
-                                        @can('educationLevel-update')
-                                            <a class="btn btn-primary btn-sm mr-3" href="{{route('educationLevels.edit',$educationLevel)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endcan
+                                        @if(checkPermission('educationLevel-update'))
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('educationLevels.edit',$educationLevel->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                        @endif
 
-                                        @can('educationLevel-delete')
-                                            <form class="form-delete" method="post" action="{{route('educationLevels.destroy',$educationLevel)}}">
+                                        @if(checkPermission('educationLevel-delete'))
+                                            <form class="form-delete" method="post" action="{{route('educationLevels.destroy',$educationLevel->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure delete education level {{$educationLevel->name}}?')" title="delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    @can('educationLevel-create')
+    @if(checkPermission('educationLevel-create'))
         <!-- start create new certificate form modal -->
         <div class="modal fade" id="newEducationLevel" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -101,6 +101,6 @@
             </div>
         </div>
         <!-- end create new certificate form modal -->
-    @endcan
+    @endif
 
 @endsection

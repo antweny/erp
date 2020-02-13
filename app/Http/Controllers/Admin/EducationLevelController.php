@@ -15,10 +15,13 @@ class EducationLevelController extends Controller
     public function index(EducationLevel $educationLevel)
     {
         $this->authorize('read',$educationLevel);
-
-        $educationLevels = $educationLevel->orderBy('name','desc')->get();
-
-        return view('education.levels.index',compact('educationLevels'));
+        try {
+            $educationLevels = $educationLevel->orderBy('name','desc')->get();
+            return view('education.levels.index',compact('educationLevels'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -27,44 +30,83 @@ class EducationLevelController extends Controller
     public function store(EducationLevelRequest $request, EducationLevel $educationLevel)
     {
         $this->authorize('create',$educationLevel);
-
-        $educationLevel->create($request->all());
-
-        return back()->with('success',' EducationLevel has been saved');
+        try {
+            $educationLevel->create($request->all());
+            return back()->with('success',' EducationLevel has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EducationLevel $educationLevel)
+    public function edit($id)
     {
-        $this->authorize('update',$educationLevel);
-
-        return view('education.levels.edit',compact('educationLevel'));
+        $this->authorize('update',$this->model());
+        try{
+            $educationLevel = $this->getID($id);
+            return view('education.levels.edit',compact('educationLevel'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EducationLevelRequest $request, EducationLevel $educationLevel)
+    public function update(EducationLevelRequest $request, $id)
     {
-        $this->authorize('update',$educationLevel);
-
-        $educationLevel->update($request->all());
-
-        return redirect()->route('educationLevels.index')->with('success',' Education Level has been updated');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->all());
+            return redirect()->route('educationLevels.index')->with('success',' Education Level has been updated');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EducationLevel $educationLevel)
+    public function destroy($id)
     {
-        $this->authorize('delete',$educationLevel);
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Education Level has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
-        $educationLevel->delete();
+    /*
+  * Get requested record ID
+  */
+    public function getID($id)
+    {
+        $data = EducationLevel::findOrFail($id);
+        return $data;
+    }
 
-        return back()->with('success','Education Level has been deleted');
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return EducationLevel::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('educationLevels.index')->with('error','something went wrong');
     }
 
 
