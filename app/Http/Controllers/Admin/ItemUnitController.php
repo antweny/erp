@@ -16,10 +16,13 @@ class ItemUnitController extends Controller
     public function index(ItemUnit $itemUnit)
     {
         $this->authorize('read',$itemUnit);
-
-        $itemUnits = $itemUnit->get();
-
-        return view('items.units.index',compact('itemUnits'));
+        try {
+            $itemUnits = $itemUnit->get();
+            return view('store.itemUnits.index',compact('itemUnits'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -28,44 +31,84 @@ class ItemUnitController extends Controller
     public function store(ItemUnitRequest $request, ItemUnit $itemUnit)
     {
         $this->authorize('create',$itemUnit);
-
-        $itemUnit->create($request->only('name','desc','sort'));
-
-        return back()->with('success','Item Unit has been saved!');
+        try {
+            $itemUnit->create($request->only('name','desc','sort'));
+            return back()->with('success','Item Unit has been saved!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',' Something went wrong')->withInput($request->input());
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemUnit $itemUnit)
+    public function edit($id)
     {
-        $this->authorize('update',$itemUnit);
-
-        return view('items.units.edit',compact('itemUnit'));
+        $this->authorize('update',$this->model());
+        try{
+            $itemUnit= $this->getID($id);
+            return view('store.itemUnits.edit',compact('itemUnit'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemUnitRequest $request, ItemUnit $itemUnit)
+    public function update(ItemUnitRequest $request,$id)
     {
-        $this->authorize('update',$itemUnit);
-
-        $itemUnit->update($request->only('name','sort','desc'));
-
-        return redirect()->route('itemUnits.index')->with('success','item unit has been updated!');
+        $this->authorize('update',$this->model());
+        try {
+            $this->getID($id)->update($request->only('name','sort','desc'));
+            return redirect()->route('itemUnits.index')->with('success','item unit has been updated!');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemUnit $itemUnit)
+    public function destroy($id)
     {
-        $this->authorize('delete',$itemUnit);
-
-        $itemUnit->delete();
-
-        return redirect()->route('itemUnits.index')->with('success','item unit has been updated!');
+        $this->authorize('delete',$this->model());
+        try {
+            $this->getID($id)->delete();
+            return redirect()->route('itemUnits.index')->with('success','item unit has been delete!');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = ItemUnit::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controler model class
+     */
+    public function model ()
+    {
+        return ItemUnit::class;
+    }
+
+    /*
+     * Exception Error return back
+     */
+    public function errorReturn()
+    {
+        return redirect()->route('itemUnits.index')->with('error','something went wrong');
+    }
+
+
 }

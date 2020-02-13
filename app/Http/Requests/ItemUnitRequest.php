@@ -41,7 +41,7 @@ class ItemUnitRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:item_units,id,'.$this->itemUnit->id,
+                    'name' => 'required|string|max:255|unique:item_units,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }
