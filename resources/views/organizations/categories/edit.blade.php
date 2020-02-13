@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h4 class="header-title">Edit {{$category->name}} organization category</h4>
                     @include('alerts._flash')
-                    {{ Form::model($category, array('route' => array('categories.update', $category), 'method' => 'PUT')) }}
+                    {{ Form::model($category, array('route' => array('categories.update', $category->id), 'method' => 'PUT')) }}
                             @include('Organizations.categories._form',['buttonText'=>'update'])
                     {{Form::close()}}
                 </div>

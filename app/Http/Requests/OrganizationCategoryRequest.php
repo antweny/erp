@@ -41,7 +41,7 @@ class OrganizationCategoryRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:organization_categories,id,'.$this->category->id,
+                    'name' => 'required|string|max:255|unique:organization_categories,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }

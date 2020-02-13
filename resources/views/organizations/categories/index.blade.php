@@ -11,9 +11,9 @@
                         <h4 class="header-title">Organization Categories</h4>
                     </div>
                     <div class="float-right">
-                        @can('organizationCategory-create')
+                        @if(checkPermission('organizationCategory-create'))
                             <a class="btn btn-primary" href="#newOrganizationCategory" data-toggle="modal"><i class="fa fa-plus"></i> New organization category</a>
-                        @endcan
+                        @endif
                     </div>
                 </div>
             </div>
@@ -40,17 +40,17 @@
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
 
-                                    @can('organizationCategory-update')
-                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('categories.edit',$organizationCategory)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endcan
+                                    @if(checkPermission('organizationCategory-update'))
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('categories.edit',$organizationCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                    @endif
 
-                                    @can('organizationCategory-delete')
-                                        <form class="form-delete" method="post" action="{{route('categories.destroy',$organizationCategory)}}">
+                                    @if(checkPermission('organizationCategory-delete'))
+                                        <form class="form-delete" method="post" action="{{route('categories.destroy',$organizationCategory->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endcan
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    @can('organizationCategory-create')
+    @if(checkPermission('organizationCategory-create'))
         <!-- start create new organizationCategory form modal -->
         <div class="modal fade" id="newOrganizationCategory" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -101,6 +101,6 @@
             </div>
         </div>
         <!-- end create new organizationCategory form modal -->
-    @endcan
+    @endif
 
 @endsection
