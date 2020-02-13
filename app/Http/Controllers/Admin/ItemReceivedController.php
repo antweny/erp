@@ -143,7 +143,6 @@ class ItemReceivedController extends Controller
     public function increment_item_quantity ($request)
     {
         $item = $this->get_item_id($request['item_id']);   //Initialize the class
-
         return $item->increment('quantity',$request['quantity']);
     }
 
@@ -153,9 +152,7 @@ class ItemReceivedController extends Controller
     public function update_item_quantity($request,$old)
     {
         $item = $this->get_item_id($request['item_id']);
-
         $item->decrement('quantity',$old);
-
         return $item->increment('quantity',$request['quantity']);
     }
 
