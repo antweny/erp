@@ -69,7 +69,6 @@ class OrganizationCategoryController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -84,7 +83,6 @@ class OrganizationCategoryController extends Controller
             return $this->errorReturn();
         }
     }
-
 
     /*
      * Get requested record ID
