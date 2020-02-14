@@ -29,7 +29,7 @@ class CreateEmployeesTable extends Migration
             $table->uuid('admin_id')->nullable();
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('SET NULL');
 
-            $table->date('hire_date');
+            $table->date('doj');
 
             $table->timestamps();
         });

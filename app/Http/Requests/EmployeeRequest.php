@@ -42,7 +42,7 @@ class EmployeeRequest extends FormRequest
                     'email' => 'required|email|unique:employees,email',
                     'mobile' => 'required',
                     'department_id' => 'required',
-                    'hire_date' => 'required|date',
+                    'doj' => 'required|date',
                     'admin_id' => 'nullable|unique:employees,admin_id',
                 ];
             }
@@ -58,7 +58,7 @@ class EmployeeRequest extends FormRequest
                     'email' => 'required|email|unique:employees,id,'.$this->id,
                     'mobile' => 'required',
                     'department_id' => 'required',
-                    'hire_date' => 'required|date',
+                    'doj' => 'required|date',
                     'admin_id' => 'nullable|unique:employees,id,'.$this->id,
                 ];
             }

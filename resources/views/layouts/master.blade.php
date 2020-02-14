@@ -83,6 +83,12 @@
         //format: 'yyyy-dd-mm'
     });
 
+    $('#date').datepicker({
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        //format: 'yyyy-dd-mm'
+    });
+
     $('#end_date').datepicker({
         uiLibrary: 'bootstrap4',
         iconsLibrary: 'fontawesome',

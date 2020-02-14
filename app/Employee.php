@@ -9,9 +9,7 @@ class Employee extends BaseModel
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [
-        'employee_no', 'first_name', 'middle_name','last_name','dob','email','mobile','department_id','admin_id','hire_date'
-    ];
+    protected $fillable = ['employee_no', 'first_name', 'middle_name','last_name','dob','email','mobile','department_id','doj','password'];
 
 
     /**
@@ -19,6 +17,18 @@ class Employee extends BaseModel
      */
     protected static $logName = 'employees';
 
+
+    /* ------------------
+   *  Mutator functions
+   * ------------------*/
+    public function setDojAttribute($value)
+    {
+        $this->attributes['doj'] = date_to_mysql($value);
+    }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['doj'] = date_to_mysql($value);
+    }
 
 
 

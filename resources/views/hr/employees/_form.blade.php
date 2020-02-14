@@ -55,21 +55,9 @@
         @error('department_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
     <div class="col-md-4">
-        <label class="col-form-label">Hire Date <span class="star">*</span> </label>
-        <input type="date" name="hire_date" class="form-control @error('hire_date') is-invalid @enderror" value="{{old('hire_date',$employee->hire_date)}}" required></input>
-        @error('hire_date')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-    </div>
-</div>
-<div class="form-group row ">
-    <div class=" col-md-4">
-        <label class="col-form-label">User Login</label>
-        <select name="admin_id" class="form-control" >
-            <option value="">Select User...</option>
-            @foreach($admins as $admin)
-                <option value="{{$admin->id}}" {{old('admin_id',$employee->admin_id) == $department->id ? 'selected' : '' }}>{{$admin->name}}</option>
-            @endforeach
-        </select>
-        @error('admin_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        <label class="col-form-label">Join Date<span class="star">*</span> </label>
+        <input type="text" id="date" name="doj" class="form-control @error('doj') is-invalid @enderror" value="{{old('doj',mysql_to_date($employee->doj))}}" required></input>
+        @error('doj')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
 </div>
 

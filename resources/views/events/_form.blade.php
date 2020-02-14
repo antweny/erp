@@ -77,12 +77,12 @@
 <div class="form-group row">
     <div class="col-md-6">
         <label class="col-form-label">From date </label>
-        <input type="text" id="start_date" name="start_date" value="{{old('start_date',mysql_to_date($event->start_date))}}" class="form-control" >
+        <input type="text" id="date" name="start_date" value="{{old('start_date',mysql_to_date($event->start_date))}}" class="form-control" >
         @error('start_date')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
     <div class="col-md-6">
         <label class="col-form-label">To date</label>
-        <input type="text" id="end_date" name="end_date" value="{{old('end_date',mysql_to_date($event->end_date))}}" class="form-control" >
+        <input type="text" id="date" name="end_date" value="{{old('end_date',mysql_to_date($event->end_date))}}" class="form-control" >
         @error('end_date')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
 </div>
