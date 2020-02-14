@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="row hd mb-3">
@@ -42,7 +42,7 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-form-label mb-1">Assign Permissions <span class="star">*</span></label>
                         @foreach ($permissions as $permission)
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label class="label">
                                     {{ Form::checkbox('permissions[]', $permission->id )}} {{$permission->name}}
                                     <span class="checkmark"></span>
