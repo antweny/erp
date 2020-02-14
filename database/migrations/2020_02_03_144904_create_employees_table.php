@@ -22,15 +22,9 @@ class CreateEmployeesTable extends Migration
             $table->date('dob');
             $table->string('email')->unique();
             $table->string('mobile',15)->nullable();
-
             $table->uuid('department_id')->nullable();
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('SET NULL');
-
-            $table->uuid('admin_id')->nullable();
-            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('SET NULL');
-
             $table->date('doj');
-
             $table->timestamps();
         });
     }
