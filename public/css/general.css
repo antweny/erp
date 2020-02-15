@@ -278,7 +278,17 @@ a.logo span { color: #688a7e; }
     padding-top: 25px;
     margin: 150px 0;
 }
-
+.login-form img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.login-form span {
+    margin-top: 10px;
+    display: block;
+    font-size: 28px;
+    font-weight: bold;
+}
 
 /*
  * ===========================

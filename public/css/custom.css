@@ -1,0 +1,16 @@
+.front img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
+.front a div{display: block;}
+.front span {
+    padding: 10px;
+    font-size: 28px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.front a:hover {
+    text-decoration: none;
+}
