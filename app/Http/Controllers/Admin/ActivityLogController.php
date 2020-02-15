@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 
 class ActivityLogController extends Controller
 {

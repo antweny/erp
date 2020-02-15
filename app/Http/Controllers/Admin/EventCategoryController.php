@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 
 use App\EventCategory;
 use App\Http\Requests\EventCategoryRequest;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Employee;
 use App\EventCategory;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 
 use App\Event;
 use App\Http\Requests\EventRequest;

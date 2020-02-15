@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\EducationLevel;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\EducationLevelRequest;
 use Illuminate\Http\Request;
 

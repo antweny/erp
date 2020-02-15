@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
 
 use App\City;
 use App\District;
 use App\EducationLevel;
 use App\Http\Requests\ImportRequest;
-use App\Http\Controllers\Controller;
 use App\Imports\IndividualsImport;
 use App\Individual;
 use App\Repositories\IndividualRepository;

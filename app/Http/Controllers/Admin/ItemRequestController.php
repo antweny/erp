@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
 
 use App\Employee;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemRequestRequest;
 use App\ItemIssued;
 use App\Item;

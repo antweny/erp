@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\GenderSeries;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use App\GenderSeriesParticipant;
 use App\Http\Requests\GenderSeriesParticipantRequest;
 use App\Http\Requests\ImportRequest;

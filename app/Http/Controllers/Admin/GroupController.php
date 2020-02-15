@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
+
 
 use App\Group;
 use App\Http\Controllers\Controller;

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
 
 use App\City;
 use App\District;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportRequest;
 use App\Imports\OrganizationImport;
 use App\Http\Requests\OrganizationRequest;

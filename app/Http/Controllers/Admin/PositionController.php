@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
 
 use App\City;
 use App\District;
-use App\Http\Controllers\Controller;
 use App\Individual;
 use App\Organization;
 use App\Position;

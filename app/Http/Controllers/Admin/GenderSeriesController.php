@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Employee;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 
 use App\GenderSeries;
 use App\Http\Requests\GenderSeriesRequest;

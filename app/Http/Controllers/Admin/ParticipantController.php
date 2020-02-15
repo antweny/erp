@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\Controller;
 
 use App\Event;
 use App\Group;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ParticipantRequest;
 use App\Individual;
 use App\Organization;
