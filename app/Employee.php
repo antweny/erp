@@ -2,14 +2,32 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use App\Traits\Uuids;
+use Illuminate\Support\Carbon;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class Employee extends BaseModel
+class Employee extends Authenticatable
 {
+    use Notifiable;
+    use Uuids;
+    use HasRoles;
+    use LogsActivity;
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['employee_no', 'first_name', 'middle_name','last_name','dob','email','mobile','department_id','doj','password'];
+    protected $fillable = ['employee_no', 'first_name', 'middle_name',
+        'last_name','dob','email','mobile','department_id','doj','password'];
+
+
+    /**
+     * The attributes that should be hidden for arrays.
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
 
     /**

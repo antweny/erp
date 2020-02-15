@@ -11,45 +11,44 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
-});
+
+/*
+ * Default Route For the System
+ */
+Route::view('/', 'index');
+
+
+
+
 
 
 Auth::routes();
-
 //Route::get('/home', 'HomeController@index')->name('home');
 
 
-/**
- * Admin Auth routes
+
+/*
+ * Admin Web Guard Routes
  */
-
-
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group (function () {
-    Route::get('/', 'DashboardController@index');
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
-    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-});
-
-
 Route::namespace('Admin')->prefix('admin')->group (function () {
 
-    /**
-     * Administrator routes
-     */
+    // Admin Auth routes
+    Route::name('admin.')->group (function () {
+        Route::get('/', 'DashboardController@index');
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+        Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
+        Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    });
+
+    //Administrator routes
     Route::resource('admin', 'AdminController')->except('create','show');
     Route::resource('users', 'UserController')->except('create','show');
     Route::resource('permissions', 'PermissionController')->except('create','show');
     Route::resource('roles', 'RoleController')->except('create','show');
     Route::resource('activityLogs', 'ActivityLogController')->except('create','show','edit','update');
 
-
-    /*
-     * Store Management
-     */
+    // Store Management
     Route::prefix('store/')->group (function () {
         Route::get('/manage','StoreController')->name('store.manage');
         Route::resource('itemCategories','ItemCategoryController')->except('create','show');
@@ -59,18 +58,14 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('itemIssued','ItemIssuedController')->except('show');
     });
 
-    /*
-     * Human Resource Management
-     */
+    // Human Resource Management
     Route::prefix('hr/')->group (function () {
         Route::get('/dashboard', function () {return redirect()->route('departments.index');})->name('hr.dashboard');
         Route::resource('departments','DepartmentController')->except('create','show');
         Route::resource('employee','EmployeeController');
     });
 
-    /*
-     * Location Management
-     */
+    //Location Management
     Route::prefix('location/')->group (function () {
         Route::get('/', function () {return redirect()->route('countries.index');})->name('location');
 
@@ -93,10 +88,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('venues', 'VenueController')->except('show');
     });
 
-
-    /*
-     * Organization Management
-     */
+    // Organization Management
     Route::prefix('organization/')->group (function () {
         //Route::post('import', 'OrganizationController@import')->name('organizations.import');
         Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
@@ -107,9 +99,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
     Route::post('import', 'OrganizationController@import')->name('organizations.import');
     Route::resource('organizations', 'OrganizationController');
 
-    /*
-     * Individual Data Management
-     */
+    // Individual Data Management
     Route::prefix('individual/')->group (function () {
         Route::resource('educationLevels', 'EducationLevelController')->except('create','show');
         Route::resource('positions', 'PositionController')->except('show');
@@ -121,11 +111,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
     Route::post('individuals/import', 'IndividualController@import')->name('individuals.import');
     Route::resource('individuals', 'IndividualController');
 
-
-    /*
-     * Event Management System
-     */
-
+    //Event Management System
     Route::resource('eventCategories', 'EventCategoryController')->except('create','show');
     Route::resource('events', 'EventController');
 
@@ -139,6 +125,22 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('genderSeriesParticipants', 'GenderSeriesParticipantController');
 
         Route::resource('participants', 'ParticipantController');
+    });
+});
+
+
+/*
+ * Employee Web Guard Routes
+ */
+Route::namespace('Employee')->prefix('employee')->group (function () {
+
+    // Admin Auth routes
+    Route::name('employee.')->group (function () {
+        Route::get('/', 'DashboardController@index');
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+        Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
+       Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
     });
 
 });

@@ -65,14 +65,4 @@ class Admin extends Authenticatable
         return $admin->name;
     }
 
-
-    /* ------------------------------------
-     * Model Relationship with other models
-     * -------------------------------------*/
-    //Eveny Employee belong to a particula department
-    public function employee ()
-    {
-        return $this->hasOne(Employee::class);
-    }
-
 }
