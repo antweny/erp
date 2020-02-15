@@ -23,11 +23,5 @@ class RolesTableSeeder extends Seeder
             'name' => 'superAdmin',
             'guard_name' => 'admin'
         ]);
-        $role = Role::create([
-            'name' => 'store',
-            'guard_name' => 'admin'
-        ]);
-
-
     }
 }
