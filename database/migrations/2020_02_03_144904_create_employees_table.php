@@ -21,6 +21,8 @@ class CreateEmployeesTable extends Migration
             $table->string('last_name',50);
             $table->date('dob');
             $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->string('mobile',15)->nullable();
             $table->uuid('department_id')->nullable();
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('SET NULL');
