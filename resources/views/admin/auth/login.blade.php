@@ -5,7 +5,10 @@
     <div class="row justify-content-center login-form">
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">Administrator Login</div>
+                <div class="text-center card-header">
+                    <img src="{{asset('img/admin.png')}}">
+                    <span class="h3">Admin Portal Login</span>
+                </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.login.submit') }}">
                         @csrf
@@ -26,12 +29,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group row justify-content-center">
-                            <div class="col-md-5">
-                                <button type="submit" class="btn btn-block btn-primary ">{{ __('Login') }}</button>
+                        <div class="form-group row">
+                            <div class="col-md-6 float-left">
+                                <a href="{{url('/')}}" class="btn btn-outline-secondary">Home</a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="float-right btn btn-primary btn-lg">{{ __('Login') }}</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>

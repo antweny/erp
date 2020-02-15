@@ -10,7 +10,7 @@
                         <h4 class="header-title">Employee List</h4>
                     </div>
                     <div class="float-right">
-                        @if(checkPermission('item-create'))
+                        @if(checkPermission('employee-create'))
                             <a class="btn btn-primary" href="{{route('employee.create')}}"><i class="fa fa-plus"></i> New Employee</a>
                         @endif
                     </div>

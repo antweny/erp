@@ -1,5 +1,7 @@
 @include('layouts.app.header')
-
-hgjgfhjhgfjgfhj
-
+    <div class="container-fluid">
+        <div class="content" >
+            @yield('content')
+        </div>
+    </div>
 @include('layouts.app.footer')
