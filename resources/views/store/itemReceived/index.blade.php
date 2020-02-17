@@ -1,4 +1,4 @@
-@extends('layouts.store')
+@extends('layouts.admin')
 @section('title','Items Received')
 @section('content')
     <div class="card">

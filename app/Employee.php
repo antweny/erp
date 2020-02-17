@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuids;
-use Illuminate\Support\Carbon;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Employee extends Authenticatable
@@ -43,9 +42,9 @@ class Employee extends Authenticatable
     {
         $this->attributes['doj'] = date_to_mysql($value);
     }
-    public function setPasswordAttribute($value)
+    public function setDobAttribute($value)
     {
-        $this->attributes['doj'] = date_to_mysql($value);
+        $this->attributes['dob'] = date_to_mysql($value);
     }
 
 

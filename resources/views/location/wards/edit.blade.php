@@ -1,4 +1,4 @@
-@extends('layouts.location')
+@extends('layouts.admin')
 @section('title','Edit ward')
 @section('content')
     <div class="row justify-content-center">

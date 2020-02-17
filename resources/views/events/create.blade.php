@@ -1,4 +1,4 @@
-@extends('layouts.event')
+@extends('layouts.admin')
 @section('title','New event')
 @section('content')
 

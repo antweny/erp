@@ -8,6 +8,7 @@ use App\Employee;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\Department;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -40,10 +41,16 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request, Employee $employee)
     {
         $this->authorize('create',$employee);
+        try {
+            $this->generatePassword($request);
 
-        $employee->create($request->all());
+            $employee->create($request->all());
 
-        return back()->with('success','Employee has been saved!');
+            return back()->with('success','Employee has been saved!');
+        }
+        catch (\Exception $e) {
+            return back()->with('error',$e->getMessage())->withInput($request->input());
+        }
     }
 
     /**
@@ -124,4 +131,17 @@ class EmployeeController extends Controller
     {
         return Employee::class;
     }
+
+    /*
+     * Generate  Password based from First name
+     */
+
+    public function generatePassword ($request)
+    {
+        $request['password'] = Hash::make($request['first_name']);
+
+        return $request;
+    }
+
+
 }

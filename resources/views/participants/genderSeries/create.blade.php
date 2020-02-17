@@ -1,4 +1,4 @@
-@extends('layouts.event')
+@extends('layouts.admin')
 @section('title','New Gender Series Participants')
 @section('content')
 

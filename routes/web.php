@@ -132,7 +132,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
 /*
  * Employee Web Guard Routes
  */
-Route::namespace('Employee')->prefix('employee')->group (function () {
+Route::namespace('Employee')->prefix('employee/')->group (function () {
 
     // Admin Auth routes
     Route::name('employee.')->group (function () {

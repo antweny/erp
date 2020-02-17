@@ -1,4 +1,4 @@
-@extends('layouts.store')
+@extends('layouts.admin')
 @section('title','Update Item Received')
 @section('content')
 

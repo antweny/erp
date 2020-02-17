@@ -1,4 +1,4 @@
-@extends('layouts.location')
+@extends('layouts.admin')
 
 @section('title','New Venue')
 

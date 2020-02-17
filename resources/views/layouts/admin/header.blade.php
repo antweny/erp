@@ -1,23 +1,37 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<nav class="navbar navbar-expand-lg bg-blue">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')</title>
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <!-- fontawesome icons-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" >
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- DataTables -->
-    <link href="{{ asset('vendor/DataTables/dataTables.min.css') }}" rel="stylesheet">
-    <!-- custom style -->
-    <link href="{{ asset('css/general.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-</head>
-<body>
+    <div class="collapse navbar-collapse ml-5" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <span class="text-white h4">@php echo date('h:i a'); @endphp</span>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <!-- Right Links-->
+    <div class="navbar-collapse collapse order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto right-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user"></i> {{auth()->user()->name}}
+                </a>
+                <div class="dropdown-menu b-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#"><i class="icon_profile"></i> My Profile</a>
+                    <a class="dropdown-item logout" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="icon_key_alt"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;"> @csrf</form>
+                </div>
+            </li>
+
+
+
+        </ul>
+    </div>
+
+</nav>

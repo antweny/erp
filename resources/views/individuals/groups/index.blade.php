@@ -1,4 +1,4 @@
-@extends('layouts.individual')
+@extends('layouts.admin')
 @section('title','Individual Groups')
 @section('content')
 

@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-4">
         <label class="col-form-label">Date of Birth <span class="star">*</span> </label>
-        <input type="date" name="dob" class="form-control @error('dob') is-invalid @enderror" value="{{old('dob',$employee->dob)}}" required></input>
+        <input type="text" id="dob" name="dob" class="form-control @error('dob') is-invalid @enderror" value="{{old('dob',mysql_to_date($employee->dob))}}" required></input>
         @error('dob')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
     <div class="col-md-4">
@@ -45,8 +45,8 @@
         @error('mobile')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
     <div class="col-md-4">
-        <label class="col-form-label">Department</label>
-        <select name="department_id" class="form-control">
+        <label class="col-form-label">Department <span class="star">*</span></label>
+        <select name="department_id" class="form-control @error('department_id') is-invalid @enderror" required>
             <option value="">Select Department...</option>
             @foreach($departments as $department)
                 <option value="{{$department->id}}" {{old('department_id',$employee->department_id) == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
@@ -56,7 +56,7 @@
     </div>
     <div class="col-md-4">
         <label class="col-form-label">Join Date<span class="star">*</span> </label>
-        <input type="text" id="date" name="doj" class="form-control @error('doj') is-invalid @enderror" value="{{old('doj',mysql_to_date($employee->doj))}}" required></input>
+        <input type="text" id="doj" name="doj" class="form-control @error('doj') is-invalid @enderror" value="{{old('doj',mysql_to_date($employee->doj))}}" required></input>
         @error('doj')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
 </div>

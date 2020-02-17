@@ -1,6 +1,6 @@
-@extends('layouts.login')
+@extends('layouts.app')
 @section('title','Please Login!')
-@section('body')
+@section('content')
 
     <div class="row justify-content-center login-form">
         <div class="col-md-3">
@@ -10,7 +10,7 @@
                     <span class="h3">Employee Portal Login</span>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.login.submit') }}">
+                    <form method="POST" action="{{ route('employee.login.submit') }}">
                         @csrf
 
                         <div class="form-group row">

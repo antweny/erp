@@ -21,7 +21,7 @@
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center text-white bg-blue">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Full Name</th>
@@ -39,13 +39,13 @@
                             <td class="text-center">{{$admin->registered}}</td>
                             <td class="text-center">{{$admin->email}}</td>
                             <td class="text-center">{{ $admin->roles()->pluck('name')->implode(' | ') }}</td>{{-- Retrieve array of roles associated to a user and convert to string --}}
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a class="btn btn-primary btn-sm mr-3" href="{{route('admin.edit',$admin)}}" title="edit"><i class="fas fa-edit"></i></a>
+                            <td class="text-center p-0">
+                                <div class="btn btn-group">
+                                    <a class="btn btn-primary btn-sm mr-2" href="{{route('admin.edit',$admin)}}" title="edit"><i class="fas fa-edit"></i></a>
                                     <form class="form-delete" method="post" action="{{route('admin.destroy',$admin)}}">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-danger btm-sm" onclick="return confirm('Delete {{$admin->name}} administrator?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$admin->name}} administrator?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                     </form>
                                 </div>
                             </td>

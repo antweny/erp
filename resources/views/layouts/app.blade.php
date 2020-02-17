@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
@@ -18,35 +17,17 @@
     <link href="{{ asset('vendor/DataTables/dataTables.min.css') }}" rel="stylesheet">
     <!-- custom style -->
     <link href="{{ asset('css/general.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 <body>
-
-
-@include('layouts.app.topnav')
-
     <div class="container-fluid">
-        <div class="content row" >
-            <aside class="col-md-2 pr-0 pl-0 pt-2 ">
-                <div id="sidebar " class="position-fixed">
-                    @include('layouts.app.sidemenu')
-                </div>
-            </aside>
-
-            <!-- Content Area -->
-            <main class="pt-3 col-md-10">
-                <div class="col">
-                    @yield('content')
-                </div>
-            </main>
+        <div class="content" >
+            @yield('content')
         </div>
     </div>
-
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- Affix Js-->
 <script src="{{ asset('vendor/DataTables/dataTables.min.js') }}" ></script>
-
 <script>
     $(document).ready( function () {
         $('#table').DataTable({
@@ -57,4 +38,5 @@
 @yield('scripts')
 </body>
 </html>
+
 

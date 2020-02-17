@@ -1,9 +1,6 @@
-@extends('layouts.location')
-
+@extends('layouts.admin')
 @section('title','New city')
-
 @section('content')
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -26,5 +23,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\Controller;
 
 
 use App\Group;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\GroupRequest;
 
 

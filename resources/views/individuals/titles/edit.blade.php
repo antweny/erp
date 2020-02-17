@@ -1,4 +1,4 @@
-@extends('layouts.individual')
+@extends('layouts.admin')
 @section('title','Edit title')
 
 @section('content')
