@@ -15,8 +15,10 @@
 /*
  * Default Route For the System
  */
-Route::view('/', 'index');
-
+//Route::view('/', 'index');
+Route::get('/', function () {
+    return redirect()->route('admin.dashboard');
+});
 
 
 

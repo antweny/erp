@@ -32,223 +32,232 @@
     </li>
     @endrole
 
-    <!-- Individual Management -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#people" aria-expanded="true" aria-controls="people">
-            <i class="fa fa-users"></i>
-            <span>People</span>
-        </a>
-        <div id="people" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
-                @can('educationLevel-read')
-                    <a class="collapse-item" href="{{route('educationLevels.index')}}">
-                        <i class="fa fa-signal"></i>
-                        Education Level
-                    </a>
-                @endcan
-                @can('individual-read')
-                    <a class="collapse-item" href="{{route('individuals.index')}}">
-                        <i class="fa fa-users"></i>
-                        Individuals
-                    </a>
-                @endcan
-                @can('title-read')
-                    <a class="collapse-item" href="{{route('titles.index')}}">
-                        <i class="fa fa-heading"></i>
-                        Position Titles
-                    </a>
-                @endcan
-                @can('position-read')
-                    <a class="collapse-item" href="{{route('positions.index')}}">
-                        <i class="fa fa-briefcase"></i>
-                        Positions
-                    </a>
-                @endcan
-                @can('group-read')
-                    <a class="collapse-item" href="{{route('groups.index')}}">
-                        <i class="fa fa-user-tag"></i>
-                        Groups
-                    </a>
-                @endcan
+
+    @role('data-entry')
+        <!-- Individual Management -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#people" aria-expanded="true" aria-controls="people">
+                <i class="fa fa-users"></i>
+                <span>People</span>
+            </a>
+            <div id="people" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class=" py-2 collapse-inner ">
+                    @can('educationLevel-read')
+                        <a class="collapse-item" href="{{route('educationLevels.index')}}">
+                            <i class="fa fa-signal"></i>
+                            Education Level
+                        </a>
+                    @endcan
+                    @can('individual-read')
+                        <a class="collapse-item" href="{{route('individuals.index')}}">
+                            <i class="fa fa-users"></i>
+                            Individuals
+                        </a>
+                    @endcan
+                    @can('title-read')
+                        <a class="collapse-item" href="{{route('titles.index')}}">
+                            <i class="fa fa-heading"></i>
+                            Position Titles
+                        </a>
+                    @endcan
+                    @can('position-read')
+                        <a class="collapse-item" href="{{route('positions.index')}}">
+                            <i class="fa fa-briefcase"></i>
+                            Positions
+                        </a>
+                    @endcan
+                    @can('group-read')
+                        <a class="collapse-item" href="{{route('groups.index')}}">
+                            <i class="fa fa-user-tag"></i>
+                            Groups
+                        </a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
 
-    <!-- Individual Management -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#organization" aria-expanded="true" aria-controls="organization">
-            <i class="fa fa-building"></i>
-            <span>Organizations</span>
-        </a>
-        <div id="organization" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
-                @can('organizationCategory-read')
-                    <a class="collapse-item" href="{{route('categories.index')}}">
-                        <i class="fa fa-flag"></i>
-                        Categories
-                    </a>
-                @endcan
-                @can('organization-read')
-                    <a class="collapse-item" href="{{route('organizations.index')}}">
-                        <i class="fa fa-city"></i>
-                        Organisation
-                    </a>
-                @endcan
-                @can('sector-read')
-                    <a class="collapse-item" href="{{route('sectors.index')}}">
-                        <i class="fa fa-industry"></i>
-                        Sectors
-                    </a>
-                @endcan
-                @can('field-read')
-                    <a class="collapse-item" href="{{route('fields.index')}}">
-                        <i class="fa fa-bars"></i>
-                        Sector Fields
-                    </a>
-                @endcan
+    @role('data-entry')
+        <!-- Individual Management -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#organization" aria-expanded="true" aria-controls="organization">
+                <i class="fa fa-building"></i>
+                <span>Organizations</span>
+            </a>
+            <div id="organization" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class=" py-2 collapse-inner ">
+                    @can('organizationCategory-read')
+                        <a class="collapse-item" href="{{route('categories.index')}}">
+                            <i class="fa fa-flag"></i>
+                            Categories
+                        </a>
+                    @endcan
+                    @can('organization-read')
+                        <a class="collapse-item" href="{{route('organizations.index')}}">
+                            <i class="fa fa-city"></i>
+                            Organisation
+                        </a>
+                    @endcan
+                    @can('sector-read')
+                        <a class="collapse-item" href="{{route('sectors.index')}}">
+                            <i class="fa fa-industry"></i>
+                            Sectors
+                        </a>
+                    @endcan
+                    @can('field-read')
+                        <a class="collapse-item" href="{{route('fields.index')}}">
+                            <i class="fa fa-bars"></i>
+                            Sector Fields
+                        </a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
 
-    <!-- Store Management -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#storMan" aria-expanded="true" aria-controls="storMan">
-            <i class="fa fa-store"></i>
-            <span>Store</span>
-        </a>
-        <div id="storMan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
-                @can('itemCategory-read')
-                    <a class="collapse-item" href="{{route('itemCategories.index')}}">
-                        <i class="fa fa-list-alt"></i>
-                        Item Categories
-                    </a>
-                @endcan
-                @can('itemUnit-read')
-                    <a class="collapse-item" href="{{route('itemUnits.index')}}">
-                        <i class="fab fa-untappd"></i>
-                        Item Units
-                    </a>
-                @endcan
-                @can('item-read')
-                    <a class="collapse-item" href="{{route('items.index')}}">
-                        <i class="fab fa-product-hunt"></i>
-                        Items
-                    </a>
-                @endcan
-                @can('itemReceived-read')
-                    <a class="collapse-item" href="{{route('itemReceived.index')}}">
-                        <i class="fa fa-download"></i>
-                        Received Items
-                    </a>
-                @endcan
-                @can('itemRequest-read')
-                    <a class="collapse-item" href="{{route('itemRequests.index')}}">
-                        <i class="fa fa-upload"></i>
-                        Item Requests
-                    </a>
-                @endcan
+    @hasanyrole('Store Manager|superAdmin')
+        <!-- Store Management -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#storMan" aria-expanded="true" aria-controls="storMan">
+                <i class="fa fa-store"></i>
+                <span>Store</span>
+            </a>
+            <div id="storMan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class=" py-2 collapse-inner ">
+                    @can('itemCategory-read')
+                        <a class="collapse-item" href="{{route('itemCategories.index')}}">
+                            <i class="fa fa-list-alt"></i>
+                            Item Categories
+                        </a>
+                    @endcan
+                    @can('itemUnit-read')
+                        <a class="collapse-item" href="{{route('itemUnits.index')}}">
+                            <i class="fab fa-untappd"></i>
+                            Item Units
+                        </a>
+                    @endcan
+                    @can('item-read')
+                        <a class="collapse-item" href="{{route('items.index')}}">
+                            <i class="fab fa-product-hunt"></i>
+                            Items
+                        </a>
+                    @endcan
+                    @can('itemReceived-read')
+                        <a class="collapse-item" href="{{route('itemReceived.index')}}">
+                            <i class="fa fa-download"></i>
+                            Received Items
+                        </a>
+                    @endcan
+                    @can('itemRequest-read')
+                        <a class="collapse-item" href="{{route('itemRequests.index')}}">
+                            <i class="fa fa-upload"></i>
+                            Item Requests
+                        </a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
-
-    <!-- Location Management -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#locManage" aria-expanded="true" aria-controls="locManage">
-            <i class="fa fa-map-marker"></i>
-            <span>Location</span>
-        </a>
-        <div id="locManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
-                @can('country-read')
-                    <a class="collapse-item" href="{{route('countries.index')}}">
-                        <i class="fa fa-flag"></i>
-                        Countries
-                    </a>
-                @endcan
-                @can('city-read')
-                    <a class="collapse-item" href="{{route('cities.index')}}">
-                        <i class="fa fa-city"></i>
-                        Regions/Cities
-                    </a>
-                @endcan
-                @can('district-read')
-                    <a class="collapse-item" href="{{route('districts.index')}}">
-                        <i class="fa fa-building"></i>
-                        Districts
-                    </a>
-                @endcan
-                @can('ward-read')
-                    <a class="collapse-item" href="{{route('wards.index')}}">
-                        <i class="fa fa-street-view"></i>
-                        Wards
-                    </a>
-                @endcan
-                @can('street-read')
-                    <a class="collapse-item" href="{{route('streets.index')}}">
-                        <i class="fa fa-compass"></i>
-                        Streets/Villages
-                    </a>
-                @endcan
+    @role('data-entry')
+        <!-- Location Management -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#locManage" aria-expanded="true" aria-controls="locManage">
+                <i class="fa fa-map-marker"></i>
+                <span>Location</span>
+            </a>
+            <div id="locManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class=" py-2 collapse-inner ">
+                    @can('country-read')
+                        <a class="collapse-item" href="{{route('countries.index')}}">
+                            <i class="fa fa-flag"></i>
+                            Countries
+                        </a>
+                    @endcan
+                    @can('city-read')
+                        <a class="collapse-item" href="{{route('cities.index')}}">
+                            <i class="fa fa-city"></i>
+                            Regions/Cities
+                        </a>
+                    @endcan
+                    @can('district-read')
+                        <a class="collapse-item" href="{{route('districts.index')}}">
+                            <i class="fa fa-building"></i>
+                            Districts
+                        </a>
+                    @endcan
+                    @can('ward-read')
+                        <a class="collapse-item" href="{{route('wards.index')}}">
+                            <i class="fa fa-street-view"></i>
+                            Wards
+                        </a>
+                    @endcan
+                    @can('street-read')
+                        <a class="collapse-item" href="{{route('streets.index')}}">
+                            <i class="fa fa-compass"></i>
+                            Streets/Villages
+                        </a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
+    @role('data-entry')
+        <!-- Events Management -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#eventManage" aria-expanded="true" aria-controls="eventManage">
+                <i class="fa fa-calendar"></i>
+                <span>Events</span>
+            </a>
+            <div id="eventManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class=" py-2 collapse-inner ">
+                    @can('eventCategory-read')
+                        <a class="collapse-item" href="{{route('eventCategories.index')}}">
+                            <i class="fa fa-list-alt"></i>
+                            Event Categories
+                        </a>
+                    @endcan
+                    @can('event-read')
+                        <a class="collapse-item" href="{{route('events.index')}}">
+                            <i class="fa fa-calendar"></i>
+                            Events
+                        </a>
+                    @endcan
 
-    <!-- Events Management -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#eventManage" aria-expanded="true" aria-controls="eventManage">
-            <i class="fa fa-calendar"></i>
-            <span>Events</span>
-        </a>
-        <div id="eventManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
-                @can('eventCategory-read')
-                    <a class="collapse-item" href="{{route('eventCategories.index')}}">
-                        <i class="fa fa-list-alt"></i>
-                        Event Categories
-                    </a>
-                @endcan
-                @can('event-read')
-                    <a class="collapse-item" href="{{route('events.index')}}">
-                        <i class="fa fa-calendar"></i>
-                        Events
-                    </a>
-                @endcan
+                    @can('genderSeries-read')
+                        <a class="collapse-item" href="{{route('genderSeries.index')}}">
+                            <i class="fa fa-street-view"></i>
+                            Gender Series (GDSS)
+                        </a>
+                    @endcan
 
-                @can('genderSeries-read')
-                    <a class="collapse-item" href="{{route('genderSeries.index')}}">
-                        <i class="fa fa-street-view"></i>
-                        Gender Series (GDSS)
-                    </a>
-                @endcan
+                    @can('participantRole-read')
+                        <a class="collapse-item" href="{{route('participantRoles.index')}}">
+                            <i class="fa fa-user-circle"></i>
+                            Participant Roles
+                        </a>
+                    @endcan
 
-                @can('participantRole-read')
-                    <a class="collapse-item" href="{{route('participantRoles.index')}}">
-                        <i class="fa fa-user-circle"></i>
-                        Participant Roles
-                    </a>
-                @endcan
+                    @can('genderSeriesParticipant-read')
+                        <a class="collapse-item" href="{{route('genderSeriesParticipants.index')}}">
+                            <i class="fa fa-user-circle"></i>
+                            GDSS Participants
+                        </a>
+                    @endcan
 
-                @can('genderSeriesParticipant-read')
-                    <a class="collapse-item" href="{{route('genderSeriesParticipants.index')}}">
-                        <i class="fa fa-user-circle"></i>
-                        GDSS Participants
-                    </a>
-                @endcan
-
-                @can('participant-read')
-                    <a class="collapse-item" href="{{route('participants.index')}}">
-                        <i class="fa fa-user-circle"></i>
-                        Participants
-                    </a>
-                @endcan
+                    @can('participant-read')
+                        <a class="collapse-item" href="{{route('participants.index')}}">
+                            <i class="fa fa-user-circle"></i>
+                            Participants
+                        </a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
 
     @role('superAdmin')
