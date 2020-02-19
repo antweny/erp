@@ -44,6 +44,8 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
     });
 
     //Administrator routes
+    Route::get('admin/reset/password/{id}', 'AdminController@resetPasswordForm')->name('admin.resetPasswordForm');
+    Route::put('admin/reset/password/{id}', 'AdminController@reset_password')->name('admin.resetPassword');
     Route::resource('admin', 'AdminController')->except('create','show');
     Route::resource('users', 'UserController')->except('create','show');
     Route::resource('permissions', 'PermissionController')->except('create','show');

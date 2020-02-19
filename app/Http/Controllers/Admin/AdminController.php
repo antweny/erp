@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Admin;
 use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\PasswordResetRequest;
 use App\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +37,7 @@ class AdminController extends Controller
     public function store(AdminRequest $request, Admin $admin)
     {
         //Hash the human password
-        $request['password'] = Hash::make($request->password);
+        $this->password_encryption($request);
 
         $admin = $admin->create($request->only('name','email','password'));
 
@@ -92,4 +93,52 @@ class AdminController extends Controller
         return back()->with('success','admin has been deleted');
     }
 
+    /*
+     * Get Password Reset Form
+     */
+    public function resetPasswordForm($id)
+    {
+        try {
+            $admin = $this->getID($id);
+            return view('admin.admins.reset_password')->with(compact('admin'));
+        }
+        catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error','Something went wrong');
+        }
+    }
+
+    /*
+     * Password Reset Form
+     */
+    public function reset_password(PasswordResetRequest $request,$id)
+    {
+        try {
+            $admin = $this->getID($id);
+            $this->password_encryption($request);
+            $admin->update($request->only('password'));
+            return redirect()->route('admin.index')->with('success','Password for user '.$admin->name. ' updated successfuly');
+        }
+        catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error','Something went wrong');
+        }
+    }
+
+    /*
+     * Encrypt the Password
+     */
+    protected function password_encryption($request)
+    {
+        $request['password'] = Hash::make($request['password']);
+        return $request;
+    }
+
+
+    /*
+   * Get requested record ID
+   */
+    public function getID($id)
+    {
+        $participant = Admin::findOrFail($id);
+        return $participant;
+    }
 }

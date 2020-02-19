@@ -41,6 +41,7 @@
                             <td class="text-center">{{ $admin->roles()->pluck('name')->implode(' | ') }}</td>{{-- Retrieve array of roles associated to a user and convert to string --}}
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
+                                    <a class="btn btn-outline-secondary btn-sm mr-2" href="{{route('admin.resetPasswordForm',$admin)}}" title="Reset Password"><i class="fa fa-key"></i></a>
                                     <a class="btn btn-primary btn-sm mr-2" href="{{route('admin.edit',$admin)}}" title="edit"><i class="fas fa-edit"></i></a>
                                     <form class="form-delete" method="post" action="{{route('admin.destroy',$admin)}}">
                                         @method('DELETE')
