@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading, SkipsOnFailure
+class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
 
 
@@ -30,17 +30,20 @@ class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, Wit
             'founded' => $row['founded'],
             'registered' => $row['registered'],
             'mobile' => $row['mobile'],
-            'phone' => $row['phone'],
             'email' => $row['email'],
+            'website' => $row['website'],
             'contact_person' => $row['contact_person'],
-            'address' => $row['address'],
+            'contact_person_number' => $row['contact_person_number'],
             'district_id' => $this->check_district($row['district']),
             'city_id' => $this->check_city($row['city']),
         ]);
 
     }
 
-
+    /*
+     * Sometimes you might want to validate each row before it's inserted into the database.
+     * By implementing the WithValidation concern, you can indicate the rules that each row need to adhere to.
+    */
     public function rules(): array
     {
         return [
@@ -49,32 +52,34 @@ class OrganizationImport implements ToModel, WithValidation, WithHeadingRow, Wit
             'registered'=>'nullable|integer',
             'city'=>'nullable|string',
             'district'=>'nullable|string',
-            'ward'=>'nullable|string',
-            'address' =>'nullable|string',
             'website' => 'nullable|url',
             'email'=>'nullable|email',
-            'mobile' => 'string|nullable',
-            'phone' => 'string|nullable'
+            'mobile' => 'nullable',
+            'contact_person' => 'nullable',
+            'contact_person_number' => 'nullable',
         ];
     }
 
-
-
+    /*
+     * Importing a large file to Eloquent models
+     */
     public function batchSize(): int
     {
         return 250;
     }
 
-
+    /*
+     * Importing a large file can have a huge impact on the memory usage, as the library will try to load the entire sheet into memory.
+     */
     public function chunkSize(): int
     {
         return 250;
     }
 
 
-    public function onFailure(Failure ...$failures)
+    public function onFailure(Failure $failures)
     {
-        return null;
+        return $failures;
     }
 
 

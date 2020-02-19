@@ -8,14 +8,17 @@ use App\District;
 use App\Street;
 use App\Ward;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
+//use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Validators\Failure;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Ramsey\Uuid\Uuid;
 
-class IndividualsImport implements ToModel,WithBatchInserts,WithChunkReading, WithHeadingRow, WithValidation
+class IndividualsImport implements ToModel,WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
+
    /**
     * @param array $row
     */
@@ -23,12 +26,11 @@ class IndividualsImport implements ToModel,WithBatchInserts,WithChunkReading, Wi
     {
         $individual = new Individual();
         $individual->create([
-            'id' => Uuid::uuid4(),
+            //'id' => Uuid::uuid4(),
             'full_name' => $row['full_name'],
             'gender' => $row['gender'],
             'mobile' => $row['mobile'],
             'age_group' => $row['age_group'],
-            //'email' => $row['email'],
             'district_id' => $this->check_district($row['district']),
             'city_id' => $this->check_city($row['city']),
         ]);
@@ -42,8 +44,8 @@ class IndividualsImport implements ToModel,WithBatchInserts,WithChunkReading, Wi
     {
         return [
             'full_name' => ['required','string','max:100'],
-            'gender' => ['string','max:3'],
-            'mobile' => ['nullable','string','min:10'],
+            'gender' => ['string','max:3','nullable'],
+            'mobile' => ['nullable','numeric'],
             'age_group' => ['nullable','string'],
             'district' => ['string','nullable'],
             'city' => ['string','nullable'],
@@ -60,12 +62,18 @@ class IndividualsImport implements ToModel,WithBatchInserts,WithChunkReading, Wi
     }
 
     /*
-    * Importing a large file can have a huge impact on the memory usage, as the library will try to load the entire sheet into memory.
-    */
+     * Importing a large file can have a huge impact on the memory usage, as the library will try to load the entire sheet into memory.
+     */
     public function chunkSize(): int
     {
         return 100;
     }
+
+    public function onFailure(Failure $failures)
+    {
+        return $failures;
+    }
+
 
     /*
      * Check if resource exist get ID if not create and get ID

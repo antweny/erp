@@ -121,14 +121,14 @@ class IndividualController extends Controller
     public function import (ImportRequest $request)
     {
         $this->authorize('import',$this->model());
-        try {
+        //try {
             Excel::import(new IndividualsImport,request()->file('imported_file'));
             return back()->with('success','Individual imported successfully!');
-        }
-        catch (\Exception $e){
+       // }
+        //catch (\Exception $e){
             //return $this->errorReturn();
-            return redirect()->route('individuals.index')->with('error',$e->getMessage());
-        }
+            //return redirect()->route('individuals.index')->with('error',$e->getMessage());
+        //}
     }
 
     /*

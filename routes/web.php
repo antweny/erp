@@ -55,7 +55,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('items','ItemController')->except('create','show');
         Route::resource('itemUnits','ItemUnitController')->except('create','show');
         Route::resource('itemReceived','ItemReceivedController')->except('show');
-        Route::resource('itemIssued','ItemIssuedController')->except('show');
+        Route::resource('itemRequests','ItemRequestController')->except('show');
     });
 
     // Human Resource Management
@@ -141,8 +141,17 @@ Route::namespace('Employee')->prefix('employee/')->group (function () {
         Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
         Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
        Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-    });
 
+
+       //Item Store Request
+        Route::resource('itemRequests', 'ItemRequestController')->except('create,show');
+
+
+        //Events Management Routes
+        Route::resource('eventCategories', 'EventCategoryController')->except('create','show','destroy');
+        Route::resource('events', 'EventController')->except('show','destroy');
+
+    });
 });
 
 

@@ -6,7 +6,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -28,13 +27,13 @@
 <body>
     <div id="wrapper">
         <!-- Sidebar -->
-    @include('layouts.includes.employee_sidebar')
+    @include('layouts.employee.sidebar')
     <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-        @include('layouts.includes.employee_header')
+        @include('layouts.employee.header')
         <!-- Main Content -->
             <div id="content" class="pt-3">
 
@@ -47,11 +46,66 @@
         </div>
         <!-- End of Content Wrapper -->
     </div>
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/gijgo/gijgo.min.js') }}" ></script>
 <script src="{{ asset('vendor/DataTables/dataTables.min.js') }}" ></script>
 <script src="{{ asset('vendor/select/select.min.js') }}" ></script>
 <script src="{{ asset('js/sb-admin.min.js') }}" ></script>
+    <script>
+        $(document).ready( function () {
+            $('#table').DataTable({
+                "iDisplayLength": 25
+            });
+            $('#activityTable').DataTable({
+                "iDisplayLength": 25
+            });
+            // Material Multi Select Initialization
+            $('.multiple-select-id').select2({
+
+            });
+            $('b[role="presentation"]').hide()
+
+            // Material Multi Select Initialization
+            $('.single-select').select2();
+            //Count number of words in event textarea
+        } );
+
+        $('#start_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            //format: 'yyyy-dd-mm'
+        });
+
+        $('#date').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            //format: 'yyyy-dd-mm'
+        });
+
+        $('#end_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            //format: 'yyyy-dd-mm'
+        });
+
+        $('#dob').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            //format: 'yyyy-dd-mm'
+        });
+
+        $('#doj').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            //format: 'yyyy-dd-mm'
+        });
+
+        $(document).ready(function () {
+            $("#editor").editor();
+        });
+
+    </script>
 </body>
 </html>
 

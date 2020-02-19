@@ -86,7 +86,7 @@
                                     <option value="">Select guard.....</option>
                                     <option value="web" {{old('guard_name') == 'web' ? 'selected' : ''}}>web</option>
                                     <option value="admin" {{old('guard_name') == 'admin' ? 'selected' : ''}}>admin</option>
-                                    <option value="admin" {{old('guard_name') == 'employee' ? 'selected' : ''}}>employee</option>
+                                    <option value="employee" {{old('guard_name') == 'employee' ? 'selected' : ''}}>employee</option>
                                 </select>
                                 @error('guard_name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>

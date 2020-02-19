@@ -3,9 +3,11 @@
 namespace App\Policies;
 
 use App\Admin;
+use App\Employee;
+use App\ItemRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemIssuedPolicy
+class ItemRequestPolicy
 {
     use HandlesAuthorization;
 
@@ -22,7 +24,7 @@ class ItemIssuedPolicy
      */
     public function create(Admin $admin)
     {
-        return $admin->can('itemIssued-create');
+        return $admin->can('itemRequest-create');
     }
 
 
@@ -31,7 +33,7 @@ class ItemIssuedPolicy
      */
     public function read(Admin $admin)
     {
-        return $admin->can('itemIssued-read');
+        return $admin->can('itemRequest-read');
     }
 
 
@@ -40,7 +42,7 @@ class ItemIssuedPolicy
      */
     public function update(Admin $admin)
     {
-        return $admin->can('itemIssued-update');
+        return $admin->can('itemRequest-update');
     }
 
 
@@ -49,7 +51,7 @@ class ItemIssuedPolicy
      */
     public function delete(Admin $admin)
     {
-        return $admin->can('itemIssued-delete');
+        return $admin->can('itemRequest-delete');
     }
 
 
@@ -58,7 +60,19 @@ class ItemIssuedPolicy
      */
     public function import(Admin $admin)
     {
-        return $admin->can('itemIssued-import');
+        return $admin->can('itemRequest-import');
+    }
+
+    /**
+     * Determine whether the admin can delete the question.
+     */
+    public function manage(Employee $employee, ItemRequest $itemRequest)
+    {
+        if($itemRequest->status == 'O')
+        {
+            return $employee->id === $itemRequest->employee_id;
+        }
+        else { return false; }
     }
 
 }

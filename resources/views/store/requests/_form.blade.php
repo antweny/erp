@@ -1,15 +1,7 @@
 @csrf
 
 <div class="form-group row">
-    <div class="col-md-12">
-        <label class="col-form-label">Date Issued <span class="star">*</span> </label>
-        <input type="date" name="date_issued" class="form-control @error('date_issued') is-invalid @enderror" value="{{old('date_issued')}}" required></input>
-        @error('date_issued')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-    </div>
-</div>
-
-<div class="form-group row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
         <select name="item_id" class="form-control @error('date_issued') is-invalid @enderror single-select" required>
             <option value="">Select Category...</option>
@@ -19,7 +11,13 @@
         </select>
         @error('item_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
+    <div class="col-md-4">
+        <label class="col-form-label">Date Issued <span class="star">*</span> </label>
+        <input type="date" id="date_issued" name="date_issued" class="form-control @error('date_issued') is-invalid @enderror" value="{{old('date_issued')}}" required></input>
+        @error('date_issued')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+    </div>
 </div>
+
 
 <div class="form-group row">
     <div class="col-md-6">
@@ -36,14 +34,23 @@
 
 <div class="form-group row">
     <div class="col-md-12">
-        <label class="col-form-label">Issued To<span class="star">*</span> </label>
+        <label class="col-form-label">Request By<span class="star">*</span> </label>
         <select name="employee_id" class="form-control @error('employee_id') is-invalid @enderror single-select" required>
             <option value="">Select Employee...</option>
             @foreach($employees as $employee)
                 <option value="{{$employee->id}}" {{old('employee_id') == $employee->id ? 'selected' : '' }}>{{$employee->full_name}}</option>
             @endforeach
         </select>
-        @error('employee')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        @error('employee_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+    </div>
+</div>
+
+
+<div class="form-group row">
+    <div class="col-sm-12">
+        <label class="col-form-label">Descriptions</label>
+        <textarea name="desc" id="desc" class="form-control{{ $errors->has('desc') ? ' is-invalid' : '' }}" rows="5">{{old('desc')}}</textarea>
+        @if ($errors->has('desc'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('desc') }}</strong></span>@endif
     </div>
 </div>
 
@@ -51,7 +58,7 @@
 <div class="form-group row justify-content-center">
     <div class="col-md-12">
         <div class="float-left">
-            <a class="btn btn-outline-secondary" href="{{route('itemIssued.index')}}" title="create">cancel</a>
+            <a class="btn btn-outline-secondary" href="{{route('itemRequests.index')}}" title="create">cancel</a>
         </div>
         <div class="float-right">
             <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>

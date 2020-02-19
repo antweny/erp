@@ -109,13 +109,13 @@ class GenderSeriesParticipantController extends Controller
     public function import (ImportRequest $request)
     {
         $this->authorize('create',$this->model());
-        try {
+        //try {
             Excel::import(new GenderSeriesParticipantsImport,request()->file('imported_file'));
             return back()->with('success','Gender Participants have been imported');
-        }
-        catch (\Exception $e){
+       // }
+       // catch (\Exception $e){
             return redirect()->route('genderSeriesParticipants.index')->with('error',$e->getMessage());
-        }
+       // }
     }
 
     /*

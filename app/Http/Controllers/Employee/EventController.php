@@ -1,20 +1,17 @@
 <?php
 
+namespace App\Http\Controllers\Employee;
+use App\Http\Controllers\Employee\Controller;
 
-namespace App\Http\Controllers\Admin;
 
 use App\Employee;
 use App\EventCategory;
-use App\Http\Controllers\Admin\Controller;
-
 use App\Event;
 use App\Http\Requests\EventRequest;
 use App\Individual;
 use App\Organization;
 use App\Venue;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class EventController extends Controller
 {
@@ -23,10 +20,9 @@ class EventController extends Controller
      */
     public function index(Event $event)
     {
-        $this->authorize('read',$event);
         try {
             $events = $event->with('event_category','employee')->get();
-            return view('events.index',compact('events'));
+            return view('employee.events.index',compact('events'));
         }
         catch (\Exception $e) {
             abort(404);
@@ -38,14 +34,14 @@ class EventController extends Controller
      */
     public function create(Event $event)
     {
-        $this->authorize('create',$event);
         try {
             return $this->populate(__FUNCTION__,$event);
         }
         catch (\Exception $e) {
-           abort(404);
+            abort(404);
         }
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -72,72 +68,6 @@ class EventController extends Controller
             return back()->with('error',' Something went wrong')->withInput($request->input());
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        $this->authorize('update',$this->model());
-        try{
-            $event = $this->getID($id);
-            return $this->populate(__FUNCTION__,$event);
-        }
-        catch (\Exception $e) {
-            return $this->errorReturn();
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(EventRequest $request, $id)
-    {
-        $this->authorize('update',$this->model());
-
-        $request['venue_id'] = $this->check_venue($request['venue']);
-        $organizations = $request['organization_id'];
-        $individuals = $request['individual_id'];
-
-        DB::beginTransaction();
-
-        try {
-            $this->getID($id)->update($request->all());
-            $this->getID($id)->organization()->sync($organizations);
-            $this->getID($id)->individual()->sync($individuals);
-            DB::commit();
-            return  redirect()->route('events.index')->with('success',' Event has been updated');
-        }
-        catch (\Exception $e) {
-            DB::rollback();
-            return $this->errorReturn();
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        $this->authorize('delete',$this->model());
-        try {
-            $this->getID($id)->delete();
-            return back()->with('success','Event has been deleted');
-        }
-        catch (\Exception $e) {
-            return $this->errorReturn();
-        }
-    }
-
-
     /*
      * Get Venue ID
      */
@@ -157,7 +87,7 @@ class EventController extends Controller
         $organizations = Organization::get_name_and_id();
         $employees = Employee::get_full_name_and_id();
         $data = compact('event','eventCategories','venues','individuals','organizations','employees');
-        return view('events.' .$function_name , $data);
+        return view('employee.events.' .$function_name , $data);
     }
 
     /*
@@ -182,6 +112,7 @@ class EventController extends Controller
      */
     public function errorReturn()
     {
-        return redirect()->route('events.index')->with('error','something went wrong');
+        return redirect()->route('employee.events.index')->with('error','something went wrong');
     }
+
 }

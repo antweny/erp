@@ -48,7 +48,6 @@ function mysql_to_date($date)
 
 }
 
-
 /*
  * Get month and year from mysql format date
  */

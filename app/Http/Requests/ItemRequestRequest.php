@@ -30,21 +30,28 @@ class ItemRequestRequest extends FormRequest
             case 'DELETE': {
                 return [];
             }
-
             case 'POST': {
                 return [
+                    'date_issued' => 'date|nullable',
                     'item_id' => 'required',
+                    'quantity' => 'integer',
                     'required' => 'required|integer',
+                    'employee_id' => 'required',
+                    'desc' => 'string|nullable',
                 ];
             }
-
             case 'PUT':
             case 'PATCH': {
                 return [
+                    'date_issued' => 'date|nullable',
                     'item_id' => 'required',
+                    'quantity' => 'integer',
                     'required' => 'required|integer',
+                    'employee_id' => 'required',
+                    'desc' => 'string|nullable',
                 ];
             }
+
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuids;
@@ -26,6 +27,13 @@ class Employee extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     */
+    protected $casts = [
+        'id' => 'string'
     ];
 
 
@@ -76,12 +84,9 @@ class Employee extends Authenticatable
      */
     static function get_full_name_and_id()
     {
-        $employee = Employee::select('id','first_name','middle_name','last_name')->get();
-
+        $employee = Employee::select('id','first_name','last_name')->get();
         return $employee;
     }
-
-
 
 
     /* ------------------------------------

@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\GenderSeries;
 use App\GenderSeriesParticipant;
 use App\Individual;
+use Maatwebsite\Excel\Validators\Failure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -58,6 +59,12 @@ class GenderSeriesParticipantsImport implements ToModel, WithBatchInserts, WithC
     {
         return 100;
     }
+
+    public function onFailure(Failure $failures)
+    {
+        return $failures;
+    }
+
 
     /*
      * Check if resource exist get ID if not create and get ID

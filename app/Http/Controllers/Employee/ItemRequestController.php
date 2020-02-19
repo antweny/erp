@@ -1,38 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers\Employee;
+use App\Http\Controllers\Employee\Controller;
 
-use App\Employee;
-use App\Http\Requests\ItemRequestRequest;
 use App\ItemRequest;
 use App\Item;
+use App\Http\Requests\ItemRequestRequest;
 use Illuminate\Support\Facades\DB;
 
 class ItemRequestController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
     public function index(ItemRequest $itemRequest)
     {
-        $this->authorize('read',$itemRequest);
         try {
-            $itemRequests = $itemRequest->latest()->with('employee','item')->get();
-            return view('store.requests.index',compact('itemRequests'));
+            $itemRequests = $itemRequest->where('employee_id',currentLogged()->id)->latest()->with('employee','item')->get();
+            return view('employee.store.index',compact('itemRequests'));
         }
         catch (\Exception $e) {
             abort(404);
         }
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
     public function create(ItemRequest $itemRequest)
     {
-        $this->authorize('create',$itemRequest);
         try {
             return $this->populate(__FUNCTION__,$itemRequest);
         }
@@ -41,17 +38,17 @@ class ItemRequestController extends Controller
         }
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(ItemRequestRequest $request, ItemRequest $itemRequest)
     {
-        $this->authorize('create',$itemRequest);
-        $request['status'] = 'C';
+        $request['status'] = 'O';
         DB::beginTransaction();
         try {
             //dd($request->only('employee_id'));
-            $this->decrement_item_quantity($request);    //Reduced quantity number on item on issuee
+            //$this->decrement_item_quantity($request);    //Reduced quantity number on item on issuee
 
             $itemRequest->create($request->all());
             DB::commit();
@@ -63,39 +60,38 @@ class ItemRequestController extends Controller
         }
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
         try {
             $itemRequest = $this->getID($id);
+
+            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
+
             return $this->populate(__FUNCTION__, $itemRequest);
         }
         catch (\Exception $e) {
-            return $this->errorReturn();
+            return $this->errorReturn($e);
         }
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(ItemRequestRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
-        $request['status'] = 'C';
         DB::beginTransaction();
         try {
             $itemRequest = $this->getID($id); //Get delatis of updating item received
-            if($request->quantity != $itemRequest->quantity)  //Check if user update the item received quqntity
-            {
-                $this->update_item_quantity($request,$itemRequest->quantity);
-            }
+
+            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
+
             $itemRequest->update($request->all());
             DB::commit();
-            return redirect()->route('itemRequests.index')->with('success','Item Request has been Updated');
+            return redirect()->route('employee.itemRequests.index')->with('success','Item Request has been Updated');
         }
         catch (\Exception $e) {
             DB::rollBack();
@@ -103,14 +99,16 @@ class ItemRequestController extends Controller
         }
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
         try {
             $itemRequest = $this->getID($id);
+
+            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
 
             //Update the Item Table
             $this->increment_item_quantity($itemRequest->item_id,$itemRequest->quantity);
@@ -168,9 +166,10 @@ class ItemRequestController extends Controller
     public function populate($function_name, $itemRequest)
     {
         $items = Item::quantity_greater_than_zero(); //Get List of items
-        $employees = Employee::get_full_name_and_id();
-        $data = compact('items','itemRequest','employees');
-        return view('store.requests.'.$function_name,$data);
+
+        $data = compact('items','itemRequest');
+
+        return view('employee.store.'.$function_name,$data);
     }
 
     /*
@@ -193,9 +192,9 @@ class ItemRequestController extends Controller
     /*
      * Exception Error return back
      */
-    public function errorReturn()
+    public function errorReturn($e)
     {
-        return redirect()->route('itemRequests.index')->with('error','something went wrong');
+        return redirect()->route('employee.itemRequests.index')->with('error',$e->getMessage());
     }
 
 }

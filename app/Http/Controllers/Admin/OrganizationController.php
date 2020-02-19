@@ -119,11 +119,14 @@ class OrganizationController extends Controller
     public function import(ImportRequest $request, Organization $organization)
     {
         $this->authorize('import',$organization);
-
-        if ($request->file('imported_file')) {
+        //try {
             Excel::import(new OrganizationImport(), request()->file('imported_file'));
-            return back();
-        }
+            return back()->with('success','Organization imported successfully!');
+        // }
+        //catch (\Exception $e){
+        //return $this->errorReturn();
+        //return redirect()->route('individuals.index')->with('error',$e->getMessage());
+        //}
     }
 
     /*
