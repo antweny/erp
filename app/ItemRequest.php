@@ -36,7 +36,7 @@ class ItemRequest extends BaseModel
                 return '<span class="status  bg-danger text-white">Open</span>';
                 break;
             case 'C' :
-                return '<span class="status  bg-success text-white ">Closed</span>';
+                return '<span class="status  bg-success text-white ">Issued</span>';
                 break;
             default:
                 return NULL;

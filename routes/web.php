@@ -62,6 +62,8 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
 
         Route::resource('itemUnits','ItemUnitController')->except('create','show');
         Route::resource('itemReceived','ItemReceivedController')->except('show');
+
+        Route::get('items/issued', 'ItemRequestController@itemIssued')->name('itemRequests.issued');
         Route::resource('itemRequests','ItemRequestController')->except('show');
     });
 

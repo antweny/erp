@@ -19,8 +19,23 @@ class ItemRequestController extends Controller
     {
         $this->authorize('read',$itemRequest);
         try {
-            $itemRequests = $itemRequest->latest()->with('employee','item')->get();
+            $itemRequests = $itemRequest->latest()->where('status','O')->with('employee','item')->get();
             return view('store.requests.index',compact('itemRequests'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function itemIssued(ItemRequest $itemRequest)
+    {
+        $this->authorize('read',$itemRequest);
+        try {
+            $itemRequests = $itemRequest->latest()->where('status','C')->with('employee','item')->get();
+            return view('store.requests.issued',compact('itemRequests'));
         }
         catch (\Exception $e) {
             abort(404);

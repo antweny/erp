@@ -46,7 +46,7 @@
                                 <td class="text-center">
                                     <div class="btn-group">
                                         @if(checkPermission('itemRequest-update'))
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('itemRequests.edit',$itemRequest->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('itemRequests.edit',$itemRequest->id)}}" title="issue item"><i class="fa fa-upload"></i></a>
                                         @endif
                                         @if(checkPermission('itemRequest-delete'))
                                             <form class="form-delete" method="post" action="{{route('itemRequests.destroy',$itemRequest->id)}}">

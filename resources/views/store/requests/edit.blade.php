@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <h1 class="h4">Update Item Request</h1>
+                        <h1 class="h4">Issue Item Request</h1>
                     </div>
                     <div class="float-right">
                         <a class="btn btn-info btn-sm text-white" href="{{route('itemRequests.index')}}" title="create"><i class="fa fa-list mr-1"></i> item requests</a>
@@ -27,10 +27,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
                                 <input type="text" name="item_name" class="form-control" value="{{$itemRequest->item->name}}" required readonly></input>
                                 <input type="hidden" name="item_id" class="form-control" value="{{$itemRequest->item_id}}"></input>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label" name="title">Quantity Remain</label>
+                                <input type="text" name="item_name" class="form-control" value="{{$itemRequest->item->quantity}}" required readonly></input>
                             </div>
                         </div>
 
@@ -51,13 +55,9 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="col-form-label">Employee Name<span class="star">*</span> </label>
-                                <select name="employee_id" class="form-control" required>
-                                    <option value="">Select Employee...</option>
-                                    @foreach($employees as $employee)
-                                        <option value="{{$employee->id}}" {{old('employee_id',$itemRequest->employee_id) == $employee->id ? 'selected' : '' }}>{{$employee->full_name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('employee')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                <input type="text" name="employee_name" class="form-control" value="{{$itemRequest->employee->full_name}}" required readonly></input>
+                                <input type="hidden" name="employee_id" class="form-control" value="{{$itemRequest->employee_id}}"></input>
+                                @error('employee_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
 
@@ -76,7 +76,7 @@
                                     <a class="btn btn-outline-secondary" href="{{route('itemRequests.index')}}" title="create">cancel</a>
                                 </div>
                                 <div class="float-right">
-                                    <input type="submit" class="btn btn-primary" value="update"/>
+                                    <input type="submit" class="btn btn-primary" value="Issue Item"/>
                                 </div>
                             </div>
                         </div>

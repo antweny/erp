@@ -152,8 +152,14 @@
                     @endcan
                     @can('itemRequest-read')
                         <a class="collapse-item" href="{{route('itemRequests.index')}}">
-                            <i class="fa fa-upload"></i>
+                            <i class="fab fa-invision"></i>
                             Item Requests
+                        </a>
+                    @endcan
+                    @can('itemRequest-read')
+                        <a class="collapse-item" href="{{route('itemRequests.issued')}}">
+                            <i class="fa fa-upload"></i>
+                            Item Issued
                         </a>
                     @endcan
                 </div>
