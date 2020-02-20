@@ -56,7 +56,10 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
     Route::prefix('store/')->group (function () {
         Route::get('/manage','StoreController')->name('store.manage');
         Route::resource('itemCategories','ItemCategoryController')->except('create','show');
+
+        Route::post('items/import', 'ItemController@import')->name('items.import');
         Route::resource('items','ItemController')->except('create','show');
+
         Route::resource('itemUnits','ItemUnitController')->except('create','show');
         Route::resource('itemReceived','ItemReceivedController')->except('show');
         Route::resource('itemRequests','ItemRequestController')->except('show');

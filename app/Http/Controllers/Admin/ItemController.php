@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Controller;
 
+use App\Http\Requests\ImportRequest;
 use App\Http\Requests\ItemRequest;
+use App\Imports\ItemsImport;
 use App\Item;
 use App\ItemCategory;
 use App\ItemUnit;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -88,6 +91,22 @@ class ItemController extends Controller
             return $this->errorReturn();
         }
     }
+
+    /*
+    * Import Data from Excel
+    */
+    public function import (ImportRequest $request)
+    {
+        $this->authorize('create',$this->model());
+        //try {
+            Excel::import(new ItemsImport,request()->file('imported_file'));
+            return back()->with('success','Items imported successfully!');
+       // }
+       // catch (\Exception $e){
+       //     return $this->errorReturn();
+       // }
+    }
+
 
     /*
     * Get requested record ID

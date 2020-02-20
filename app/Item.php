@@ -21,6 +21,14 @@ class Item extends BaseModel
     protected static $logName = 'items';
 
 
+    /*
+     * Mutator Functions
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords(strtolower($value));
+    }
+
 
     /* ------------------
      * Accessor  Functions

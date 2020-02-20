@@ -17,5 +17,12 @@ class ItemUnit extends BaseModel
      */
     protected static $logName = 'item_units';
 
+    /*
+    * Mutator Functions
+    */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 
 }
