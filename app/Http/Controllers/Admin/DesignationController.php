@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\DesignationRequest;
-use Illuminate\Http\Request;
 use App\Designation;
 
 class DesignationController extends Controller
