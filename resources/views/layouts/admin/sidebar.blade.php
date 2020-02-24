@@ -24,8 +24,9 @@
                     <i class="fa fa-building"></i>
                     Department
                 </a>
-                <a class="collapse-item" href="{{route('departments.index')}}">
-                    Desigantions
+                <a class="collapse-item" href="{{route('designations.index')}}">
+                    <i class="fa fa-map"></i>
+                    Designations
                 </a>
             </div>
         </div>

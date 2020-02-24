@@ -48,6 +48,10 @@ class BaseModel extends Model
     /* -------------------
      *   Other Functions
      * -------------------*/
+
+    /*
+     * Get record id
+     */
     public function get_id($data)
     {
         if ($data != null) {
@@ -55,6 +59,15 @@ class BaseModel extends Model
             return $model->id;
         }
         return null;
+    }
+
+    /*
+     * Get Name and ID
+     */
+   static function getNameID()
+    {
+        $data = self::select('id','name')->get();
+        return $data;
     }
 
 }

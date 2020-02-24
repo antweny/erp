@@ -72,6 +72,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::get('/dashboard', function () {return redirect()->route('departments.index');})->name('hr.dashboard');
         Route::resource('departments','DepartmentController')->except('create','show');
         Route::resource('employee','EmployeeController');
+        Route::resource('designations','DesignationController');
     });
 
     //Location Management
