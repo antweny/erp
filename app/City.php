@@ -53,18 +53,4 @@ class City extends BaseModel
         return $this->hasMany(District::class);
     }
 
-
-    /* -------------------
-     *   Other Functions
-     * -------------------*/
-
-    /*
-     * Get Name and ID
-     */
-    static function get_name_and_id()
-    {
-        $city = City::select('id','name')->get();
-
-        return $city;
-    }
 }

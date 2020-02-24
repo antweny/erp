@@ -171,10 +171,10 @@ class IndividualController extends Controller
     * Populate dropdowns values from different tables and return to forms
     */
     public function populate($function_name, $individual) {
-        $cities = City::get_name_and_id();
-        $districts = District::get_name_and_id();
-        $wards = Ward::get_name_and_id();
-        $levels = EducationLevel::get_name_and_id();
+        $cities = City::getNameID();
+        $districts = District::getNameID();
+        $wards = Ward::getNameID();
+        $levels = EducationLevel::getNameID();
 
         $data = compact('individual','cities','districts','wards','levels');
         return view('individuals.' .$function_name , $data);

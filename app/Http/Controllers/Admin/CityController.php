@@ -21,7 +21,7 @@ class CityController extends Controller
 
         $cities = $city->latest()->with('country')->get();
 
-        $countries = Country::select('name','id')->get(); //Get countries list
+        $countries = Country::getNameID(); //Get countries list
 
         return view('location.cities.index',compact('countries','cities'));
     }
@@ -47,7 +47,7 @@ class CityController extends Controller
     public function edit($id)
     {
         $this->authorize('update',$this->model());
-        $countries = Country::select('name','id')->get(); //Get countires list
+        $countries = Country::getNameID(); //Get countires list
         try {
             $city = $this->getID($id);
             return view('location.cities.edit',compact('city','countries'));

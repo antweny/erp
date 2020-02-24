@@ -7,6 +7,8 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DepartmentPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Create a new policy instance.
      *

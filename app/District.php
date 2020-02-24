@@ -48,27 +48,4 @@ class District extends BaseModel
     }
 
 
-
-    /* -------------------
-     *   Other Functions
-     * -------------------*/
-
-    /*
-     * Get Name and ID
-     */
-    static function get_name_and_id()
-    {
-        $district = District::select('id','name')->get();
-
-        return $district;
-    }
-
-
-
-
-
-
-
-
-
 }

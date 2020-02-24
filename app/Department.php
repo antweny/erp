@@ -19,16 +19,4 @@ class Department extends BaseModel
     protected static $logName = 'departments';
 
 
-    /* -------------------
-    *   Other Functions
-    * -------------------*/
-    /*
-     * Get Name and ID
-     */
-    static function get_name_and_id()
-    {
-        $data = Department::select('id','name')->get();
-        return $data;
-    }
-
 }

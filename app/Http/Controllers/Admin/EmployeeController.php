@@ -106,11 +106,9 @@ class EmployeeController extends Controller
     */
     public function populate ($function_name,$employee)
     {
-        $admins = Admin::select('name','id')->get();
+        $departments = Department::getNameID();
 
-        $departments = Department::get_name_and_id();
-
-        $data = compact('admins','departments','employee');
+        $data = compact('departments','employee');
 
         return view('hr.employees.' .$function_name, $data);
     }
