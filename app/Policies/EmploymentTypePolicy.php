@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Admin;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EmploymentTypePolicy
@@ -17,5 +17,45 @@ class EmploymentTypePolicy
     public function __construct()
     {
         //
+    }
+
+    /**
+     * Determine whether the admin can create new resource.
+     */
+    public function create(Admin $admin)
+    {
+        return $admin->can('employmentType-create');
+    }
+
+    /**
+     * Determine whether the admin can view the resources.
+     */
+    public function read(Admin $admin)
+    {
+        return $admin->can('employmentType-read');
+    }
+
+    /**
+     * Determine whether the admin can update the question.
+     */
+    public function update(Admin $admin)
+    {
+        return $admin->can('employmentType-update');
+    }
+
+    /**
+     * Determine whether the admin can delete the question.
+     */
+    public function delete(Admin $admin)
+    {
+        return $admin->can('employmentType-delete');
+    }
+
+    /**
+     * Determine whether the admin can delete the question.
+     */
+    public function import(Admin $admin)
+    {
+        return $admin->can('employmentType-import');
     }
 }

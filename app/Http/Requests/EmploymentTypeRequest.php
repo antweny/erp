@@ -13,7 +13,7 @@ class EmploymentTypeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,30 @@ class EmploymentTypeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method())
+        {
+
+            case 'GET':
+            case 'DELETE': {
+                return [];
+            }
+
+            case 'POST': {
+                return [
+                    'name' => 'required|string|max:255|unique:employment_types,name',
+                    'desc' => 'string|nullable',
+                    'sort' => 'integer|nullable',
+                ];
+            }
+
+            case 'PUT':
+            case 'PATCH': {
+                return [
+                    'name' => 'required|string|max:255|unique:employment_types,id,'.$this->id,
+                    'desc' => 'string|nullable',
+                    'sort' => 'integer|nullable',
+                ];
+            }
+        }
     }
 }

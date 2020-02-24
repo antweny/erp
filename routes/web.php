@@ -73,6 +73,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('departments','DepartmentController')->except('create','show');
         Route::resource('employee','EmployeeController');
         Route::resource('designations','DesignationController');
+        Route::resource('employmentTypes','EmploymentTypeController');
     });
 
     //Location Management

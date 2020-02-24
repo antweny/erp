@@ -16,10 +16,6 @@
         </a>
         <div id="empManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class=" py-2 collapse-inner ">
-                <a class="collapse-item" href="{{route('employee.index')}}">
-                    <i class="fa fa-user"></i>
-                    Employee
-                </a>
                 <a class="collapse-item" href="{{route('departments.index')}}">
                     <i class="fa fa-building"></i>
                     Department
@@ -27,6 +23,16 @@
                 <a class="collapse-item" href="{{route('designations.index')}}">
                     <i class="fa fa-map"></i>
                     Designations
+                </a>
+                @if(checkPermission('employmentType-read'))
+                    <a class="collapse-item" href="{{route('employmentTypes.index')}}">
+                        <i class="fa fa-map"></i>
+                        Employment Types
+                    </a>
+                @endif
+                <a class="collapse-item" href="{{route('employee.index')}}">
+                    <i class="fa fa-user"></i>
+                    Employee
                 </a>
             </div>
         </div>
@@ -43,36 +49,36 @@
             </a>
             <div id="people" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class=" py-2 collapse-inner ">
-                    @can('educationLevel-read')
+                    @if(checkPermission('educationLevel-read'))
                         <a class="collapse-item" href="{{route('educationLevels.index')}}">
                             <i class="fa fa-signal"></i>
                             Education Level
                         </a>
-                    @endcan
-                    @can('individual-read')
+                    @endif
+                    @if(checkPermission('individual-read'))
                         <a class="collapse-item" href="{{route('individuals.index')}}">
                             <i class="fa fa-users"></i>
                             Individuals
                         </a>
-                    @endcan
-                    @can('title-read')
+                    @endif
+                    @if(checkPermission('title-read'))
                         <a class="collapse-item" href="{{route('titles.index')}}">
                             <i class="fa fa-heading"></i>
                             Position Titles
                         </a>
-                    @endcan
-                    @can('position-read')
+                    @endif
+                    @if(checkPermission('position-read'))
                         <a class="collapse-item" href="{{route('positions.index')}}">
                             <i class="fa fa-briefcase"></i>
                             Positions
                         </a>
-                    @endcan
-                    @can('group-read')
+                    @endif
+                    @if(checkPermission('group-read'))
                         <a class="collapse-item" href="{{route('groups.index')}}">
                             <i class="fa fa-user-tag"></i>
                             Groups
                         </a>
-                    @endcan
+                    @endif
                 </div>
             </div>
         </li>
