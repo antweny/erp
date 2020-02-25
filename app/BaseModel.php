@@ -43,7 +43,27 @@ class BaseModel extends Model
     }
 
 
-
+     /* ------------------
+      *  Mutator functions
+      * ------------------*/
+     public function getEndDateAttribute($value)
+     {
+         if(is_null($value)) {
+             return '';
+         }
+         else {
+             return get_day_month_and_year($value);
+         }
+     }
+    public function getStartDateAttribute($value)
+    {
+        if(is_null($value)) {
+            return '';
+        }
+        else {
+            return $value;
+        }
+    }
 
     /* -------------------
      *   Other Functions

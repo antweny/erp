@@ -74,6 +74,7 @@ Route::namespace('Admin')->prefix('admin')->group (function () {
         Route::resource('employee','EmployeeController');
         Route::resource('designations','DesignationController');
         Route::resource('employmentTypes','EmploymentTypeController');
+        Route::resource('employmentHistories','EmploymentHistoryController')->except('show','create');
     });
 
     //Location Management

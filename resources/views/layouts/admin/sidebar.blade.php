@@ -30,10 +30,18 @@
                         Employment Types
                     </a>
                 @endif
-                <a class="collapse-item" href="{{route('employee.index')}}">
-                    <i class="fa fa-user"></i>
-                    Employee
-                </a>
+                @if(checkPermission('employee-read'))
+                    <a class="collapse-item" href="{{route('employee.index')}}">
+                        <i class="fa fa-user"></i>
+                        Employee
+                    </a>
+                @endif
+                @if(checkPermission('employee-read'))
+                    <a class="collapse-item" href="{{route('employmentHistories.index')}}">
+                        <i class="fa fa-map"></i>
+                        Employment Histories
+                    </a>
+                @endif
             </div>
         </div>
     </li>
