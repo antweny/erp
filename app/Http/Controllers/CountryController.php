@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\CountryRequest;
 use App\Country;
@@ -11,6 +10,14 @@ use App\Imports\CountryImport;
 
 class CountryController extends Controller
 {
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -83,7 +90,6 @@ class CountryController extends Controller
         }
     }
 
-
     /*
      * Get requested record ID
      */
@@ -93,7 +99,6 @@ class CountryController extends Controller
         return $data;
     }
 
-
     /*
      * Initialize the controler model class
      */
@@ -101,7 +106,6 @@ class CountryController extends Controller
     {
         return Country::class;
     }
-
 
     /*
    * Import Data from Excel

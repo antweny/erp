@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\ItemCategoryRequest;
-use App\ItemCategory;
+use App\Http\Requests\ItemUnitRequest;
+use App\ItemUnit;
 
-class ItemCategoryController extends Controller
+
+class ItemUnitController extends Controller
 {
+    /**
+     * Controller constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index(ItemCategory $itemCategory)
+    public function index(ItemUnit $itemUnit)
     {
-        $this->authorize('read',$itemCategory);
+        $this->authorize('read',$itemUnit);
         try {
-            $itemCategories = $itemCategory->get()->sortBy('sort');
-            return view('store.itemCategories.index',compact('itemCategories'));
+            $itemUnits = $itemUnit->get();
+            return view('store.itemUnits.index',compact('itemUnits'));
         }
         catch (\Exception $e) {
             abort(404);
@@ -26,12 +35,12 @@ class ItemCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemCategoryRequest $request, ItemCategory $itemCategory)
+    public function store(ItemUnitRequest $request, ItemUnit $itemUnit)
     {
-        $this->authorize('create',$itemCategory);
+        $this->authorize('create',$itemUnit);
         try {
-            $itemCategory->create($request->only('name','desc','sort'));
-            return back()->with('success','Item Category has been saved!');
+            $itemUnit->create($request->only('name','desc','sort'));
+            return back()->with('success','Item Unit has been saved!');
         }
         catch (\Exception $e) {
             return back()->with('error',' Something went wrong')->withInput($request->input());
@@ -45,8 +54,8 @@ class ItemCategoryController extends Controller
     {
         $this->authorize('update',$this->model());
         try{
-            $itemCategory = $this->getID($id);
-            return view('store.itemCategories.edit',compact('itemCategory'));
+            $itemUnit= $this->getID($id);
+            return view('store.itemUnits.edit',compact('itemUnit'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -56,12 +65,12 @@ class ItemCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemCategoryRequest $request, $id)
+    public function update(ItemUnitRequest $request,$id)
     {
         $this->authorize('update',$this->model());
         try {
             $this->getID($id)->update($request->only('name','sort','desc'));
-            return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
+            return redirect()->route('itemUnits.index')->with('success','item unit has been updated!');
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -76,7 +85,7 @@ class ItemCategoryController extends Controller
         $this->authorize('delete',$this->model());
         try {
             $this->getID($id)->delete();
-            return redirect()->route('itemCategories.index')->with('success','item category has been deleted!');
+            return redirect()->route('itemUnits.index')->with('success','item unit has been delete!');
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -88,7 +97,7 @@ class ItemCategoryController extends Controller
      */
     public function getID($id)
     {
-        $data = ItemCategory::findOrFail($id);
+        $data = ItemUnit::findOrFail($id);
         return $data;
     }
 
@@ -97,7 +106,7 @@ class ItemCategoryController extends Controller
      */
     public function model ()
     {
-        return ItemCategory::class;
+        return ItemUnit::class;
     }
 
     /*
@@ -105,6 +114,8 @@ class ItemCategoryController extends Controller
      */
     public function errorReturn()
     {
-        return redirect()->route('itemCategories.index')->with('error','something went wrong');
+        return redirect()->route('itemUnits.index')->with('error','something went wrong');
     }
+
+
 }

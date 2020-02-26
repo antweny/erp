@@ -1,23 +1,19 @@
-@extends('layouts.admin')
-@section('title','Streets')
+@extends('layouts.location')
+@section('title','List of Streets/Villages')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Streets</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('street-import'))
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endif
-                        @if(checkPermission('street-create'))
-                            <a class="btn btn-primary" href="#newStreet" data-toggle="modal"><i class="fa fa-plus"></i> New street</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">List of Streets/Villages</h4>
+            </div>
+            <div class="float-right">
+                @if(checkPermission('street-import'))
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                @endif
+                @if(checkPermission('street-create'))
+                    <a class="btn btn-success" href="#newStreet" data-toggle="modal"><i class="fa fa-plus"></i> New street</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -25,7 +21,7 @@
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -112,7 +108,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Create</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">save</button>
                         </div>
                     </form>
                 </div>
@@ -147,7 +143,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                         </div>
                     </form>
                 </div>

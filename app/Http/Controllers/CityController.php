@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
@@ -12,6 +11,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CityController extends Controller
 {
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
     /**
      * Display a listing of the resource.
      */

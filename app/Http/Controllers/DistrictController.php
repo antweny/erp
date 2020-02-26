@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\City;
 use App\District;
 use App\Http\Requests\DistrictRequest;
@@ -13,6 +12,14 @@ use Maatwebsite\Excel\Facades\Excel;
 class DistrictController extends Controller
 {
     /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(District $district)
@@ -21,11 +28,10 @@ class DistrictController extends Controller
 
         $districts = $district->orderBy('name','desc')->with('city')->get();
 
-        $cities = City::get_name_and_id(); // Get cities list
+        $cities = City::getNameID(); // Get cities list
 
         return view('location.districts.index',compact('districts','cities'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -47,7 +53,7 @@ class DistrictController extends Controller
     {
         $this->authorize('update',$this->model());
 
-        $cities = City::get_name_and_id(); // Get cities list
+        $cities = City::getNameID(); // Get cities list
 
         try {
             $district = $this->getID($id);

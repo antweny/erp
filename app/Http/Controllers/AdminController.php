@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Admin;
-use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\PasswordResetRequest;
 use App\Role;

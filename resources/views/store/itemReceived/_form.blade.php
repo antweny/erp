@@ -19,14 +19,6 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-sm-12">
-            <label class="col-form-label">Item Descriptions</label>
-            <textarea name="desc" id="desc" class="form-control{{ $errors->has('desc') ? ' is-invalid' : '' }}" rows="3">{{old('desc',$itemReceived->desc)}}</textarea>
-            @if ($errors->has('desc'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('desc') }}</strong></span>@endif
-        </div>
-    </div>
-
-    <div class="form-group row">
         <div class="col-md-6">
             <label class="col-form-label">Quantity <span class="star">*</span> </label>
             <input type="number" name="quantity" class="form-control @error('date_received') is-invalid @enderror" value="{{old('quantity',$itemReceived->quantity)}}" required></input>

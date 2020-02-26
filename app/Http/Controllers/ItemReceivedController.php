@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\ItemReceivedRequest;
 use App\ItemReceived;
 use App\Item;
@@ -11,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class ItemReceivedController extends Controller
 {
+    /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -41,7 +47,6 @@ class ItemReceivedController extends Controller
             return $this->errorReturn();
         }
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -197,6 +202,5 @@ class ItemReceivedController extends Controller
     {
         return redirect()->route('itemReceived.index')->with('error','something went wrong');
     }
-
 
 }

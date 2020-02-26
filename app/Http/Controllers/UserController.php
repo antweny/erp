@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\Role;
 use App\User;
 use App\Http\Requests\UserRequest;
@@ -10,17 +9,28 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
+        //$this->middleware('auth:employee',['only'=> ['employee']]);
+    }
 
     /**
      * User index page
      */
     public function index(User $user)
     {
-        $roles = Role::select('id','name')->where('guard_name','web')->get();   //Get all roles
-
-        $users = $user->get();
-
-        return view('admin.users.index',compact('users','roles'));
+        try {
+            $roles = Role::select('id','name')->where('guard_name','web')->get();   //Get all roles
+            $users = $user->get();
+            return view('admin.users.index',compact('users','roles'));
+        }
+        catch (\Exception $e) {
+            return abort(404);
+        }
     }
 
     /**

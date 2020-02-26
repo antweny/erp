@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
-
+namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
 use App\Permission;
@@ -23,11 +21,14 @@ class RoleController extends Controller
      */
     public function index(Role $role)
     {
-        $roles = $role->orderBy('name','desc')->get();
-
-        $permissions = Permission::orderBy('name','asc')->get();
-
-        return view('admin.roles.index')->with(compact('roles','permissions'));
+        try {
+            $roles = $role->orderBy('name','desc')->get();
+            $permissions = Permission::orderBy('name','asc')->get();
+            return view('admin.roles.index')->with(compact('roles','permissions'));
+        }
+        catch (\Exception $e) {
+            return abort(404);
+        }
     }
 
     /**

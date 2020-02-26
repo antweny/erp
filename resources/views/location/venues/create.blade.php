@@ -1,18 +1,16 @@
-@extends('layouts.admin')
-
+@extends('layouts.location')
 @section('title','New Venue')
-
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <h4 class="header-title">New Venue</h4>
+                        <h5 class="header-title">New Venue</h5>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-flat bg-blue text-white " href="{{route('venues.index')}}"><i class="fa fa-list"></i> view venues</a>
+                        <a class="btn btn-warning text-white" href="{{route('venues.index')}}"><i class="fa fa-list"></i> view venues</a>
                     </div>
                 </div>
                 <div class="card-body">

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\ImportRequest;
 use App\Http\Requests\StreetRequest;
 use App\Imports\StreetImport;
@@ -13,13 +12,21 @@ use Maatwebsite\Excel\Facades\Excel;
 class StreetController extends Controller
 {
     /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Street $street)
     {
         $this->authorize('read',$street);
 
-        $wards = Ward::get_name_and_id();
+        $wards = Ward::getNameID();
 
         $streets = $street->latest()->with('ward')->get(); //Get cities list
 
@@ -46,7 +53,7 @@ class StreetController extends Controller
     {
         $this->authorize('update',$this->model());
 
-        $wards = Ward::get_name_and_id(); //Get countires list
+        $wards = Ward::getNameID(); //Get countires list
         try {
             $street = $this->getID($id);
             return view('location.streets.edit',compact('wards','street'));

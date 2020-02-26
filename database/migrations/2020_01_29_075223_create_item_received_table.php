@@ -20,9 +20,6 @@ class CreateItemReceivedTable extends Migration
             $table->uuid('item_id');
             $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->mediumText('desc')->nullable();
-
-
             $table->unsignedDecimal('unit_rate',13,2);
             $table->unsignedInteger('quantity');
 

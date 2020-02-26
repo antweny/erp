@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\PermissionRequest;
 use App\Permission;

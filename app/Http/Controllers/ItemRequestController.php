@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Http\Requests\ItemRequestRequest;
@@ -11,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class ItemRequestController extends Controller
 {
+    /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy','itemIssued']]);
+    }
 
     /**
      * Display a listing of the resource.

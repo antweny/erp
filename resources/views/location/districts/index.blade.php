@@ -1,31 +1,26 @@
-@extends('layouts.admin')
-@section('title','Districts')
+@extends('layouts.location')
+@section('title','List of Districts')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Districts</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('district-import'))
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endif
-                        @if(checkPermission('district-create'))
-                            <a class="btn btn-primary" href="#newDistrict" data-toggle="modal"><i class="fa fa-plus"></i> New district</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">List of Districts</h4>
+            </div>
+            <div class="float-right">
+                @if(checkPermission('district-import'))
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                @endif
+                @if(checkPermission('district-create'))
+                    <a class="btn btn-success" href="#newDistrict" data-toggle="modal"><i class="fa fa-plus"></i> New district</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -73,7 +68,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Create new district</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New District</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -113,7 +108,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Create</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">save</button>
                         </div>
                     </form>
                 </div>
@@ -129,7 +124,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import districts</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Import Districts</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -147,7 +142,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                         </div>
                     </form>
                 </div>

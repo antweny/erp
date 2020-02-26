@@ -11,9 +11,19 @@ html , body{
 /* ========================
     Colors Section Styling
    ========================*/
-.bg-blue { background: #2067b0; }
-.bg-orange { background: #f39c12; }
+.bg-blue { background: #0866C6; }
+.bg-green { background: green; }
+.bg-orange { background:orange; }
 .bg-black { background: black; }
+.bg-indigo { background: indigo; }
+.bg-purple { background: purple; }
+.bg-yellow { background: yellow; }
+.bg-cyna { background:darkcyan; }
+.bg-pink { background: deeppink; }
+.bg-teal { background: teal; }
+
+
+
 
 /* ====================
     Card Section Style
@@ -222,6 +232,38 @@ html , body{
 }
 .sidebar .nav-link {
     color: #fff;
+}
+
+
+/*
+ * Dashboard Navigations
+ */
+.dash-menu div {
+    margin-bottom: 20px;
+}
+.dash-menu li i{
+    display: block;
+    text-align: center;
+    font-size: 100px;
+}
+.dash-menu li {
+    list-style: none;
+    word-wrap: break-word;
+}
+.dash-menu li a {
+    padding: 10px;
+    display: block;
+    width:100%;
+    overflow: hidden;
+}
+.dash-menu li a span {
+    display: block;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+}
+.dash-menu li a:hover {
+    text-decoration: none;
 }
 
 

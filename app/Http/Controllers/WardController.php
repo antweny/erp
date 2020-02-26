@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\District;
 use App\Http\Requests\ImportRequest;
 use App\Http\Requests\WardRequest;
@@ -13,19 +12,23 @@ use Maatwebsite\Excel\Facades\Excel;
 class WardController extends Controller
 {
     /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Ward $ward)
     {
         $this->authorize('read',$ward);
-
-        $districts = District::get_name_and_id();
-
+        $districts = District::getNameID();
         $wards = $ward->orderBy('name', 'desc')->with('district')->get();
-
         return view('location.wards.index',compact('districts','wards'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -46,7 +49,7 @@ class WardController extends Controller
     public function edit($id)
     {
         $this->authorize('update',$this->model());
-        $districts = District::get_name_and_id(); //Get districts list
+        $districts = District::getNameID(); //Get districts list
         try {
             $ward = $this->getID($id);
             return view('location.wards.edit',compact('districts','ward'));

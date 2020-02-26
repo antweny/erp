@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Employee\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Employee\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
 
-class LoginController extends Controller
+class EmployeeLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/employee/dashboard';
+    protected $redirectTo = '/employee';
 
     /**
      * Create a new controller instance.
@@ -44,7 +44,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('employee.auth.login');
+        return view('auth.employee_login');
     }
 
     /**

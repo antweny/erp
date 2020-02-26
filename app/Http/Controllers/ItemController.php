@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\ImportRequest;
 use App\Http\Requests\ItemRequest;
@@ -15,6 +13,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -16,7 +16,7 @@ class ItemReceived extends BaseModel
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'date_received','item_id','desc', 'unit_rate','quantity','amount','remarks'
+        'date_received','item_id','unit_rate','quantity','amount','remarks'
     ];
 
     /**

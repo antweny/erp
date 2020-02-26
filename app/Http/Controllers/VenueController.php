@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
 use App\City;
 use App\Venue;
@@ -12,6 +10,14 @@ use App\District;
 
 class VenueController extends Controller
 {
+    /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy','import']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,8 +41,6 @@ class VenueController extends Controller
 
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      */
@@ -48,7 +52,6 @@ class VenueController extends Controller
 
         return back()->with('success',' Venue has been saved');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -94,7 +97,6 @@ class VenueController extends Controller
             return back()->with('error','something went Wrong');
         }
     }
-
 
     /*
      * Populate dropdowns values from different tables and return to forms
