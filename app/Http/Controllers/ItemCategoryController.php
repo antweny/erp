@@ -8,12 +8,11 @@ use App\ItemCategory;
 class ItemCategoryController extends Controller
 {
     /**
-     * AdminController constructor.
+     * Auth constructor.
      */
     function __construct()
     {
         $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
-        //$this->middleware('auth:employee',['only'=> ['employee']]);
     }
 
     /**
@@ -21,10 +20,9 @@ class ItemCategoryController extends Controller
      */
     public function index()
     {
-        $this->authorize('read',$this->model());
+        $this->can_read($this->model());
         try {
-            $itemCategories = ItemCategory::latest()->get();
-            return view('store.itemCategories.index',compact('itemCategories'));
+            return view('store.itemCategories.index');
         }
         catch (\Exception $e) {
             abort(404);
@@ -36,7 +34,7 @@ class ItemCategoryController extends Controller
      */
     public function store(ItemCategoryRequest $request)
     {
-        $this->authorize('create',$this->model());
+        $this->can_create($this->model());
         try {
             ItemCategory::create($request->only('name','desc','sort'));
             return back()->with('success','Item Category has been saved!');
@@ -51,7 +49,7 @@ class ItemCategoryController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $itemCategory = $this->getID($id);
             return view('store.itemCategories.edit',compact('itemCategory'));
@@ -66,7 +64,7 @@ class ItemCategoryController extends Controller
      */
     public function update(ItemCategoryRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->only('name','sort','desc'));
             return redirect()->route('itemCategories.index')->with('success','item category has been updated!');
@@ -81,7 +79,7 @@ class ItemCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return redirect()->route('itemCategories.index')->with('success','item category has been deleted!');

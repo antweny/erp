@@ -1,26 +1,22 @@
-@extends('layouts.admin')
-@section('title','Items Received')
+@extends('layouts.templates.store')
+@section('title','Received Items')
 @section('content')
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Items Received</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('itemReceived-create'))
-                            <a class="btn btn-primary" href="{{route('itemReceived.create')}}" ><i class="fa fa-plus"></i> Receive Item</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Items Received</h4>
+            </div>
+            <div class="float-right">
+                @if(checkPermission('itemReceived-create'))
+                    <a class="btn btn-success" href="{{route('itemReceived.create')}}" ><i class="fa fa-plus"></i> Receive Item</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Date Received</th>
                         <th scope="col">Item Name</th>

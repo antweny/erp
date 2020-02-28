@@ -21,7 +21,7 @@ class ActivityLogController extends Controller
     {
         try {
             $activities = Activity::with('admin')->latest()->get();
-            return view('activity.logs.index',compact('activities'));
+            return view('settings.activity.logs.index',compact('activities'));
         }
         catch (\Exception $e) {
             return abort(404);

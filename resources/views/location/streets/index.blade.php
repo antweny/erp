@@ -9,7 +9,7 @@
             </div>
             <div class="float-right">
                 @if(checkPermission('street-import'))
-                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                 @endif
                 @if(checkPermission('street-create'))
                     <a class="btn btn-success" href="#newStreet" data-toggle="modal"><i class="fa fa-plus"></i> New street</a>
@@ -86,16 +86,8 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="col-form-label">Ward</label>
-                                    <select class="form-control @error('ward_id') is-invalid @enderror single-select" style="width: 100%" name="ward_id">
-                                        <option value="">Select street...</option>
-                                        @foreach($wards as $ward)
-                                            <option value="{{$ward->id}}" {{old('ward_id') == $ward->id ? 'selected' : ''}}>{{$ward->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('ward_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                   @include('partials.wards.dropdown',['old' => null])
                                 </div>
-
                             </div>
 
                             <div class="form-group row">

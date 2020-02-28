@@ -1,30 +1,25 @@
-@extends('layouts.admin')
+@extends('layouts.templates.hrm')
 @section('title','Departments')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Departments</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('department-create'))
-                            <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Department</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">List Departments</h4>
+            </div>
+            <div class="float-right">
+                @can('department-create')
+                    <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Department</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                         <tr class="text-white">
                             <th scope="col">Name</th>
-                            <th scope="col">Sort</th>
                             <th scope="col">Descriptions</th>
                             <th scope="col" >Actions</th>
                         </tr>
@@ -33,7 +28,6 @@
                         @foreach ($departments as $department)
                             <tr>
                                 <td class="text-left">{{$department->name}}</td>
-                                <td class="text-center">{{$department->sort}}</td>
                                 <td class="text-center">{{$department->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -74,15 +68,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <label class="col-form-label">Department Name <span class="star">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name')}}" placeholder="Ex. Finance, KRA, IT" required/>
                                 @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">Sort Number</label>
-                                <input type="number" name="sort" id="sort" class="form-control {{ $errors->has('sort') ? ' is-invalid' : '' }} " value="{{old('sort')}}" placeholder="0, 1, 2" />
-                                @if ($errors->has('sort'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('sort') }}</strong></span>@endif
                             </div>
                         </div>
                         <div class="form-group row">
@@ -95,7 +84,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btn-save">save record</button>
+                        <button type="submit" class="btn btn-success" id="btn-save">save</button>
                     </div>
                 </form>
             </div>

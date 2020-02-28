@@ -21,21 +21,25 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Country $country)
+    public function index()
     {
-        $this->authorize('read',$country);
-        $countries = $country->orderBy('name','asc')->get();
-        return view('location.countries.index',compact('countries'));
+        $this->can_read($this->model());
+        try {
+            return view('location.countries.index');
+        }
+        catch (\Exception $e) {
+           abort(404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.e
      */
-    public function store(CountryRequest $request, Country $country)
+    public function store(CountryRequest $request)
     {
-        $this->authorize('create',$country);
+        $this->can_create($this->model());
         try {
-            $country->create($request->all());
+            Country::create($request->all());
             return back()->with('success','Country has been saved');
         }
         catch (\Exception $e) {
@@ -48,7 +52,7 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $country = $this->getID($id);
             return view('location.countries.edit',compact('country'));
@@ -58,13 +62,12 @@ class CountryController extends Controller
         }
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(CountryRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('countries.index')->with('success',' Country has been updated.');
@@ -74,13 +77,12 @@ class CountryController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Country has been deleted');
@@ -110,13 +112,10 @@ class CountryController extends Controller
     /*
    * Import Data from Excel
    */
-    public function import (ImportRequest $request,Country $country)
+    public function import (ImportRequest $request)
     {
-        $this->authorize('create',$country);
-
-        if ($request->file('imported_file')) {
-            Excel::import(new CountryImport(), request()->file('imported_file'));
-            return back()->with('success','Countries has been imported');
-        }
+        $this->can_import($this->model());
+        Excel::import(new CountryImport(), request()->file('imported_file'));
+        return back()->with('success','Countries has been imported');
     }
 }

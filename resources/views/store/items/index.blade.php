@@ -1,28 +1,24 @@
-@extends('layouts.admin')
-@section('title','Items')
+@extends('layouts.templates.store')
+@section('title','Items List')
 @section('content')
 
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="float-left">
-                            <h4 class="header-title">Items</h4>
-                        </div>
-                        <div class="float-right">
-                            @if(checkPermission('item-create'))
-                                <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                                <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item</a>
-                            @endif
-                        </div>
-                    </div>
+                <div class="float-left">
+                    <h4 class="header-title">Items List</h4>
+                </div>
+                <div class="float-right">
+                    @if(checkPermission('item-create'))
+                        <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                        <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item</a>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
                 @include('alerts._flash')
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-sm" id="table">
-                        <thead class="text-uppercase text-center bg-blue">
+                        <thead class="text-uppercase text-center">
                         <tr class="text-white">
                             <th scope="col">Name</th>
                             <th scope="col">Category</th>
@@ -82,40 +78,27 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <label class="col-form-label">Item Name <span class="star">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name')}}" placeholder="Ex. Ream Paper, Staple Pins" required/>
                                 @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
                             </div>
-                            <div class="col-md-5">
-                                <label class="col-form-label">Category <span class="star">*</span></label>
-                                <select name="item_category_id" class="form-control" required>
-                                    <option value="">Select Category...</option>
-                                    @foreach($itemCategories as $itemCategory)
-                                        <option value="{{$itemCategory->id}}" {{old('item_category_id') == $itemCategory->id ? 'selected' : '' }}>{{$itemCategory->name}}</option>
-                                    @endforeach
-                                </select>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                @include('partials.item.categories.dropdown',['value' => null])
+                            </div>
+                            <div class="col-md-6">
+                                @include('partials.item.units.dropdown',['value' => null])
                             </div>
                         </div>
                         <div class="form-group row">
-
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-4">
-                                <label class="col-form-label">Measurement</label>
-                                <select name="item_unit_id" class="form-control" >
-                                    <option value="">Select Unit...</option>
-                                    @foreach($itemUnits as $itemUnit)
-                                        <option value="{{$itemUnit->id}}" {{old('item_unit_id') == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="col-form-label">Quantity <span class="star">*</span> </label>
                                 <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{old('quantity')}}" required></input>
                                 @error('quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="col-form-label">Min. Quantity<span class="star">*</span> </label>
                                 <input type="number" name="min_quantity" class="form-control @error('min_quantity') is-invalid @enderror" value="{{old('min_quantity')}}" required></input>
                                 @error('min_quantity')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
@@ -131,7 +114,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btn-save">save record</button>
+                        <button type="submit" class="btn btn-success" id="btn-save">save</button>
                     </div>
                 </form>
             </div>
@@ -164,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                                <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                             </div>
                         </form>
                     </div>

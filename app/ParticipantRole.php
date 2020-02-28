@@ -41,18 +41,4 @@ class ParticipantRole extends BaseModel
      * ---------------------*/
 
 
-    /* -------------------
-          *   Other Functions
-          * -------------------*/
-    /*
-     * Get Name and ID
-     */
-    static function get_name_and_id()
-    {
-        $data = ParticipantRole::select('id','name')->get();
-        return $data;
-    }
-
-
-
 }

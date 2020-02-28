@@ -9,7 +9,7 @@
             </div>
             <div class="float-right">
                 @if(checkPermission('district-import'))
-                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                 @endif
                 @if(checkPermission('district-create'))
                     <a class="btn btn-success" href="#newDistrict" data-toggle="modal"><i class="fa fa-plus"></i> New district</a>
@@ -39,7 +39,6 @@
                                 <td class="text-left">{{$district->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-
                                         @if(checkPermission('district-update'))
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('districts.edit',$district['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endif
@@ -84,18 +83,11 @@
                                     @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="col-form-label">City</label>
-                                    <select class="form-control @error('city_id') is-invalid @enderror single-select" style="width: 100%;" name="city_id">
-                                        <option value="">Select city...</option>
-                                        @foreach($cities as $city)
-                                            <option value="{{$city->id}}">{{$city->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('city_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                   @include('partials.cities.dropdown',['value'=>null])
                                 </div>
-
                             </div>
 
                             <div class="form-group row">

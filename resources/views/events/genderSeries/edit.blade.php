@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Update Gender Series Topic')
 @section('content')
 
@@ -11,7 +11,7 @@
                         <h1 class="h4">Update Gender Series Topic</h1>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary" href="{{route('genderSeries.index')}}" title="create"><i class="fa fa-list mr-1"></i> Back to List</a>
+                        <a class="btn btn-warning text-white" href="{{route('genderSeries.index')}}" title="create"><i class="fa fa-list"></i> view GDSS topics</a>
                     </div>
                 </div>
                 <div class="card-body">

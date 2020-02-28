@@ -96,6 +96,12 @@ class Organization extends BaseModel
         return $this->belongsTo(Ward::class)->withDefault();
     }
 
+    //Event can be Organized by many organization
+    public function event()
+    {
+        return $this->hasMany(Organization::class,'organisers');
+    }
+
 
     /* -------------------
      *   Other Functions

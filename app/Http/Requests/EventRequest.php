@@ -26,7 +26,6 @@ class EventRequest extends FormRequest
             case 'DELETE': {
                 return [];
             }
-
             case 'POST': {
                 return [
                     'name' => 'required|string|max:100|unique:events,name',
@@ -40,7 +39,6 @@ class EventRequest extends FormRequest
                     'objectives' => 'required|string',
                 ];
             }
-
             case 'PUT':
             case 'PATCH': {
                 return [

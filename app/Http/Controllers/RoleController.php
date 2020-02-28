@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleRequest;
 use App\Permission;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -19,12 +20,10 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Role $role)
+    public function index()
     {
         try {
-            $roles = $role->orderBy('name','desc')->get();
-            $permissions = Permission::orderBy('name','asc')->get();
-            return view('admin.roles.index')->with(compact('roles','permissions'));
+            return view('security.roles.index');
         }
         catch (\Exception $e) {
             return abort(404);
@@ -34,60 +33,97 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RoleRequest $request, Role $role)
+    public function store(RoleRequest $request)
     {
-        //store all permissions assign to roles
         $permissions = $request['permissions'];
-
-        $role = $role->create($request->only('name','guard_name','desc'));
-
-        //Looping through selected permissions
-        if (isset($permissions)) {
-            foreach ($permissions as $permission) {
-                $per = Permission::where('id', $permission)->firstOrFail();
-                $role->givePermissionTo($per);
+        DB::beginTransaction();
+        try {
+            $role = Role::create($request->only('name','guard_name','desc'));
+            //Looping through selected permissions
+            if (isset($permissions)) {
+                foreach ($permissions as $permission) {
+                    $per = Permission::where('id', $permission)->firstOrFail();
+                    $role->givePermissionTo($per);
+                }
             }
+            DB::commit();
+            return back()->with('success','role has been saved');
         }
-        return back()->with('success','role has been saved');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error','Something went wrong')->withInput($request->input());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
-        $permissions = Permission::orderBy('name','asc')->get();
-
-        return view('admin.roles.edit',compact('permissions','role'));
+        try{
+           $role = $this->getID($id);
+            return view('security.roles.edit',compact('role'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RoleRequest $request, Role $role)
+    public function update(RoleRequest $request, $id)
     {
         $permissions = $request->permissions;
 
-        $role->update($request->only('name','guard_name','desc'));
-
-        //Assign roles to user admin
-        if (isset($permissions)) {
-            $role->permissions()->sync($permissions);  //If one or more role is selected associate user to roles
+        DB::beginTransaction();
+        try {
+            $role = $this->getID($id);
+            $role->update($request->only('name','guard_name','desc'));
+            //Assign roles to user admin
+            if (isset($permissions)) {
+                $role->permissions()->sync($permissions);  //If one or more role is selected associate user to roles
+            } else {
+                $role->permissions()->detach(); //If no role is selected remove exisiting role associated to a user
+            }
+            DB::commit();
+            return redirect()->route('roles.index')->with('success','Role updated successfully!');
         }
-        else {
-            $role->permissions()->detach(); //If no role is selected remove exisiting role associated to a user
+        catch (\Exception $e) {
+            DB::rollback();
+            return $this->errorReturn();
         }
-
-        return redirect()->route('roles.index')->with('success','Role updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
-        $role->delete();
-        return back()->with('success','role has been deleted');
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','role has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
+
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Role::findOrFail($id);
+        return $data;
+    }
+
+    /*
+    * Exception Error return back
+    */
+    public function errorReturn()
+    {
+        return redirect()->route('roles.index')->with('error','something went wrong');
     }
 
 }

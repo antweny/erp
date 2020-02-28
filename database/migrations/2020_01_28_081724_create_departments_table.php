@@ -17,7 +17,6 @@ class CreateDepartmentsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->mediumText('desc')->nullable();
-            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }

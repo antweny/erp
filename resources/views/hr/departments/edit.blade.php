@@ -1,18 +1,16 @@
-@extends('layouts.admin')
+@extends('layouts.templates.hrm')
 @section('title','Update Department')
-
 @section('content')
 
-
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <h4 class="header-title">Update <strong>{{$department->name}}</strong> department</h4>
+                        <h5>Update <strong>{{$department->name}}</strong> department</h5>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary " href="{{route('departments.index')}}"><i class="fa fa-list"></i> Departments</a>
+                        <a class="btn btn-warning text-white " href="{{route('departments.index')}}"><i class="fa fa-list"></i> View Departments</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -20,15 +18,10 @@
                     {{ Form::model($department, array('route' => array('departments.update', $department->id), 'method' => 'PUT')) }}
                         @csrf
                         <div class="form-group row">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <label class="col-form-label">Department Name <span class="star">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{$department->name}}" placeholder="Ex. Stationary, IT" required/>
                                 @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">Sort Number</label>
-                                <input type="number" name="sort" id="sort" class="form-control {{ $errors->has('sort') ? ' is-invalid' : '' }} " value="{{$department->sort}}" placeholder="0, 1, 2" />
-                                @if ($errors->has('sort'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('sort') }}</strong></span>@endif
                             </div>
                         </div>
                         <div class="form-group row">
@@ -40,11 +33,11 @@
                         </div>
                         <div class="form-group row justify-content-center">
                             <div class="col-md-6 float-left">
-                                <a class="btn btn-outline-secondary" href="{{route('departments.index')}}">Cancel</a>
+                                <a class="btn btn-dark" href="{{route('departments.index')}}">Cancel</a>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
-                                    <input type="submit" class="btn btn-primary" value="update"/>
+                                    <input type="submit" class="btn btn-success" value="update"/>
                                 </div>
                             </div>
                         </div>

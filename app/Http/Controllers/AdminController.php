@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\PasswordResetRequest;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -19,77 +20,110 @@ class AdminController extends Controller
     }
 
     /**
-     * Admin index page
+     * Display a listing of the resource.
      */
-    public function index(Admin $admin)
+    public function index()
     {
-        $roles = Role::select('id','name')->where('guard_name','admin')->get();   //Get all roles
-
-        $admins = $admin->get();  //Get all administrators
-
-        return view('admin.admins.index',compact('admins','roles'));
+        try {
+            $admins = Admin::get();  //Get all administrators
+            return view('security.admins.index',compact('admins'));
+        }
+        catch (\Exception $e) {
+            return abort(404);
+        }
     }
 
     /**
-     * Show the form for creating the specified resource.
+     * Store a newly created resource in storage.
      */
-    public function store(AdminRequest $request, Admin $admin)
+    public function store(AdminRequest $request)
     {
-        //Hash the human password
-        $this->password_encryption($request);
-
-        $admin = $admin->create($request->only('name','email','password'));
-
         $roles = $request['roles'];
-
-        if(isset($roles))
-        {
-            $admin->assignRole($roles);
+        DB::beginTransaction();
+        try {
+            $this->password_encryption($request);
+            $admin = Admin::create($request->only('name','email','password'));
+            if(isset($roles)) {
+                $admin->assignRole($roles);
+            }
+            DB::commit();
+            return back()->with('success','admin has been added');
         }
-
-        return back()->with('success','admin has been added');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error','Something went wrong')->withInput($request->input());
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $admin)
+    public function edit($id)
     {
-        $roles = Role::select('id','name')->get();
-
-        return view('admin.admins.edit')->with(compact('admin','roles'));
+        try{
+            $admin = $this->getID($id);
+            return view('security.admins.edit')->with(compact('admin'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminRequest $request, Admin $admin)
+    public function update(AdminRequest $request, $id)
     {
         $roles = $request->roles; //Get all assign roles
-
-        $admin->update($request->only('name'));
-
-        //Assign roles to user admin
-        if (isset($roles)) {
-            $admin->roles()->sync($roles);  //If one or more role is selected associate user to roles
+        DB::beginTransaction();
+        try {
+            $admin = $this->getID($id);
+            $admin->update($request->only('name'));
+            //Assign roles to user admin
+            if (isset($roles)) {
+                $admin->roles()->sync($roles);  //If one or more role is selected associate user to roles
+            }
+            else {
+                $admin->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+            }
+            DB::commit();
+            return redirect()->route('admin.index')->with('success','Admin updated successfully!');
         }
-        else {
-            $admin->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+        catch (\Exception $e) {
+            DB::rollback();
+            return $this->errorReturn();
         }
-
-        return redirect()->route('admin.index')->with('success','Admin updated successfully!');
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        $admin->delete();
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','Administrator has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
-        return back()->with('success','admin has been deleted');
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = Admin::findOrFail($id);
+        return $data;
+    }
+
+    /*
+    * Exception Error return back
+    */
+    public function errorReturn()
+    {
+        return redirect()->route('admin.index')->with('error','something went wrong');
     }
 
     /*
@@ -99,7 +133,7 @@ class AdminController extends Controller
     {
         try {
             $admin = $this->getID($id);
-            return view('admin.admins.reset_password')->with(compact('admin'));
+            return view('security.admins.reset_password')->with(compact('admin'));
         }
         catch (\Exception $e) {
             return redirect()->route('admin.index')->with('error','Something went wrong');
@@ -131,13 +165,4 @@ class AdminController extends Controller
         return $request;
     }
 
-
-    /*
-   * Get requested record ID
-   */
-    public function getID($id)
-    {
-        $participant = Admin::findOrFail($id);
-        return $participant;
-    }
 }

@@ -6,7 +6,7 @@
     <div class="row dash-menu">
         <div class="col-md-2">
             <li class="bg-green">
-                <a href="#" class="text-white">
+                <a href="{{route('hrm')}}" class="text-white">
                     <i class="fa fa-user-cog"></i>
                     <span>Human Resource Management</span>
                 </a>
@@ -34,17 +34,16 @@
 
         <div class="col-md-2">
             <li class="bg-cyna">
-                <a href="#" class="text-white">
+                <a href="{{route('event')}}" class="text-white">
                     <i class="fa fa-calendar"></i>
                     <span>Events Management</span>
                 </a>
             </li>
-
         </div>
 
         <div class="col-md-2">
             <li class="bg-pink">
-                <a href="#" class="text-white">
+                <a href="{{route('store')}}" class="text-white">
                     <i class="fa fa-store"></i>
                     <span> Store Management</span>
                 </a>
@@ -52,19 +51,19 @@
         </div>
 
         <div class="col-md-2">
-            <li class="bg-yellow">
-                <a href="#" class="text-black-50">
-                    <i class="fa fa-user"></i>
-                    <span>Users Management</span>
+            <li class="bg-danger">
+                <a href="{{route('security')}}" class="text-white">
+                    <i class="fa fa-lock"></i>
+                    <span>System Security</span>
                 </a>
             </li>
         </div>
 
         <div class="col-md-2">
             <li class="bg-danger">
-                <a href="#" class="text-white">
-                    <i class="fa fa-lock"></i>
-                    <span>System Security</span>
+                <a href="{{route('settings')}}" class="text-white">
+                    <i class="fa fa-cog"></i>
+                    <span>Settings</span>
                 </a>
             </li>
         </div>

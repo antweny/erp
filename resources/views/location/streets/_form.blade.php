@@ -6,14 +6,7 @@
             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
         </div>
         <div class="col-md-6">
-            <label class="col-form-label">District</label>
-            <select class="form-control @error('district_id') is-invalid @enderror single-select" style="width: 100%" name="district_id">
-                <option value="">Select district...</option>
-                @foreach($wards as $ward)
-                    <option value="{{$ward->id}}" {{$street->ward_id == $ward->id ? 'selected' : ''}}>{{$ward->name}}</option>
-                @endforeach
-            </select>
-            @error('district_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+            @include('partials.wards.dropdown',['old' => $street->ward_id ])
         </div>
     </div>
     <div class="form-group row">

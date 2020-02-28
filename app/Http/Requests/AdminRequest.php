@@ -44,7 +44,7 @@ class AdminRequest extends FormRequest
             case 'PATCH': {
                 return [
                     'name' => 'required|string|max:255',
-                    'email' => 'required|string|email|max:255|unique:admins,id,'.$this->admin->id,
+                    'email' => 'required|string|email|max:255|unique:admins,id,'.$this->id,
                     'roles' => 'required',
                 ];
             }

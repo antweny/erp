@@ -1,25 +1,24 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Gender Series Participants')
 @section('content')
 
     <div class="card event">
         <div class="card-header">
             <div class="float-left">
-                <h1 class="h4">Gender Series Participants</h1>
+                <h1 class="h4">Gender Series (GDSS) Participants</h1>
             </div>
             <div class="float-right">
                 @if(checkPermission('genderSeriesParticipant-create'))
-                    <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                    <a class="btn btn-primary" href="{{route('genderSeriesParticipants.create')}}" title="create"><i class="fa fa-plus"></i> GDSS Participant</a>
+                    <a class="btn btn-dark mr-3 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                    <a class="btn btn-success" href="{{route('genderSeriesParticipants.create')}}" title="create"><i class="fa fa-plus"></i> GDSS Participant</a>
                 @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Participant Name</th>
                         <th scope="col">Topic</th>
@@ -70,7 +69,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import Gender Series Participants</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Import GDSS Participants</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -88,7 +87,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                         </div>
                     </form>
                 </div>

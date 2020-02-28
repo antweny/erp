@@ -35,7 +35,6 @@ class DepartmentRequest extends FormRequest
                 return [
                     'name' => 'required|string|max:255|unique:departments,name',
                     'desc' => 'string|nullable',
-                    'sort' => 'integer|nullable',
                 ];
             }
 
@@ -44,7 +43,6 @@ class DepartmentRequest extends FormRequest
                 return [
                     'name' => 'required|string|max:255|unique:departments,id,'.$this->id,
                     'desc' => 'string|nullable',
-                    'sort' => 'integer|nullable',
                 ];
             }
         }

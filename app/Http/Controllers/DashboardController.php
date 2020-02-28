@@ -9,8 +9,9 @@ class DashboardController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['admin','location','store']]);
-        $this->middleware('auth:employee',['only'=> ['employee']]);
+        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm']]);
+        $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
+        //$this->middleware('auth:employee',['only'=> ['employee']]);
     }
 
     /*
@@ -44,4 +45,38 @@ class DashboardController extends Controller
     {
         return view('dashboards.location');
     }
+
+    /*
+    * When user with admin Guard login redirwct to.
+    */
+    public function event()
+    {
+        return view('dashboards.event');
+    }
+
+
+    /*
+    * Human Resource Management Dashboard.
+    */
+    public function hrm()
+    {
+        return view('dashboards.hrm');
+    }
+
+    /*
+    * System Settngs.
+    */
+    public function setting()
+    {
+        return view('dashboards.settings');
+    }
+
+    /*
+    * System Securities.
+    */
+    public function security()
+    {
+        return view('dashboards.security');
+    }
+
 }

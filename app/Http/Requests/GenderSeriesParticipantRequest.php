@@ -36,7 +36,7 @@ class GenderSeriesParticipantRequest extends FormRequest
                     'gender_series_id' => 'required',
                     'individual_id' => 'required',
                     'organization_id'=>'nullable',
-                    'ward_id' => 'nullable|integer',
+                    'ward_id' => 'nullable',
                 ];
             }
 
@@ -46,7 +46,7 @@ class GenderSeriesParticipantRequest extends FormRequest
                     'gender_series_id' => 'required',
                     'individual_id' => 'required',
                     'organization_id'=>'nullable',
-                    'ward_id' => 'nullable|integer',
+                    'ward_id' => 'nullable',
                 ];
             }
         }

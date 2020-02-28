@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.store')
 @section('title','Request Item')
 @section('content')
 
@@ -11,7 +11,7 @@
                   <h4 class="header-title">Request Item</h4>
                </div>
                <div class="float-right">
-                  <a class="btn btn-primary" href="{{route('itemRequests.index')}}" title="create"><i class="fa fa-list mr-1"></i>items requests</a>
+                  <a class="btn btn-warning text-white" href="{{route('itemRequests.index')}}" title="create"><i class="fa fa-list mr-1"></i>items requests</a>
                </div>
             </div>
             <div class="card-body">

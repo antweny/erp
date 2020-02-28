@@ -9,7 +9,7 @@ class Department extends BaseModel
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'desc', 'sort',
+        'name', 'desc',
     ];
 
 

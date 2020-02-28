@@ -10,7 +10,7 @@
             </div>
             <div class="float-right">
                 @if(checkPermission('ward-import'))
-                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                 @endif
                 @if(checkPermission('ward-create'))
                     <a class="btn btn-success" href="#newWard" data-toggle="modal"><i class="fa fa-plus"></i> New ward</a>
@@ -85,16 +85,8 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="col-form-label">District</label>
-                                    <select class="form-control @error('district_id') is-invalid @enderror single-select" style="width: 100%;" name="district_id">
-                                        <option value="">Select district...</option>
-                                        @foreach($districts as $district)
-                                            <option value="{{$district->id}}">{{$district->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('district_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                    @include('partials.districts.dropdown',['value' => null])
                                 </div>
-
                             </div>
 
                             <div class="form-group row">

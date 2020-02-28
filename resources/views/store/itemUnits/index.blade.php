@@ -1,26 +1,22 @@
-@extends('layouts.admin')
+@extends('layouts.templates.store')
 @section('title','Item Units')
 @section('content')
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Item Units</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('itemUnit-create'))
-                            <a class="btn btn-primary" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item Unit</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Item Units</h4>
+            </div>
+            <div class="float-right">
+                @if(checkPermission('itemUnit-create'))
+                    <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> New Item Unit</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                         <tr class="text-white">
                             <th scope="col">Name</th>
                             <th scope="col">Descriptions</th>
@@ -28,28 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($itemUnits as $itemUnit)
-                            <tr>
-                                <td class="text-left">{{$itemUnit->name}}</td>
-                                <td class="text-center">{{$itemUnit->desc}}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        @if(checkPermission('itemUnit-update'))
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('itemUnits.edit',$itemUnit)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-
-                                        @if(checkPermission('itemUnit-delete'))
-                                            <form class="form-delete" method="post" action="{{route('itemUnits.destroy',$itemUnit)}}">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$itemUnit->name}} unit?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
-                                            </form>
-                                        @endif
-
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                       @include('partials.item.units.list')
                     </tbody>
                 </table>
             </div>
@@ -88,7 +63,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btn-save">save record</button>
+                        <button type="submit" class="btn btn-success" id="btn-save">save record</button>
                     </div>
                 </form>
             </div>

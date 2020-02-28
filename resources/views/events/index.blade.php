@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Events list')
 @section('content')
 
@@ -9,13 +9,12 @@
             </div>
             <div class="float-right">
                 @if(checkPermission('event-create'))
-                    <a class="btn btn-primary" href="{{route('events.create')}}" title="create"><i class="fa fa-plus"></i> New Event</a>
+                    <a class="btn btn-success" href="{{route('events.create')}}" title="create"><i class="fa fa-plus"></i> New Event</a>
                 @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
@@ -43,11 +42,6 @@
                             <td class="text-center p-0">
 
                                 <div class="btn btn-group">
-                                    @if(checkPermission('event-read'))
-                                        <a class="btn btn-secondary btn-sm mr-2 " href="{{route('events.show',$event->id)}}" title="View">
-                                            <i class="fa fa-info-circle"></i>
-                                        </a>
-                                    @endif
                                     @if(checkPermission('event-update'))
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('events.edit',$event->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>

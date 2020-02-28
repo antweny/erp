@@ -7,14 +7,7 @@
             @error('date_received')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         </div>
         <div class="col-md-6">
-            <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
-            <select name="item_id" class="form-control">
-                <option value="">Select Category...</option>
-                @foreach($items as $item)
-                    <option value="{{$item->id}}" {{old('item_id',$itemReceived->item_id) == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
-                @endforeach
-            </select>
-            @error('item_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                @include('partials.item.items.dropdown',['value'=>null])
         </div>
     </div>
 
@@ -43,10 +36,10 @@
     <div class="form-group row justify-content-center">
         <div class="col-md-12">
             <div class="float-left">
-                <a class="btn btn-outline-secondary" href="{{route('itemReceived.index')}}" title="create">cancel</a>
+                <a class="btn btn-dark" href="{{route('itemReceived.index')}}" title="create">cancel</a>
             </div>
             <div class="float-right">
-                <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+                <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
             </div>
         </div>
     </div>

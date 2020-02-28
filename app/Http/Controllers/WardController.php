@@ -22,37 +22,42 @@ class WardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Ward $ward)
+    public function index()
     {
-        $this->authorize('read',$ward);
-        $districts = District::getNameID();
-        $wards = $ward->orderBy('name', 'desc')->with('district')->get();
-        return view('location.wards.index',compact('districts','wards'));
+        $this->can_read($this->model());
+        try {
+            $wards = Ward::orderBy('name', 'desc')->with('district')->get();
+            return view('location.wards.index',compact('wards'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(WardRequest $request, Ward $ward)
+    public function store(WardRequest $request)
     {
-        $this->authorize('create',$ward);
-
-        $ward->create($request->only('name', 'desc', 'district_id'));
-
-        return back()->with('success','Ward has been saved');
+        $this->can_create($this->model());
+        try {
+            Ward::create($request->only('name', 'desc', 'district_id'));
+            return back()->with('success','Ward has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
-        $districts = District::getNameID(); //Get districts list
+        $this->can_update($this->model());
         try {
             $ward = $this->getID($id);
-            return view('location.wards.edit',compact('districts','ward'));
+            return view('location.wards.edit',compact('ward'));
         }
         catch (\Exception $e) {
             return back()->with('error','something went Wrong');
@@ -64,7 +69,7 @@ class WardController extends Controller
      */
     public function update(WardRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('wards.index')->with('success',' Ward has been updated.');
@@ -79,7 +84,7 @@ class WardController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Ward has been deleted');
@@ -92,18 +97,16 @@ class WardController extends Controller
     /*
      * Import Data from Excel
      */
-    public function import (ImportRequest $request, Ward $ward)
+    public function import (ImportRequest $request)
     {
-        $this->authorize('import',$ward);
-        if ($request->file('imported_file')) {
-            Excel::import(new WardImport(), request()->file('imported_file'));
-            return back()->with('success','Ward imported successfully!');
-        }
+        $this->can_import($this->model());
+        Excel::import(new WardImport(), request()->file('imported_file'));
+        return back()->with('success','Ward imported successfully!');
     }
 
     /*
-    * Get requested record ID
-    */
+     * Get requested record ID
+     */
     public function getID($id)
     {
         $data = Ward::findOrFail($id);

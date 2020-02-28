@@ -35,7 +35,6 @@
         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email',$employee->email)}}" required></input>
         @error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
-
 </div>
 
 <div class="form-group row">
@@ -64,10 +63,10 @@
 <div class="form-group row justify-content-center mt-5">
     <div class="col-md-12">
         <div class="float-left">
-            <a class="btn btn-outline-secondary" href="{{route('employee.index')}}" title="create">cancel</a>
+            <a class="btn btn-dark" href="{{route('employee.index')}}" title="create">cancel</a>
         </div>
         <div class="float-right">
-            <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+            <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
         </div>
     </div>
 </div>

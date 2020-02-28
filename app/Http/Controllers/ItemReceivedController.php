@@ -21,11 +21,11 @@ class ItemReceivedController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ItemReceived $itemReceived)
+    public function index()
     {
-        $this->authorize('read',$itemReceived);
+        $this->can_read($this->model());
         try {
-            $itemReceiveds = $itemReceived->with('item.item_unit')->latest()->get();
+            $itemReceiveds = ItemReceived::with('item.item_unit')->latest()->get();
             return view('store.itemReceived.index',compact('itemReceiveds'));
         }
         catch (\Exception $e) {
@@ -36,12 +36,12 @@ class ItemReceivedController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ItemReceived $itemReceived)
+    public function create()
     {
-        $this->authorize('create',$itemReceived);
+        $this->can_create($this->model());
         try {
-            $items = Item::select('id','name')->get(); //Get List of items
-            return view('store.itemReceived.create',compact('itemReceived','items'));
+            $itemReceived = new ItemReceived();
+            return view('store.itemReceived.create',compact('itemReceived'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -51,17 +51,14 @@ class ItemReceivedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemReceivedRequest $request, ItemReceived $itemReceived)
+    public function store(ItemReceivedRequest $request)
     {
-        $this->authorize('create',$itemReceived);
+        $this->can_create($this->model());
         DB::beginTransaction();
         try {
             $this->multiply_quantity_and_unit_rate($request); //Multiply Quantity and Unite Rate to get total amount of the items received
-
-            $itemReceived = $itemReceived->create($request->all());
-
+            ItemReceived::create($request->all());
             $this->increment_item_quantity($request);//Increment the Item Quantity
-
             DB::commit();
             return back()->with('success','Item has been received');
         }
@@ -76,11 +73,10 @@ class ItemReceivedController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
-            $items = Item::select('id','name')->get(); //Get List of items
             $itemReceived = $this->getID($id);
-            return view('store.itemReceived.edit',compact('itemReceived','items'));
+            return view('store.itemReceived.edit',compact('itemReceived'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -92,7 +88,7 @@ class ItemReceivedController extends Controller
      */
     public function update(ItemReceivedRequest $request,$id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         DB::beginTransaction();
         try {
             $this->multiply_quantity_and_unit_rate($request); //Multiply Quantity and Unite Rate to get total amount of the items received
@@ -117,10 +113,10 @@ class ItemReceivedController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+
+        $this->can_delete($this->model());
         try {
             $itemReceived = $this->getID($id);
-
             //Before Delete check the item recived quantity is less than the remain item quantity
             $this->decrement_item_quantity($itemReceived->item_id,$itemReceived->quantity);
             $itemReceived->delete();

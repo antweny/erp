@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
 use App\District;
 use App\Http\Requests\DistrictRequest;
 use App\Http\Requests\ImportRequest;
@@ -22,42 +21,42 @@ class DistrictController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(District $district)
+    public function index()
     {
-        $this->authorize('read',$district);
-
-        $districts = $district->orderBy('name','desc')->with('city')->get();
-
-        $cities = City::getNameID(); // Get cities list
-
-        return view('location.districts.index',compact('districts','cities'));
+        $this->can_read($this->model());
+        try {
+            $districts = District::orderBy('name','desc')->with('city')->get();
+            return view('location.districts.index',compact('districts'));
+        }
+        catch (\Exception $e) {
+            abort(404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DistrictRequest $request, District $district)
+    public function store(DistrictRequest $request)
     {
-        $this->authorize('create',$district);
-
-        $district->create($request->only('name', 'desc', 'city_id'));
-
-        return back()->with('success',' district saved successfully');
+        $this->can_create($this->model());
+        try {
+            District::create($request->only('name','desc','city_id'));
+            return back()->with('success',' City has been saved');
+        }
+        catch (\Exception $e) {
+            return back()->with('error','something went Wrong');
+        }
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
-
-        $cities = City::getNameID(); // Get cities list
-
+        $this->can_update($this->model());
         try {
             $district = $this->getID($id);
-            return view('location.districts.edit',compact('district','cities'));
+            return view('location.districts.edit',compact('district'));
         }
         catch (\Exception $e) {
             return back()->with('error','something went Wrong');
@@ -69,7 +68,7 @@ class DistrictController extends Controller
      */
     public function update(DistrictRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('districts.index')->with('success',' District has been updated.');
@@ -84,7 +83,7 @@ class DistrictController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','District deleted successfully!');
@@ -112,15 +111,12 @@ class DistrictController extends Controller
     }
 
     /*
-   * Import Data from Excel
-   */
-    public function import (ImportRequest $request, District $district)
+     * Import Data from Excel
+     */
+    public function import (ImportRequest $request)
     {
-        $this->authorize('import',$district);
-
-        if ($request->file('imported_file')) {
-            Excel::import(new DistrictImport(), request()->file('imported_file'));
-            return back()->with('success','District imported successfully!');
-        }
+        $this->can_import($this->model());
+        Excel::import(new DistrictImport(), request()->file('imported_file'));
+        return back()->with('success','District imported successfully!');
     }
 }

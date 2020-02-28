@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\User;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -14,19 +15,18 @@ class UserController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
-        //$this->middleware('auth:employee',['only'=> ['employee']]);
+        $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['index','store','create','edit','update','destroy']]);
+
     }
 
     /**
      * User index page
      */
-    public function index(User $user)
+    public function index()
     {
         try {
-            $roles = Role::select('id','name')->where('guard_name','web')->get();   //Get all roles
-            $users = $user->get();
-            return view('admin.users.index',compact('users','roles'));
+            $users = User::get();
+            return view('security.users.index',compact('users'));
         }
         catch (\Exception $e) {
             return abort(404);
@@ -38,61 +38,132 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, User $user)
     {
-        //Hash the human password
-        $request['password'] = Hash::make($request->password);
-
-        $user = $user->create($request->only('name','email','password'));
-
         $roles = $request['roles'];
-
-        if(isset($roles))
-        {
-            $user->assignRole($roles);
+        DB::beginTransaction();
+        try {
+            $this->password_encryption($request);
+            $user = $user->create($request->only('name','email','password'));
+            if(isset($roles)) {
+                $user->assignRole($roles);
+            }
+            DB::commit();
+            return back()->with('success','user has been added');
         }
-
-        return back()->with('success','user has been added');
+        catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error','Something went wrong')->withInput($request->input());
+        }
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        $roles = Role::select('id','name')->where('guard_name','web')->get();;
-
-        return view('admin.users.edit')->with(compact('user','roles'));
+        try{
+            $user = $this->getID($id);
+            return view('security.users.edit')->with(compact('user'));
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, $id)
     {
         $roles = $request->roles; //Get all assign roles
-
-        $user->update($request->only('name'));
-
-        //Assign roles to user user
-        if (isset($roles)) {
-            $user->roles()->sync($roles);  //If one or more role is selected associate user to roles
+        DB::beginTransaction();
+        try {
+            $user = $this->getID($id);
+            $user->update($request->only('name'));
+            //Assign roles to user user
+            if (isset($roles)) {
+                $user->roles()->sync($roles);  //If one or more role is selected associate user to roles
+            }
+            else {
+                $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+            }
+            DB::commit();
+            return redirect()->route('users.index')->with('success','User updated successfully!');
         }
-        else {
-            $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+        catch (\Exception $e) {
+            DB::rollback();
+            return $this->errorReturn();
         }
-
-        return redirect()->route('users.index')->with('success','User updated successfully!');
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
+        try {
+            $this->getID($id)->delete();
+            return back()->with('success','User has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
 
-        return back()->with('success','user has been deleted');
+    /*
+     * Get requested record ID
+     */
+    public function getID($id)
+    {
+        $data = User::findOrFail($id);
+        return $data;
+    }
+
+    /*
+    * Exception Error return back
+    */
+    public function errorReturn()
+    {
+        return redirect()->route('users.index')->with('error','something went wrong');
+    }
+
+    /*
+     * Get Password Reset Form
+     */
+    public function resetPasswordForm($id)
+    {
+        try {
+            $user= $this->getID($id);
+            return view('security.users.reset_password')->with(compact('user'));
+        }
+        catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error','Something went wrong');
+        }
+    }
+
+    /*
+     * Password Reset Form
+     */
+    public function reset_password(PasswordResetRequest $request,$id)
+    {
+        try {
+            $user = $this->getID($id);
+            $this->password_encryption($request);
+            $admin->update($request->only('password'));
+            return redirect()->route('users.index')->with('success','Password for user '.$user->name. ' updated successfuly');
+        }
+        catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error','Something went wrong');
+        }
+    }
+
+    /*
+    * Encrypt the Password
+    */
+    protected function password_encryption($request)
+    {
+        $request['password'] = Hash::make($request['password']);
+        return $request;
     }
 
 }

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.store')
 @section('title','Update Item')
 @section('content')
 
@@ -10,7 +10,7 @@
                         <h4 class="header-title">Update <strong>{{$item->name}}</strong> item</h4>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary " href="{{route('items.index')}}"><i class="fa fa-list"></i> items</a>
+                        <a class="btn btn-warning text-white" href="{{route('items.index')}}"><i class="fa fa-list"></i> view items</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -24,24 +24,12 @@
                             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
                         </div>
                         <div class="col-md-4">
-                            <label class="col-form-label">Category <span class="star">*</span></label>
-                            <select name="item_category_id" class="form-control">
-                                <option value="">Select Category...</option>
-                                @foreach($itemCategories as $itemCategory)
-                                    <option value="{{$itemCategory->id}}" {{$item->item_category_id == $itemCategory->id ? 'selected' : '' }}>{{$itemCategory->name}}</option>
-                                @endforeach
-                            </select>
+                            @include('partials.item.categories.dropdown', ['value' => $item->item_category_id])
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="col-form-label">Unit <span class="star">*</span></label>
-                            <select name="item_unit_id" class="form-control">
-                                <option value="">Select Unit...</option>
-                                @foreach($itemUnits as $itemUnit)
-                                    <option value="{{$itemUnit->id}}" {{$item->item_unit_id == $itemUnit->id ? 'selected' : '' }}>{{$itemUnit->name}}</option>
-                                @endforeach
-                            </select>
+                            @include('partials.item.units.dropdown', ['value' => $item->item_unit_id])
                         </div>
                         <div class="col-md-4">
                             <label class="col-form-label">Quantity <span class="star">*</span> </label>
@@ -63,11 +51,11 @@
                     </div>
                     <div class="form-group row justify-content-center">
                             <div class="col-md-6 float-left">
-                                <a class="btn btn-outline-secondary" href="{{route('items.index')}}">Cancel</a>
+                                <a class="btn btn-dark" href="{{route('items.index')}}">Cancel</a>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
-                                    <input type="submit" class="btn btn-primary" value="update"/>
+                                    <input type="submit" class="btn btn-success" value="update"/>
                                 </div>
                             </div>
                         </div>

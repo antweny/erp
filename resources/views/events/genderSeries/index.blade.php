@@ -1,15 +1,15 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Gender Series Topics')
 @section('content')
 
     <div class="card gender">
         <div class="card-header">
             <div class="float-left">
-                <h1 class="h4">Gender Series Topics</h1>
+                <h5>Gender Series Topics (GDSS)</h5>
             </div>
             <div class="float-right">
                 @if(checkPermission('genderSeries-create'))
-                    <a class="btn btn-primary" href="{{route('genderSeries.create')}}" title="create"><i class="fa fa-plus"></i> New Topic</a>
+                    <a class="btn btn-success" href="{{route('genderSeries.create')}}" title="create"><i class="fa fa-plus"></i> New Topic</a>
                 @endif
             </div>
         </div>
@@ -17,7 +17,7 @@
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Topic</th>
                         <th scope="col">Facilitators</th>

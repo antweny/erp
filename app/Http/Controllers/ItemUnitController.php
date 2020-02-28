@@ -20,12 +20,11 @@ class ItemUnitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ItemUnit $itemUnit)
+    public function index()
     {
-        $this->authorize('read',$itemUnit);
+        $this->can_read($this->model());
         try {
-            $itemUnits = $itemUnit->get();
-            return view('store.itemUnits.index',compact('itemUnits'));
+            return view('store.itemUnits.index');
         }
         catch (\Exception $e) {
             abort(404);
@@ -35,11 +34,11 @@ class ItemUnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemUnitRequest $request, ItemUnit $itemUnit)
+    public function store(ItemUnitRequest $request)
     {
-        $this->authorize('create',$itemUnit);
+        $this->can_create($this->model());
         try {
-            $itemUnit->create($request->only('name','desc','sort'));
+            ItemUnit::create($request->only('name','desc','sort'));
             return back()->with('success','Item Unit has been saved!');
         }
         catch (\Exception $e) {
@@ -52,7 +51,7 @@ class ItemUnitController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $itemUnit= $this->getID($id);
             return view('store.itemUnits.edit',compact('itemUnit'));
@@ -67,7 +66,7 @@ class ItemUnitController extends Controller
      */
     public function update(ItemUnitRequest $request,$id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->only('name','sort','desc'));
             return redirect()->route('itemUnits.index')->with('success','item unit has been updated!');
@@ -82,7 +81,7 @@ class ItemUnitController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return redirect()->route('itemUnits.index')->with('success','item unit has been delete!');

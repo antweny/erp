@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\Http\Requests\ItemRequestRequest;
 use App\ItemRequest;
 use App\Item;
@@ -21,11 +20,11 @@ class ItemRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ItemRequest $itemRequest)
+    public function index()
     {
-        $this->authorize('read',$itemRequest);
+        $this->can_read($this->model());
         try {
-            $itemRequests = $itemRequest->latest()->where('status','O')->with('employee','item')->get();
+            $itemRequests = ItemRequest::latest()->where('status','O')->with('employee','item')->get();
             return view('store.requests.index',compact('itemRequests'));
         }
         catch (\Exception $e) {
@@ -36,11 +35,11 @@ class ItemRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function itemIssued(ItemRequest $itemRequest)
+    public function itemIssued()
     {
-        $this->authorize('read',$itemRequest);
+        $this->can_read($this->model());
         try {
-            $itemRequests = $itemRequest->latest()->where('status','C')->with('employee','item')->get();
+            $itemRequests = ItemRequest::latest()->where('status','C')->with('employee','item')->get();
             return view('store.requests.issued',compact('itemRequests'));
         }
         catch (\Exception $e) {
@@ -51,10 +50,11 @@ class ItemRequestController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ItemRequest $itemRequest)
+    public function create()
     {
-        $this->authorize('create',$itemRequest);
+        $this->can_create($this->model());
         try {
+            $itemRequest = new ItemRequest();
             return $this->populate(__FUNCTION__,$itemRequest);
         }
         catch (\Exception $e) {
@@ -65,16 +65,15 @@ class ItemRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemRequestRequest $request, ItemRequest $itemRequest)
+    public function store(ItemRequestRequest $request)
     {
-        $this->authorize('create',$itemRequest);
+        $this->can_create($this->model());
         $request['status'] = 'C';
         DB::beginTransaction();
         try {
             //dd($request->only('employee_id'));
             $this->decrement_item_quantity($request);    //Reduced quantity number on item on issuee
-
-            $itemRequest->create($request->all());
+            ItemRequest::create($request->all());
             DB::commit();
             return back()->with('success','Item Request has been added');
         }
@@ -84,13 +83,12 @@ class ItemRequestController extends Controller
         }
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $itemRequest = $this->getID($id);
             return $this->populate(__FUNCTION__, $itemRequest);
@@ -105,7 +103,7 @@ class ItemRequestController extends Controller
      */
     public function update(ItemRequestRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         $request['status'] = 'C';
         DB::beginTransaction();
         try {
@@ -129,20 +127,28 @@ class ItemRequestController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $itemRequest = $this->getID($id);
-
             //Update the Item Table
             $this->increment_item_quantity($itemRequest->item_id,$itemRequest->quantity);
             $itemRequest->delete();
             DB::commit();
-            return redirect()->route('itemRequests.index')->with('success','Request Item has been deleted');
+            return back()->with('success','Request Item has been deleted');
         }
         catch (\Exception $e) {
             DB::rollBack();
             return $this->errorReturn();
         }
+    }
+
+    /*
+    * Populate dropdowns values from different tables and return to forms
+    */
+    public function populate($function_name, $itemRequest) {
+        $items = Item::select('name','id')->where('quantity','>',0)->orderBy('name','asc')->get();
+        $data = compact('itemRequest','items');
+        return view('store.requests.'.$function_name , $data);
     }
 
     /*
@@ -181,17 +187,6 @@ class ItemRequestController extends Controller
     {
         $item = Item::findOrFail($id);
         return $item;
-    }
-
-    /*
-    * Populate dropdowns values from different tables and return to forms
-    */
-    public function populate($function_name, $itemRequest)
-    {
-        $items = Item::quantity_greater_than_zero(); //Get List of items
-        $employees = Employee::get_full_name_and_id();
-        $data = compact('items','itemRequest','employees');
-        return view('store.requests.'.$function_name,$data);
     }
 
     /*

@@ -1,16 +1,16 @@
-@extends('layouts.admin')
+@extends('layouts.templates.store')
 @section('title','Update Item Category')
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
                         <h4 class="header-title">Update <strong>{{$itemCategory->name}}</strong> Category</h4>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary " href="{{route('itemCategories.index')}}"><i class="fa fa-list"></i> Item Categories</a>
+                        <a class="btn btn-warning text-white" href="{{route('itemCategories.index')}}"><i class="fa fa-list"></i> view Item Categories</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,11 +38,11 @@
                         </div>
                         <div class="form-group row justify-content-center">
                             <div class="col-md-6 float-left">
-                                <a class="btn btn-outline-secondary" href="{{route('itemCategories.index')}}">Cancel</a>
+                                <a class="btn btn-dark" href="{{route('itemCategories.index')}}">Cancel</a>
                             </div>
                             <div class="col-md-6">
                                 <div class="float-right">
-                                    <input type="submit" class="btn btn-primary" value="update"/>
+                                    <input type="submit" class="btn btn-success" value="update"/>
                                 </div>
                             </div>
                         </div>

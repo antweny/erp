@@ -1,7 +1,7 @@
     @csrf
     <div class="form-group row">
         <div class="col-md-12">
-            <label class="col-form-label">Job title Name <span class="star">*</span></label>
+            <label class="col-form-label">Designation Name <span class="star">*</span></label>
             <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }} " value="{{old('name',$designation->name)}}" placeholder="Ex. Tanzania, Kenya" required/>
             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
         </div>
@@ -16,11 +16,11 @@
 
     <div class="form-group row justify-content-center">
         <div class="col-md-6 float-left">
-            <a class="btn btn-outline-secondary" href="{{route('designations.index')}}">Cancel</a>
+            <a class="btn btn-dark" href="{{route('designations.index')}}">Cancel</a>
         </div>
         <div class="col-md-6">
             <div class="float-right">
-                <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+                <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
             </div>
         </div>
     </div>

@@ -43,7 +43,7 @@ class PermissionRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:permissions,id,'.$this->permission->id,
+                    'name' => 'required|string|max:255|unique:permissions,id,'.$this->id,
                     'guard_name' => 'required|string',
                     'roles' => 'nullable',
                     'desc' => 'string|nullable',

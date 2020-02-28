@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Event Participants')
 @section('content')
 
@@ -9,13 +9,12 @@
             </div>
             <div class="float-right">
                 @can('participant-create')
-                    <a class="btn btn-primary" href="{{route('participants.create')}}" title="create"><i class="fa fa-plus"></i> Event Participants</a>
+                    <a class="btn btn-success" href="{{route('participants.create')}}" title="create"><i class="fa fa-plus"></i> Event Participants</a>
                 @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 @include('participants.components.index')
             </div>

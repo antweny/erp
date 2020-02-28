@@ -6,8 +6,6 @@ use App\Http\Requests\ImportRequest;
 use App\Http\Requests\ItemRequest;
 use App\Imports\ItemsImport;
 use App\Item;
-use App\ItemCategory;
-use App\ItemUnit;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,14 +22,12 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Item $item)
+    public function index()
     {
-        $this->authorize('read',$item);
+        $this->can_read($this->model());
         try {
-            $items = $item->with('item_category','item_unit')->get()->sortBy('name');
-            $itemCategories = ItemCategory::select('id','name')->get();
-            $itemUnits = ItemUnit::select('id','name')->get();
-            return view('store.items.index',compact('items','itemCategories','itemUnits'));
+            $items = Item::with('item_category','item_unit')->get()->sortBy('name');
+            return view('store.items.index',compact('items'));
         }
         catch (\Exception $e) {
             abort(404);
@@ -41,11 +37,11 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemRequest $request, Item $item)
+    public function store(ItemRequest $request)
     {
-        $this->authorize('create',$item);
+        $this->can_create($this->model());
         try {
-            $item->create($request->all());
+            Item::create($request->all());
             return back()->with('success','Item has been saved!');
         }
         catch (\Exception $e) {
@@ -58,10 +54,10 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $item = $this->getID($id);
-            return $this->populate(__FUNCTION__,$item);
+            return view('store.items.edit',compact('item'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -73,7 +69,7 @@ class ItemController extends Controller
      */
     public function update(ItemRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('items.index')->with('success','Item has been updated!');
@@ -88,7 +84,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return redirect()->route('items.index')->with('success','Item has been delete');
@@ -103,14 +99,9 @@ class ItemController extends Controller
     */
     public function import (ImportRequest $request)
     {
-        $this->authorize('create',$this->model());
-        //try {
-            Excel::import(new ItemsImport,request()->file('imported_file'));
-            return back()->with('success','Items imported successfully!');
-       // }
-       // catch (\Exception $e){
-       //     return $this->errorReturn();
-       // }
+        $this->can_import($this->model());
+        Excel::import(new ItemsImport,request()->file('imported_file'));
+        return back()->with('success','Items imported successfully!');
     }
 
 
@@ -129,16 +120,6 @@ class ItemController extends Controller
     public function model ()
     {
         return Item::class;
-    }
-
-    /*
-    * Populate dropdowns values from different tables and return to forms
-    */
-    public function populate($function_name, $item) {
-        $itemCategories = ItemCategory::select('id','name')->get();
-        $itemUnits = ItemUnit::select('id','name')->get();
-        $data = compact('item','itemCategories','itemUnits');
-        return view('store.items.' .$function_name , $data);
     }
 
     /*

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Participant Roles')
 @section('content')
     
@@ -7,11 +7,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="float-left">
-                        <h4 class="header-title">Participant Roles</h4>
+                        <h5> List of Participant Roles</h5>
                     </div>
                     <div class="float-right">
                         @if(checkPermission('participantRole-create'))
-                            <a class="btn btn-primary" href="#newParticipantRole" data-toggle="modal"><i class="fa fa-plus"></i> New role</a>
+                            <a class="btn btn-success" href="#newParticipantRole" data-toggle="modal"><i class="fa fa-plus"></i> New Participant Role</a>
                         @endif
                     </div>
                 </div>
@@ -19,10 +19,9 @@
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -66,7 +65,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New individual Group</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Participant Role</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -92,7 +91,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Create</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Create</button>
                         </div>
                     </form>
                 </div>

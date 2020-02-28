@@ -1,20 +1,16 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Event Categories')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Event Categories</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('eventCategory-create'))
-                            <a class="btn btn-primary" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h5>Event Categories</h5>
+            </div>
+            <div class="float-right">
+                @if(checkPermission('eventCategory-create'))
+                    <a class="btn btn-success" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -22,7 +18,7 @@
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -92,7 +88,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Save</button>
                         </div>
                     </form>
                 </div>

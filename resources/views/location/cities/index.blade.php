@@ -9,7 +9,7 @@
             </div>
             <div class="float-right">
                 @if (checkPermission('city-create'))
-                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
+                    <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="#newCity" data-toggle="modal"><i class="fa fa-plus"></i> New city</a>
                 @endif
             </div>
@@ -30,28 +30,30 @@
                     {{ csrf_field() }}
                     </thead>
                     <tbody>
-                        @foreach ($cities as $city)
-                            <tr>
-                                <td class="text-left">{{$city->name}}</td>
-                                <td>{{$city->slug}}</td>
-                                <td class="text-center">{{$city->country->name}}</td>
-                                <td class="text-left">{{$city->desc}}</td>
-                                <td class="text-center p-0">
-                                    <div class="btn btn-group">
-                                        @if(checkPermission('city-update'))
-                                            <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('city-delete'))
-                                            <form class="form-delete" method="post" action="{{route('cities.destroy',$city->id)}}">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" title="delete"><i class="fa fa-trash-alt"></i></button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                    @foreach ($cities as $city)
+                        <tr>
+                            <td class="text-left">{{$city->name}}</td>
+                            <td class="text-center">{{$city->slug}}</td>
+                            <td class="text-center">{{$city->country->name}}</td>
+                            <td class="text-left">{{$city->desc}}</td>
+                            <td class="text-center p-0">
+                                <div class="btn btn-group">
+                                    @if(checkPermission('city-update'))
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                    @endif
+
+                                    @if(checkPermission('city-delete'))
+                                        <form class="form-delete" method="post" action="{{route('cities.destroy',$city['id'])}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
+                                        </form>
+                                    @endif
+
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -80,18 +82,11 @@
                                     @error('name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="col-form-label">Country</label>
-                                    <select class="form-control @error('country_id') is-invalid @enderror single-select" style="width: 100%;" name="country_id">
-                                        <option value="">Select country...</option>
-                                        @foreach($countries as $country)
-                                            <option value="{{$country->id}}">{{$country->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('country_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                    @include('partials.countries.dropdown',['value'=>null])
                                 </div>
-
                             </div>
 
                             <div class="form-group row">

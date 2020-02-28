@@ -3,13 +3,14 @@
 <div class="form-group row">
     <div class="col-md-8">
         <label class="col-form-label" name="title">Item Name <span class="star">*</span></label>
-        <select name="item_id" class="form-control @error('date_issued') is-invalid @enderror single-select" required>
-            <option value="">Select Category...</option>
+        <select name="item_id" class="form-control @error('item_id') is-invalid @enderror single-select">
+            <option value="">Select Item...</option>
             @foreach($items as $item)
                 <option value="{{$item->id}}" {{old('item_id') == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
             @endforeach
         </select>
         @error('item_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+
     </div>
     <div class="col-md-4">
         <label class="col-form-label">Date Issued <span class="star">*</span> </label>
@@ -34,14 +35,7 @@
 
 <div class="form-group row">
     <div class="col-md-12">
-        <label class="col-form-label">Request By<span class="star">*</span> </label>
-        <select name="employee_id" class="form-control @error('employee_id') is-invalid @enderror single-select" required>
-            <option value="">Select Employee...</option>
-            @foreach($employees as $employee)
-                <option value="{{$employee->id}}" {{old('employee_id') == $employee->id ? 'selected' : '' }}>{{$employee->full_name}}</option>
-            @endforeach
-        </select>
-        @error('employee_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        @include('partials.employees.dropdown',['value'=>null])
     </div>
 </div>
 
@@ -58,10 +52,10 @@
 <div class="form-group row justify-content-center">
     <div class="col-md-12">
         <div class="float-left">
-            <a class="btn btn-outline-secondary" href="{{route('itemRequests.index')}}" title="create">cancel</a>
+            <a class="btn btn-dark" href="{{route('itemRequests.index')}}" title="create">cancel</a>
         </div>
         <div class="float-right">
-            <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+            <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
         </div>
     </div>
 </div>

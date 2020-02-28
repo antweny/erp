@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.store')
 @section('title','Update Item Received')
 @section('content')
 
@@ -7,10 +7,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <h1 class="h4">Update Item Received</h1>
+                        <h5>Update Received Item</h5>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-info btn-sm text-white" href="{{route('itemReceived.index')}}" title="create"><i class="fa fa-list mr-1"></i> item received</a>
+                        <a class="btn btn-warning text-white" href="{{route('itemReceived.index')}}" title="create"><i class="fa fa-list mr-1"></i> view received items</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -65,10 +65,10 @@
                         <div class="form-group row justify-content-center">
                             <div class="col-md-12">
                                 <div class="float-left">
-                                    <a class="btn btn-outline-secondary" href="{{route('itemReceived.index')}}" title="create">cancel</a>
+                                    <a class="btn btn-dark" href="{{route('itemReceived.index')}}" title="create">cancel</a>
                                 </div>
                                 <div class="float-right">
-                                    <input type="submit" class="btn btn-primary" value="Update Record"/>
+                                    <input type="submit" class="btn btn-success" value="Update Record"/>
                                 </div>
                             </div>
                         </div>

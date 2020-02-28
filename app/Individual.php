@@ -91,7 +91,6 @@ class Individual extends BaseModel
     static function get_name_and_id()
     {
         $individual = Individual::select('id', 'full_name')->get();
-
         return $individual;
     }
 

@@ -1,17 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.templates.event')
 @section('title','Update event participants')
 @section('content')
 
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <h1 class="h4">Update Event Participants</h1>
+                        <h5>Update Event Participants</h5>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary" href="{{route('participants.index')}}" title="create"><i class="fa fa-list mr-1"></i> view participants</a>
+                        <a class="btn btn-warning text-white" href="{{route('participants.index')}}" title="create"><i class="fa fa-list"></i> view participants</a>
                     </div>
                 </div>
                 <div class="card-body">

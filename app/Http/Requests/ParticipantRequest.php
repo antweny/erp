@@ -37,7 +37,7 @@ class ParticipantRequest extends FormRequest
                     'organization_id'=>'nullable',
                     'participant_role_id'=>'nullable',
                     'group_id'=>'nullable',
-                    'ward' => 'nullable|string',
+                    'ward_id' => 'nullable',
                     'level' => 'nullable|string|max:2',
                     'date' => 'required|date',
                 ];
@@ -51,7 +51,7 @@ class ParticipantRequest extends FormRequest
                     'organization_id'=>'nullable',
                     'participant_role_id'=>'nullable',
                     'group_id'=>'nullable',
-                    'ward' => 'nullable|string',
+                    'ward_id' => 'nullable|string',
                     'level' => 'nullable|string|max:2',
                     'date' => 'required|date',
                 ];
