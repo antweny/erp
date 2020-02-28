@@ -408,10 +408,8 @@ Route::prefix('security/')->group(function () {
  * Employee Web Guard Routes
  */
 Route::namespace('Employee')->prefix('employee/')->name('employee.')->group (function () {
-
        //Item Store Request
         Route::resource('itemRequests', 'ItemRequestController')->except('create,show');
-
         //Events Management Routes
         Route::resource('eventCategories', 'EventCategoryController')->except('create','show','destroy');
         Route::resource('events', 'EventController')->except('show','destroy');
