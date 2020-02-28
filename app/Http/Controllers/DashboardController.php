@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
-        //$this->middleware('auth:employee',['only'=> ['employee']]);
+        $this->middleware('auth:employee',['only'=> ['employee']]);
     }
 
     /*

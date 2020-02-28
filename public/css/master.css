@@ -10,7 +10,14 @@ html , body{
 
 /*Colors*/
 .bg-blue { background: #0866C6; }
-
+.bg-red {border-color:red; background:red; }
+.bg-green {border-color:green; background:green; }
+.bg-orange {border-color:orange; background:orange;}
+.bg-purple {border-color:purple; background:purple; }
+.bg-black {border-color:black; background: black; }
+.bg-pink {border-color:deeppink; background:deeppink; }
+.bg-maroon {border-color:maroon; background:maroon; }
+.bg-gray {border-color:gray; background:gray; }
 
 
 /* ====================
@@ -133,10 +140,10 @@ table.dataTable thead th, table.dataTable thead td {
  */
 header {
     background-color: #f8f9fa;
-    height: 50px;
+    height: 100px;
 }
 main {
-    margin-top: 50px;
+    margin-top: 100px;
     min-height: 100%;
 }
 .wrapper {
@@ -243,9 +250,10 @@ a[data-toggle="collapse"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    border: 1px solid #0866C6;
-    color: #0866C6;
+    color:#fff;
+    padding-top: 20px;
+    /*border: 1px solid #0866C6;*/
+    /*color: #0866C6;*/
 }
 .sub-menu-link > div {
     text-align: center;

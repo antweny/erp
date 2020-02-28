@@ -14,16 +14,22 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Custom Style -->
-    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 </head>
-<body>
-    @include('layouts.includes.topBar')
+<body class="bg-gray-900">
 
-    <div class="container-fluid pt-5" style="margin-top: 110px;">
-        <!-- Main Content Section -->
-            @yield('content')
+    <div class="wrapper">
+
+        <div class="authbox">
+            <div class="authbox-header">
+                <h2>TGNP ERP</h2>
+                <p class="mg-b-0">@yield('sub-header')</p>
+            </div>
+            <div class="authbox-body pb-5">
+                @yield('content')
+            </div>
+        </div>
     </div>
-
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
