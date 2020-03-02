@@ -12,7 +12,7 @@
                     </div>
                 </a>
             </div>
-        @endhasanyrolee
+        @endhasanyrole
 
         <div class="col-sm-4 col-md-3">
             <a href="{{route('organization')}}" class="sub-menu-link bg-orange">
