@@ -3,7 +3,7 @@
 @section('content')
     <div class="row sub-menu">
 
-        @role('HR Manager')
+        @hasanyrole('HR Manager|superAdmin')
             <div class="col-sm-4 col-md-3">
                 <a href="{{route('hrm')}}" class="sub-menu-link bg-pink">
                     <div>
@@ -12,7 +12,7 @@
                     </div>
                 </a>
             </div>
-        @endrole
+        @endhasanyrolee
 
         <div class="col-sm-4 col-md-3">
             <a href="{{route('organization')}}" class="sub-menu-link bg-orange">
