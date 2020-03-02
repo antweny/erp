@@ -1,22 +1,20 @@
-@extends('layouts.admin')
-@section('title','Position')
+@extends('layouts.templates.individuals')
+@section('title','Individual Positions')
 @section('content')
-
 
     <div class="card position">
         <div class="card-header">
             <div class="float-left">
-                <h1 class="h4">Position</h1>
+                <h5>Individual Positions</h5>
             </div>
             <div class="float-right">
-                @if(checkPermission('position-create'))
-                    <a class="btn btn-primary" href="{{route('positions.create')}}" title="create"><i class="fa fa-plus"></i> Position</a>
-                @endif
+                @can('position-create')
+                    <a class="btn btn-success" href="{{route('positions.create')}}" title="create"><i class="fa fa-plus"></i> New Position</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-            
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
@@ -25,6 +23,8 @@
                         <th scope="col">Title</th>
                         <th scope="col">Organization</th>
                         <th scope="col">City</th>
+                        <th scope="col">District</th>
+                        <th scope="col">Ward</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -32,9 +32,11 @@
                     @foreach ($positions as $position)
                         <tr>
                             <td class="text-left">{{ $position->individual->full_name }}</td>
-                            <td class="text-left">{{ $position->title->name }}</td>
+                            <td class="text-center">{{ $position->title->name }}</td>
                             <td class="text-center">{{ $position->organization->name }}</td>
                             <td class="text-center">{{ $position->city->name }}</td>
+                            <td class="text-center">{{ $position->district->name }}</td>
+                            <td class="text-center">{{ $position->ward->name }}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
                                     @if(checkPermission('position-update'))
@@ -56,7 +58,6 @@
                     </tbody>
                 </table>
             </div>
-            
         </div>
     </div>
 

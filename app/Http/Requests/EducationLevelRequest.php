@@ -41,7 +41,7 @@ class EducationLevelRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                 return [
-                    'name' => 'required|string|max:255|unique:education_levels,name,'.$this->id,
+                    'name' => 'required|string|max:255|unique:education_levels,id,'.$this->id,
                     'desc' => 'string|nullable',
                 ];
             }

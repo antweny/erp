@@ -1,29 +1,24 @@
-@extends('layouts.admin')
-@section('title','Fields')
+@extends('layouts.templates.organizations')
+@section('title','Sector Fields')
 @section('content')
 
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Sector Fields</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('field-create'))
-                            <a class="btn btn-primary" href="#newField" data-toggle="modal"><i class="fa fa-plus"></i> New field</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Sector Fields</h4>
+            </div>
+            <div class="float-right">
+                @can('field-create')
+                    <a class="btn btn-success" href="#newField" data-toggle="modal"><i class="fa fa-plus"></i> New field</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -64,7 +59,7 @@
         </div>
     </div>
 
-    @if(checkPermission('field-create'))
+    @can('field-create')
         <!-- start create new field form modal -->
         <div class="modal fade" id="newField" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -88,14 +83,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="col-form-label">Sector</label>
-                                    <select class="form-control @error('sector_id') is-invalid @enderror" name="sector_id">
-                                        <option value="">Select sector...</option>
-                                        @foreach($sectors as $sector)
-                                            <option value="{{$sector->id}}">{{$sector->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('sector_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                   @include('partials.sectors.dropdown',['old'=>null])
                                 </div>
 
                             </div>
@@ -116,6 +104,6 @@
             </div>
         </div>
         <!-- end create new field form modal -->
-    @endif
+    @endcan
 
 @endsection

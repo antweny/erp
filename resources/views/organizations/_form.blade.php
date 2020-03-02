@@ -10,6 +10,7 @@
         @error('acronym')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
 </div>
+
 <div class="form-group row">
     <div class="col-md-6">
         <label class="col-form-label">Founded</label>
@@ -66,34 +67,13 @@
 
 <div class="form-group row">
     <div class="col-md-4">
-        <label class="col-form-label">City/Region </label>
-        <select name="city_id" class="form-control @error('city_id') is-invalid @enderror single-select">
-            <option value="">Select....</option>
-            @foreach($cities as $city)
-                <option value="{{$city->id}}" {{old('city_id',$organization->city_id) == $city->id ? 'selected' : ''}}>{{$city->name}}</option>
-            @endforeach
-        </select>
-        @error('city_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        @include('partials.cities.dropdown',['old'=>null ?? $organization->city_id])
     </div>
     <div class="col-md-4">
-        <label class="col-form-label">District</label>
-        <select name="district_id" class="form-control @error('district_id') is-invalid @enderror single-select">
-            <option value="">Select....</option>
-            @foreach($districts as $district)
-                <option value="{{$district->id}}" {{old('district_id',$organization->district_id) == $district->id ? 'selected' : ''}}>{{$district->name}}</option>
-            @endforeach
-        </select>
-        @error('district_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        @include('partials.districts.dropdown',['old'=>null ?? $organization->district_id])
     </div> 
     <div class="col-md-4">
-        <label class="col-form-label">Ward</label>
-        <select name="ward_id" class="form-control @error('ward_id') is-invalid @enderror single-select">
-            <option value="">Select....</option>
-            @foreach($wards as $ward)
-                <option value="{{$ward->id}}" {{old('ward_id',$organization->ward_id) == $ward->id ? 'selected' : ''}}>{{$ward->name}}</option>
-            @endforeach
-        </select>
-        @error('ward_id')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+        @include('partials.wards.dropdown',['old'=>null ?? $organization->ward_id])
     </div>
 </div>
 
@@ -143,11 +123,11 @@
 
 <div class="form-group row justify-content-center">
     <div class="col-md-6 float-left">
-        <a class="btn btn-outline-secondary" href="{{route('organizations.index')}}">Cancel</a>
+        <a class="btn btn-dark" href="{{route('organizations.index')}}">Cancel</a>
     </div>
     <div class="col-md-6">
         <div class="float-right">
-            <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+            <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
         </div>
     </div>
 </div>

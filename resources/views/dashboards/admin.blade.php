@@ -3,17 +3,19 @@
 @section('content')
     <div class="row sub-menu">
 
-        <div class="col-sm-4 col-md-3">
-            <a href="{{route('hrm')}}" class="sub-menu-link bg-pink">
-                <div>
-                    <i class="fa fa-user-cog"></i>
-                    <span>Human Resource Management</span>
-                </div>
-            </a>
-        </div>
+        @role('HR Manager')
+            <div class="col-sm-4 col-md-3">
+                <a href="{{route('hrm')}}" class="sub-menu-link bg-pink">
+                    <div>
+                        <i class="fa fa-user-cog"></i>
+                        <span>Human Resource Management</span>
+                    </div>
+                </a>
+            </div>
+        @endrole
 
         <div class="col-sm-4 col-md-3">
-            <a href="#" class="sub-menu-link bg-orange">
+            <a href="{{route('organization')}}" class="sub-menu-link bg-orange">
                 <div>
                     <i class="fa fa-city"></i>
                     <span>Organizations Management</span>
@@ -22,10 +24,10 @@
         </div>
 
         <div class="col-sm-4 col-md-3">
-            <a href="#" class="sub-menu-link bg-purple ">
+            <a href="{{route('individual')}}" class="sub-menu-link bg-purple ">
                 <div>
                     <i class="fa fa-users"></i>
-                    <span>Contacts Management</span>
+                    <span>Individuals Management</span>
                 </div>
             </a>
         </div>
@@ -57,24 +59,25 @@
             </a>
         </div>
 
-        <div class="col-sm-4 col-md-3">
-            <a href="{{route('security')}}" class="sub-menu-link bg-red">
-                <div>
-                    <i class="fa fa-lock"></i>
-                    <span>System Security</span>
-                </div>
-            </a>
-        </div>
+        @role('superAdmin')
+            <div class="col-sm-4 col-md-3">
+                <a href="{{route('security')}}" class="sub-menu-link bg-red">
+                    <div>
+                        <i class="fa fa-lock"></i>
+                        <span>System Security</span>
+                    </div>
+                </a>
+            </div>
 
-        <div class="col-sm-4 col-md-3">
-            <a href="{{route('settings')}}" class="sub-menu-link bg-maroon">
-                <div>
-                    <i class="fa fa-cog"></i>
-                    <span>Settings</span>
-                </div>
-            </a>
-        </div>
-
+            <div class="col-sm-4 col-md-3">
+                <a href="{{route('settings')}}" class="sub-menu-link bg-maroon">
+                    <div>
+                        <i class="fa fa-cog"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </div>
+        @endrole
 
 
     </div>

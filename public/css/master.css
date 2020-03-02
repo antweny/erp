@@ -133,6 +133,14 @@ table.dataTable thead th, table.dataTable thead td {
     border-bottom: 1px solid #dee2e6;
     position: relative;
 }
+.status {
+    padding: 3px 7px 3px 7px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+.status .bg-warning {
+    color: #000;
+}
 
 
 /*
@@ -140,10 +148,10 @@ table.dataTable thead th, table.dataTable thead td {
  */
 header {
     background-color: #f8f9fa;
-    height: 100px;
+    padding: 0;
 }
 main {
-    margin-top: 100px;
+    margin-top: 55px;
     min-height: 100%;
 }
 .wrapper {
@@ -153,6 +161,13 @@ main {
 #content{
     width: 100%;
 }
+
+
+/*
+ * Header Navbar
+ */
+
+
 
 /*
  * Styling Sidebar
@@ -228,14 +243,13 @@ a[data-toggle="collapse"] {
 /*
  *  Main Section
  */
-
 .mainContent {padding: 10px;}
 
 
 
 
 /*
- * Sub Menu Navigation
+ * Admin Dashboard Menu Navigation
  */
 .sub-menu{
     margin-bottom: 20px;
@@ -272,7 +286,6 @@ a[data-toggle="collapse"] {
     color: white;
     text-decoration: none;
 }
-
 @media (max-width: 768px) {
     .sub-menu-link span {
         display: block;
@@ -283,6 +296,24 @@ a[data-toggle="collapse"] {
         line-height: 0;
         font-size: 60px;
     }
+}
+
+/*
+ * DataTables
+ */
+.form-control, .dataTables_filter input {
+    display: block;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
 }
 
 

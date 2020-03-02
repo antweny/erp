@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','Edit individual')
 @section('content')
 
@@ -6,7 +6,12 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="header-title">Edit Individual details</h4>
+                    <div class="float-left">
+                        <h4 class="header-title">Edit Individual details</h4>
+                    </div>
+                    <div class="float-right">
+                        <a class="btn btn-warning text-white" href="{{route('individuals.index')}}"><i class="fa fa-list"></i>view individuals</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     @include('alerts._flash')

@@ -1,35 +1,28 @@
-@extends('layouts.admin')
-
+@extends('layouts.templates.organizations')
 @section('title','Organizations')
-
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Organizations</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('organization-import'))
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endif
-
-                        @if(checkPermission('organization-create'))
-                            <a class="btn btn-primary" href="{{route('organizations.create')}}"><i class="fa fa-plus"></i> New organization</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Organizations</h4>
+            </div>
+            <div class="float-right">
+                @can('organization-import')
+                    <a class="btn btn-dark mr-3" href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                @endcan
+                @can('organization-create')
+                    <a class="btn btn-success" href="{{route('organizations.create')}}"><i class="fa fa-plus"></i> New organization</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
         @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table text-center table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                         <tr class="text-white">
-                            <th scope="col" width="200">Name</th>
+                            <th scope="col">Name</th>
                             <th scope="col">City/Region</th>
                             <th scope="col">District</th>
                             <th scope="col">Ward</th>
@@ -49,7 +42,6 @@
                                 <td class="text-center">{{$organization->op_level}}</td>
                                 <td class="text-center">{{$organization->contact_person}}</td>
                                 <td class="text-center">{{$organization->contact_person_number}}</td>
-
                                 <th class="text-center p-0" >
                                     <div class=" btn btn-group">
                                         @if(checkPermission('organization-update'))
@@ -73,7 +65,7 @@
     </div>
 
 
-    @if(checkPermission('organization-import'))
+    @can('organization-import')
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -104,7 +96,7 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 
 @endsection

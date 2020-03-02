@@ -1,36 +1,30 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','Titles')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Titles</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('title-create'))
-                            <a class="btn btn-secondary mr-3 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
-                            <a class="btn btn-primary" href="#newTitle" data-toggle="modal"><i class="fa fa-plus"></i> New title</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Titles</h4>
+            </div>
+            <div class="float-right">
+                @can('title-create')
+                    <a class="btn btn-dark mr-2 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                    <a class="btn btn-success" href="#newTitle" data-toggle="modal"><i class="fa fa-plus"></i> New title</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
-                    <tr class="text-white">
-                        <th scope="col">Name</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Descriptions</th>
-                        <th scope="col" >Actions</th>
-                    </tr>
-                    {{ csrf_field() }}
+                        <tr class="text-white">
+                            <th scope="col">Name</th>
+                            <th scope="col">Slug</th>
+                            <th scope="col">Descriptions</th>
+                            <th scope="col" >Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($titles as $title)
@@ -61,7 +55,7 @@
         </div>
     </div>
 
-    @if(checkPermission('title-create'))
+    @can('title-create')
         <!-- start create new title form modal -->
         <div class="modal fade" id="newTitle" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -126,13 +120,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 @endsection

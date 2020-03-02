@@ -1,29 +1,24 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','Education Levels')
 @section('content')
 
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Education Levels</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('educationLevel-create'))
-                            <a class="btn btn-primary" href="#newEducationLevel" data-toggle="modal"><i class="fa fa-plus"></i> New education level</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Education Levels</h4>
+            </div>
+            <div class="float-right">
+                @can('educationLevel-create')
+                    <a class="btn btn-success" href="#newEducationLevel" data-toggle="modal"><i class="fa fa-plus"></i> New education level</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -39,11 +34,9 @@
                                 <td class="text-left">{{$educationLevel->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-
                                         @if(checkPermission('educationLevel-update'))
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('educationLevels.edit',$educationLevel->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                         @endif
-
                                         @if(checkPermission('educationLevel-delete'))
                                             <form class="form-delete" method="post" action="{{route('educationLevels.destroy',$educationLevel->id)}}">
                                                 @method('DELETE')
@@ -61,13 +54,13 @@
         </div>
     </div>
 
-    @if(checkPermission('educationLevel-create'))
+    @can('educationLevel-create')
         <!-- start create new certificate form modal -->
         <div class="modal fade" id="newEducationLevel" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Create new education level</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Education Level</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -94,13 +87,13 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Create</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">save</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- end create new certificate form modal -->
-    @endif
+    @endcan
 
 @endsection

@@ -1,23 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
 
-use App\Http\Requests\SectorRequest;
-use App\Sector;
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
-class SectorController extends Controller
+use App\Field;
+use App\Http\Requests\FieldRequest;
+
+class FieldController extends Controller
 {
+
+    /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Sector $sector)
+    public function index()
     {
-        $this->authorize('read',$sector);
+        $this->can_read($this->model());
         try {
-            $sectors = $sector->latest()->get();
-            return view('organizations.sectors.index',compact('sectors'));
+            $fields = Field::latest()->with('sector')->get();
+            return view('organizations.fields.index',compact('fields'));
         }
         catch (\Exception $e) {
             abort(404);
@@ -27,12 +37,12 @@ class SectorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SectorRequest $request, Sector $sector)
+    public function store(FieldRequest $request)
     {
-        $this->authorize('create',$sector);
+        $this->can_create($this->model());
         try {
-            $sector->create($request->only('name','desc'));
-            return back()->with('success',' Sector has been saved');
+            Field::create($request->only('name','desc','sector_id'));
+            return back()->with('success',' Sector field has been saved');
         }
         catch (\Exception $e) {
             return back()->with('error',' Something went wrong')->withInput($request->input());
@@ -44,10 +54,10 @@ class SectorController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
-            $sector = $this->getID($id);
-            return view('organizations.sectors.edit',compact('sector'));
+            $field = $this->getID($id);
+            return view('organizations.fields.edit',compact('field'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -57,12 +67,12 @@ class SectorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SectorRequest $request, $id)
+    public function update(FieldRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
-            $this->getID($id)->update($request->only('name','desc'));
-            return redirect()->route('sectors.index')->with('success',' Sector has been updated');
+            $this->getID($id)->update($request->only('name','desc','sector_id'));
+            return redirect()->route('fields.index')->with('success','Sector field has been updated');
         }
         catch (\Exception $e) {
             return $this->errorReturn();
@@ -77,19 +87,18 @@ class SectorController extends Controller
         $this->authorize('delete',$this->model());
         try {
             $this->getID($id)->delete();
-            return back()->with('success','Sector has been deleted');
+            return back()->with('success','Sector field has been deleted');
         }
         catch (\Exception $e) {
             return $this->errorReturn();
         }
     }
-
     /*
      * Get requested record ID
      */
     public function getID($id)
     {
-        $data = Sector::findOrFail($id);
+        $data = Field::findOrFail($id);
         return $data;
     }
 
@@ -98,7 +107,7 @@ class SectorController extends Controller
      */
     public function model ()
     {
-        return Sector::class;
+        return Field::class;
     }
 
     /*
@@ -106,7 +115,7 @@ class SectorController extends Controller
      */
     public function errorReturn()
     {
-        return redirect()->route('sectors.index')->with('error','something went wrong');
+        return redirect()->route('fields.index')->with('error','something went wrong');
     }
 
 }

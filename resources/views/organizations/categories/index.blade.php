@@ -1,29 +1,24 @@
-@extends('layouts.admin')
+@extends('layouts.templates.organizations')
 @section('title','Organization Categories')
 @section('content')
 
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Organization Categories</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('organizationCategory-create'))
-                            <a class="btn btn-primary" href="#newOrganizationCategory" data-toggle="modal"><i class="fa fa-plus"></i> New organization category</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Organization Categories</h4>
+            </div>
+            <div class="float-right">
+                @can('organizationCategory-create')
+                    <a class="btn btn-success" href="#newOrganizationCategory" data-toggle="modal"><i class="fa fa-plus"></i> New organization category</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -39,7 +34,6 @@
                             <td class="text-left">{{$organizationCategory->desc}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-
                                     @if(checkPermission('organizationCategory-update'))
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('categories.edit',$organizationCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
                                     @endif
@@ -61,7 +55,7 @@
         </div>
     </div>
 
-    @if(checkPermission('organizationCategory-create'))
+    @can('organizationCategory-create')
         <!-- start create new organizationCategory form modal -->
         <div class="modal fade" id="newOrganizationCategory" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -101,6 +95,6 @@
             </div>
         </div>
         <!-- end create new organizationCategory form modal -->
-    @endif
+    @endcan
 
 @endsection

@@ -1,24 +1,23 @@
-@extends('layouts.admin')
-@section('title','Sectors')
+@extends('layouts.templates.organizations')
+@section('title','Sectors List')
 @section('content')
 
     <div class="card">
         <div class="card-header">
             <div class="float-left">
-                <h4 class="header-title">Sectors</h4>
+                <h4 class="header-title">Sectors List</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('sector-create'))
-                    <a class="btn btn-primary" href="#newSector" data-toggle="modal"><i class="fa fa-plus"></i> New sector</a>
+                @can('sector-create')
+                    <a class="btn btn-success" href="#newSector" data-toggle="modal"><i class="fa fa-plus"></i> New sector</a>
                 @endif
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center ">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
@@ -57,7 +56,7 @@
         </div>
     </div>
 
-    @if(checkPermission('sector-create'))
+    @can('sector-create')
         <!-- start create new sector form modal -->
         <div class="modal fade" id="newSector" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -96,6 +95,6 @@
             </div>
         </div>
         <!-- end create new sector form modal -->
-    @endif
+    @endcan
 
 @endsection

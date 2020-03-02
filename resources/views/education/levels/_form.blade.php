@@ -17,11 +17,11 @@
 
     <div class="form-group row justify-content-center">
         <div class="col-md-6 float-left">
-            <a class="btn btn-outline-secondary" href="{{route('educationLevels.index')}}">Cancel</a>
+            <a class="btn btn-dark" href="{{route('educationLevels.index')}}">Cancel</a>
         </div>
         <div class="col-md-6">
             <div class="float-right">
-                <input type="submit" class="btn btn-primary" value="{{$buttonText}}"/>
+                <input type="submit" class="btn btn-success" value="{{$buttonText}}"/>
             </div>
         </div>
     </div>

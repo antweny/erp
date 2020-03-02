@@ -1,30 +1,26 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','Individuals')
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="float-left">
-                        <h4 class="header-title">Individuals</h4>
-                    </div>
-                    <div class="float-right">
-                        @if(checkPermission('individual-import'))
-                            <a class="btn btn-secondary mr-4 " href="#import" data-toggle="modal"><i class="fa fa-plus"></i> Import</a>
-                        @endif
-                        @if(checkPermission('individual-create'))
-                            <a class="btn btn-primary" href="{{route('individuals.create')}}"><i class="fa fa-plus"></i> New individual</a>
-                        @endif
-                    </div>
-                </div>
+            <div class="float-left">
+                <h4 class="header-title">Individuals</h4>
+            </div>
+            <div class="float-right">
+                @can('individual-import')
+                    <a class="btn btn-dark mr-2 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                @endcan
+                @can('individual-create')
+                    <a class="btn btn-success" href="{{route('individuals.create')}}"><i class="fa fa-plus"></i> New individual</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Full Name</th>
                         <th scope="col">Gender</th>
@@ -71,7 +67,7 @@
         </div>
     </div>
 
-    @if(checkPermission('individual-import'))
+    @can('individual-import')
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -95,13 +91,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Import</button>
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 @endsection

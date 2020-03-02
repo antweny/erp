@@ -57,41 +57,20 @@
 
 <div class="form-group row">
     <div class="col-md-6">
-        <label class="col-form-label">City/Region</label>
-        <input list="cities" type="text" name="city" class="form-control {{ $errors->has('city') ? ' is-invalid' : '' }} " value="{{old('city',$individual->city->name)}}" placeholder="Ex. Kigoma, Lindi" />
-        <datalist id="cities">
-            @foreach($cities as $city)
-                <option value="{{$city->name}}"/>
-            @endforeach
-        </datalist>
-        @if ($errors->has('city'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('city') }}</strong></span>@endif
+        @include('partials.cities.dropdown',['old'=>null ?? $individual->city_id])
     </div>
     <div class="col-md-6">
-        <label class="col-form-label">District</label>
-        <input list="districts" type="text" name="district" class="form-control {{ $errors->has('district') ? ' is-invalid' : '' }} " value="{{old('district',$individual->district->name)}}" placeholder="Ex. Ubungo, Hai, Kibaha" />
-        <datalist id="districts">
-            @foreach($districts as $district)
-                <option value="{{$district->name}}"/>
-            @endforeach
-        </datalist>
-        @if ($errors->has('district'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('district') }}</strong></span>@endif
+        @include('partials.districts.dropdown',['old'=>null ?? $individual->district_id])
     </div>
 </div>
 
 <div class="form-group row">
     <div class="col-md-6">
-        <label class="col-form-label" name="ward">Wards</label>
-        <input list="wards" type="text" name="ward" class="form-control {{ $errors->has('ward') ? ' is-invalid' : '' }} " value="{{old('ward',$individual->ward->name)}}" placeholder="Ex. Mabibo, Makumbusho" />
-        <datalist id="wards">
-            @foreach($wards as $ward)
-                <option value="{{$ward->name}}"/>
-            @endforeach
-        </datalist>
-        @if ($errors->has('ward'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('ward') }}</strong></span>@endif
+        @include('partials.wards.dropdown',['old'=>null ?? $individual->ward_id])
     </div>
     <div class="col-md-6">
         <label class="col-form-label">Email</label>
-        <input type="email" name="email" id="date" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{old('email',$individual->email)}}">
+        <input type="email" name="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{old('email',$individual->email)}}">
         @if ($errors->has('email'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('email') }}</strong></span>@endif
     </div>
 </div>

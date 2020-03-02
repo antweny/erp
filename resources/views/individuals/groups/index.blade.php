@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','Individual Groups')
 @section('content')
 
@@ -10,8 +10,8 @@
                         <h4 class="header-group">Individual Groups</h4>
                     </div>
                     <div class="float-right">
-                        @if(checkPermission('group-create'))
-                            <a class="btn btn-primary" href="#newGroup" data-toggle="modal"><i class="fa fa-plus"></i> New group</a>
+                        @can('group-create')
+                            <a class="btn btn-success" href="#newGroup" data-toggle="modal"><i class="fa fa-plus"></i> New group</a>
                         @endif
                     </div>
                 </div>
@@ -19,7 +19,6 @@
         </div>
         <div class="card-body">
             @include('alerts._flash')
-
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
@@ -29,7 +28,7 @@
                         <th scope="col">Descriptions</th>
                         <th scope="col" >Actions</th>
                     </tr>
-                    {{ csrf_field() }}
+
                     </thead>
                     <tbody>
                         @foreach ($groups as $group)

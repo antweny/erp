@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.organizations')
 @section('title','Edit sector')
 
 @section('content')
@@ -11,9 +11,7 @@
                         <h4 class="header-title">Edit {{$sector->name}} sector</h4>
                     </div>
                     <div class="float-right">
-                        @can('sector-create')
-                            <a class="btn btn-primary " href="{{route('sectors.index')}}"><i class="fa fa-list"></i> List sectors</a>
-                        @endcan
+                        <a class="btn btn-warning text-white " href="{{route('sectors.index')}}"><i class="fa fa-list"></i> View Sectors</a>
                     </div>
                 </div>
                 <div class="card-body">

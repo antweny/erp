@@ -309,7 +309,7 @@ Route::prefix('setting/')->group(function () {
  * System Security routes
  */
 Route::prefix('security/')->group(function () {
-    //Events Routes
+    //Security default
     Route::get('/','DashboardController@security')->name('security');
 
     //Administrator routes
@@ -359,51 +359,112 @@ Route::prefix('security/')->group(function () {
 });
 
 
+/*
+ * Individual Management Routes
+ */
+Route::prefix('individual')->group(function (){
 
+    //Individual default
+    Route::get('/','DashboardController@individual')->name('individual');
 
+    Route::get('index', 'IndividualController@index')->name('individuals.index');
+    Route::get('create', 'IndividualController@create')->name('individuals.create');
+    Route::post('store', 'IndividualController@store')->name('individuals.store');
+    Route::get('edit/{id}', 'IndividualController@edit')->name('individuals.edit');
+    Route::put('update/{id}', 'IndividualController@update')->name('individuals.update');
+    Route::delete('delete/{id}', 'IndividualController@destroy')->name('individuals.destroy');
+    Route::post('import', 'IndividualController@import')->name('individuals.import');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Organization Management
-    Route::prefix('organization/')->group (function () {
-        //Route::post('import', 'OrganizationController@import')->name('organizations.import');
-        Route::resource('categories', 'OrganizationCategoryController')->except('create','show');
-        Route::resource('sectors', 'SectorController')->except('create','show');
-        Route::resource('sector/fields', 'FieldController')->except('create','show');
+    //Education Levels routes
+    Route::prefix('education/level')->group (function () {
+        Route::get('/', 'EducationLevelController@index')->name('educationLevels.index');
+        Route::post('store', 'EducationLevelController@store')->name('educationLevels.store');
+        Route::get('edit/{id}', 'EducationLevelController@edit')->name('educationLevels.edit');
+        Route::put('update/{id}', 'EducationLevelController@update')->name('educationLevels.update');
+        Route::delete('delete/{id}', 'EducationLevelController@destroy')->name('educationLevels.destroy');
     });
-    Route::post('import', 'OrganizationController@import')->name('organizations.import');
-    Route::resource('organizations', 'OrganizationController');
 
-    // Individual Data Management
-    Route::prefix('individual/')->group (function () {
-        Route::resource('educationLevels', 'EducationLevelController')->except('create','show');
-        Route::resource('positions', 'PositionController')->except('show');
-        Route::resource('groups', 'GroupController')->except('create','show');
+    //Position Titles  routes
+    Route::prefix('position/titles')->group (function () {
+        Route::get('/', 'TitleController@index')->name('titles.index');
+        Route::post('store', 'TitleController@store')->name('titles.store');
+        Route::get('edit/{id}', 'TitleController@edit')->name('titles.edit');
+        Route::put('update/{id}', 'TitleController@update')->name('titles.update');
+        Route::delete('delete/{id}', 'TitleController@destroy')->name('titles.destroy');
         Route::post('titles/import', 'TitleController@import')->name('titles.import');
-        Route::resource('titles', 'TitleController')->except('create','show');
+    });
+    
+    //Individual Groups routes
+    Route::prefix('groups')->group (function () {
+        Route::get('/', 'GroupController@index')->name('groups.index');
+        Route::post('store', 'GroupController@store')->name('groups.store');
+        Route::get('edit/{id}', 'GroupController@edit')->name('groups.edit');
+        Route::put('update/{id}', 'GroupController@update')->name('groups.update');
+        Route::delete('delete/{id}', 'GroupController@destroy')->name('groups.destroy');
     });
 
-    Route::post('individuals/import', 'IndividualController@import')->name('individuals.import');
-    Route::resource('individuals', 'IndividualController');
+    //Positions routes
+    Route::prefix('positions')->group (function () {
+        Route::get('/', 'PositionController@index')->name('positions.index');
+        Route::get('create', 'PositionController@create')->name('positions.create');
+        Route::post('store', 'PositionController@store')->name('positions.store');
+        Route::get('edit/{id}', 'PositionController@edit')->name('positions.edit');
+        Route::put('update/{id}', 'PositionController@update')->name('positions.update');
+        Route::delete('delete/{id}', 'PositionController@destroy')->name('positions.destroy');
+    });
+
     
+
+});
+
+/*
+ * Organizations Management
+ */
+Route::prefix('organization/')->group (function () {
+    //Organization default
+    Route::get('/','DashboardController@organization')->name('organization');
+
+    Route::get('index', 'OrganizationController@index')->name('organizations.index');
+    Route::get('create', 'OrganizationController@create')->name('organizations.create');
+    Route::post('store', 'OrganizationController@store')->name('organizations.store');
+    Route::get('edit/{id}', 'OrganizationController@edit')->name('organizations.edit');
+    Route::put('update/{id}', 'OrganizationController@update')->name('organizations.update');
+    Route::delete('delete/{id}', 'OrganizationController@destroy')->name('organizations.destroy');
+    Route::post('import', 'OrganizationController@import')->name('organizations.import');
+
+    //Organization Categories Routes
+    Route::prefix('categories')->group (function () {
+        Route::get('/', 'OrganizationCategoryController@index')->name('categories.index');
+        Route::post('store', 'OrganizationCategoryController@store')->name('categories.store');
+        Route::get('edit/{id}', 'OrganizationCategoryController@edit')->name('categories.edit');
+        Route::put('update/{id}', 'OrganizationCategoryController@update')->name('categories.update');
+        Route::delete('delete/{id}', 'OrganizationCategoryController@destroy')->name('categories.destroy');
+    });
+
+    //Organization Sectors
+    Route::prefix('sectors')->group (function () {
+        Route::get('/', 'SectorController@index')->name('sectors.index');
+        Route::post('store', 'SectorController@store')->name('sectors.store');
+        Route::get('edit/{id}', 'SectorController@edit')->name('sectors.edit');
+        Route::put('update/{id}', 'SectorController@update')->name('sectors.update');
+        Route::delete('delete/{id}', 'SectorController@destroy')->name('sectors.destroy');
+    });
+
+    //Organization Sector Fields
+    Route::prefix('sector/fields')->group (function () {
+        Route::get('/', 'FieldController@index')->name('fields.index');
+        Route::post('store', 'FieldController@store')->name('fields.store');
+        Route::get('edit/{id}', 'FieldController@edit')->name('fields.edit');
+        Route::put('update/{id}', 'FieldController@update')->name('fields.update');
+        Route::delete('delete/{id}', 'FieldController@destroy')->name('fields.destroy');
+    });
     
+});
+
+
+
+
+
 /*
  * Employee Web Guard Routes
  */

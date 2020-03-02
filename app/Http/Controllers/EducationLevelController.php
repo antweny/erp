@@ -1,22 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\EducationLevel;
-use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\EducationLevelRequest;
-use Illuminate\Http\Request;
 
 class EducationLevelController extends Controller
 {
     /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+
+    /**
      * Display a listing of the resource.
      */
-    public function index(EducationLevel $educationLevel)
+    public function index()
     {
-        $this->authorize('read',$educationLevel);
+        $this->can_read($this->model());
         try {
-            $educationLevels = $educationLevel->orderBy('name','desc')->get();
+            $educationLevels = EducationLevel::orderBy('name','desc')->get();
             return view('education.levels.index',compact('educationLevels'));
         }
         catch (\Exception $e) {
@@ -27,11 +34,11 @@ class EducationLevelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EducationLevelRequest $request, EducationLevel $educationLevel)
+    public function store(EducationLevelRequest $request)
     {
-        $this->authorize('create',$educationLevel);
+        $this->can_create($this->model());
         try {
-            $educationLevel->create($request->all());
+            EducationLevel::create($request->all());
             return back()->with('success',' EducationLevel has been saved');
         }
         catch (\Exception $e) {
@@ -44,7 +51,7 @@ class EducationLevelController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $educationLevel = $this->getID($id);
             return view('education.levels.edit',compact('educationLevel'));
@@ -59,7 +66,7 @@ class EducationLevelController extends Controller
      */
     public function update(EducationLevelRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('educationLevels.index')->with('success',' Education Level has been updated');
@@ -74,7 +81,7 @@ class EducationLevelController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Education Level has been deleted');

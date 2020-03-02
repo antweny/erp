@@ -16,6 +16,7 @@ use App\Http\View\Composers\OrganizationsComposer;
 use App\Http\View\Composers\ParticipantRolesComposer;
 use App\Http\View\Composers\PermissionsComposer;
 use App\Http\View\Composers\RolesComposer;
+use App\Http\View\Composers\SectorsComposer;
 use App\Http\View\Composers\WardsComposer;
 use App\ParticipantRole;
 use Illuminate\Support\Facades\View;
@@ -102,6 +103,10 @@ class AppServiceProvider extends ServiceProvider
 
         //Pass permissions
         View::composer(['partials.permissions.*'],PermissionsComposer::class);
+
+        //Pass permissions
+        View::composer(['partials.sectors.*'],SectorsComposer::class);
+
 
 
 

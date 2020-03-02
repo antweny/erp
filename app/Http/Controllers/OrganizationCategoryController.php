@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\OrganizationCategoryRequest;
 use App\OrganizationCategory;
 
@@ -10,13 +9,22 @@ class OrganizationCategoryController extends Controller
 {
 
     /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+
+    /**
      * Display a listing of the resource.
      */
-    public function index(OrganizationCategory $organizationCategory)
+    public function index()
     {
-        $this->authorize('read',$organizationCategory);
+        $this->can_read($this->model());
         try {
-            $organizationCategories = $organizationCategory->latest()->get();
+            $organizationCategories = OrganizationCategory::latest()->get();
             return view('organizations.categories.index',compact('organizationCategories'));
         }
         catch (\Exception $e) {
@@ -27,11 +35,11 @@ class OrganizationCategoryController extends Controller
     /**
      * Store a newly created resource in storage.e
      */
-    public function store(OrganizationCategoryRequest $request, OrganizationCategory $organizationCategory)
+    public function store(OrganizationCategoryRequest $request)
     {
-        $this->authorize('create',$organizationCategory);
+        $this->can_create($this->model());
         try {
-            $organizationCategory->create($request->all());
+            OrganizationCategory::create($request->all());
             return back()->with('success',' Organization category has been saved');
         }
         catch (\Exception $e) {
@@ -44,7 +52,7 @@ class OrganizationCategoryController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $category = $this->getID($id);
             return view('organizations.categories.edit',compact('category'));
@@ -59,7 +67,7 @@ class OrganizationCategoryController extends Controller
      */
     public function update(OrganizationCategoryRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('categories.index')->with('success',' Organization category has been updated.');
@@ -74,7 +82,7 @@ class OrganizationCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Organization category has been deleted');

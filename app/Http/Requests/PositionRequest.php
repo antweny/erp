@@ -34,10 +34,10 @@ class PositionRequest extends FormRequest
                 return [
                     'individual_id' => 'required',
                     'organization_id' => 'required',
-                    'city' => 'nullable|string|max:255',
+                    'city_id' => 'nullable|string|max:255',
                     'title' => 'nullable|string|max:255',
-                    'district'=>'nullable|string|max:255',
-                    'ward'=>'nullable|string|max:255',
+                    'district_id'=>'nullable|string|max:255',
+                    'ward_id'=>'nullable|string|max:255',
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date|after_or_equal:start_date',
                     'desc'=>'string|nullable',

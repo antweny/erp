@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.templates.individuals')
 @section('title','New position')
 @section('content')
 
@@ -10,7 +10,7 @@
                   <h4 class="header-title">New Position</h4>
                </div>
                <div class="float-right">
-                  <a class="btn btn-primary" href="{{route('positions.index')}}" title="create"><i class="fa fa-list mr-1"></i> view positions</a>
+                  <a class="btn btn-warning text-white" href="{{route('positions.index')}}" title="create"><i class="fa fa-list mr-1"></i> view positions</a>
                </div>
             </div>
             <div class="card-body">

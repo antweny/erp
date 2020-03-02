@@ -9,7 +9,7 @@ class DashboardController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm']]);
+        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm','individual','organization']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
         $this->middleware('auth:employee',['only'=> ['employee']]);
     }
@@ -77,6 +77,22 @@ class DashboardController extends Controller
     public function security()
     {
         return view('dashboards.security');
+    }
+
+    /*
+     * System Securities.
+     */
+    public function individual()
+    {
+        return view('dashboards.individuals');
+    }
+
+    /*
+    * System Securities.
+    */
+    public function organization()
+    {
+        return view('dashboards.organizations');
     }
 
 }

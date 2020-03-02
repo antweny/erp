@@ -1,29 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
-use App\City;
-use App\District;
 use App\Http\Requests\ImportRequest;
 use App\Imports\OrganizationImport;
 use App\Http\Requests\OrganizationRequest;
 use App\Organization;
 use App\OrganizationCategory;
-use App\Ward;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrganizationController extends Controller
 {
     /**
+     * Authorization constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy','import']]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
-    public function index(Organization $organization)
+    public function index()
     {
-        $this->authorize('read',$organization);
+        $this->can_read($this->model());
         try {
-            $organizations = $organization->latest()->with(['city','organization_category','district','ward'])->get();
+            $organizations = Organization::latest()->with(['city','organization_category','district','ward'])->get();
             return  view('organizations.index',compact('organizations'));
         }
         catch (\Exception $e) {
@@ -34,10 +37,11 @@ class OrganizationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Organization $organization)
+    public function create()
     {
-        $this->authorize('create',$organization);
+        $this->can_create($this->model());
         try {
+            $organization = new Organization();
             return $this->populate(__FUNCTION__, $organization);
         }
         catch (\Exception $e) {
@@ -48,11 +52,11 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OrganizationRequest $request, Organization $organization)
+    public function store(OrganizationRequest $request)
     {
-        $this->authorize('create',$organization);
+        $this->can_create($this->model());
         try {
-            $org = $organization->create($request->all());
+            $org = Organization::create($request->all());
             return back()->with('success',' Organization has been saved');
         }
         catch (\Exception $e) {
@@ -60,20 +64,13 @@ class OrganizationController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $organization = $this->getID($id);
             return $this->populate(__FUNCTION__, $organization);
@@ -88,7 +85,7 @@ class OrganizationController extends Controller
      */
     public function update(OrganizationRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('organizations.index')->with('success',' Organization has been updated');
@@ -103,7 +100,7 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success',' Organization has been deleted');
@@ -119,27 +116,17 @@ class OrganizationController extends Controller
     public function import(ImportRequest $request, Organization $organization)
     {
         $this->authorize('import',$organization);
-        //try {
-            Excel::import(new OrganizationImport(), request()->file('imported_file'));
-            return back()->with('success','Organization imported successfully!');
-        // }
-        //catch (\Exception $e){
-        //return $this->errorReturn();
-        //return redirect()->route('individuals.index')->with('error',$e->getMessage());
-        //}
+        Excel::import(new OrganizationImport(), request()->file('imported_file'));
+        return back()->with('success','Organization imported successfully!');
     }
 
     /*
      * Populate dropdowns values from different tables and return to forms
      */
     public function populate($function_name, $organization) {
-        $cities = City::get_name_and_id();
-        $districts = District::get_name_and_id();
-        $wards = Ward::get_name_and_id();
         $categories = OrganizationCategory::get_name_and_id();
-
-        $data = compact('organization','cities','districts','wards','categories');
-        return view('organizations.' .$function_name , $data);
+        $data = compact('organization','categories');
+        return view('organizations.'.$function_name , $data);
     }
 
     /*

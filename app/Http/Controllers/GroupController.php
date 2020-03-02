@@ -1,23 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
-
+namespace App\Http\Controllers;
 
 use App\Group;
 use App\Http\Requests\GroupRequest;
 
-
 class GroupController extends Controller
 {
+
+    /**
+     * Auth constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index(Group $group)
     {
-        $this->authorize('read',$group);
+        $this->can_read($this->model());
         try {
-            $groups = $group->latest()->get();
+            $groups = Group::latest()->get();
             return view('individuals.groups.index',compact('groups'));
         }
         catch (\Exception $e) {
@@ -28,11 +35,11 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GroupRequest $request, Group $group)
+    public function store(GroupRequest $request)
     {
-        $this->authorize('create',$group);
+        $this->can_create($this->model());
         try {
-            $group->create($request->only('name','desc'));
+            Group::create($request->only('name','desc'));
             return back()->with('success',' Group has been saved');
         }
         catch (\Exception $e) {
@@ -45,7 +52,7 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $group = $this->getID($id);
             return view('individuals.groups.edit',compact('group'));
@@ -60,7 +67,7 @@ class GroupController extends Controller
      */
     public function update(GroupRequest $request, $id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
             return redirect()->route('groups.index')->with('success',' Group has been updated');
@@ -75,7 +82,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Group has been deleted');

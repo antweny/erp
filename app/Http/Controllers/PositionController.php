@@ -1,27 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Admin\Controller;
+namespace App\Http\Controllers;
 
-use App\City;
-use App\District;
-use App\Individual;
-use App\Organization;
 use App\Position;
 use App\Title;
-use App\Ward;
 use App\Http\Requests\PositionRequest;
 
 class PositionController extends Controller
 {
     /**
+     * Authorization constructor.
+     */
+    function __construct()
+    {
+        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy','import']]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
-    public function index(Position $position)
+    public function index()
     {
-        $this->authorize('read',$position);
+        $this->can_read($this->model());
         try {
-            $positions = $position->with(['organization','title','city','district','individual','ward'])->get();
+            $positions = Position::with(['organization','title','city','district','individual','ward'])->get();
             return view('individuals.positions.index',compact('positions'));
         }
         catch (\Exception $e) {
@@ -29,13 +31,12 @@ class PositionController extends Controller
         }
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create(Position $position)
     {
-        $this->authorize('create',$position);
+        $this->can_create($this->model());
         try{
             return $this->populate(__FUNCTION__,$position);
         }
@@ -44,16 +45,16 @@ class PositionController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PositionRequest $request, Position $position)
+    public function store(PositionRequest $request)
     {
-        $this->authorize('create',$position);
+        $this->can_create($this->model());
         try {
+            //dd($request->all());
             $this->get_select_ids($request);
-            $position->create($request->except('city','district','ward','title'));
+            Position::create($request->all());
             return back()->with('success','Individual Position has been added');
         }
         catch (\Exception $e) {
@@ -66,7 +67,7 @@ class PositionController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try{
             $position = $this->getID($id);
             return $this->populate(__FUNCTION__,$position);
@@ -81,7 +82,7 @@ class PositionController extends Controller
      */
     public function update(PositionRequest $request,$id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_update($this->model());
         try {
             $this->get_select_ids($request);
             $this->getID($id)->update($request->except('city','district','ward','title'));
@@ -92,13 +93,12 @@ class PositionController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $this->authorize('update',$this->model());
+        $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
             return back()->with('success','Person position has been deleted');
@@ -111,24 +111,6 @@ class PositionController extends Controller
     /*
      * Check if resource exist get ID if not create and get ID
      */
-    public function check_city($request)
-    {
-        $name = new City();
-        return $name->get_id($request);
-    }
-
-    public function check_district($request)
-    {
-        $name = new District();
-        return $name->get_id($request);
-    }
-
-    public function check_ward($request)
-    {
-        $name = new Ward();
-        return $name->get_id($request);
-    }
-
     public function check_title($request)
     {
         $name = new Title();
@@ -139,13 +121,8 @@ class PositionController extends Controller
      * Populate dropdowns values from different tables and return to forms
      */
     public function populate($function_name, $position) {
-        $cities = City::get_name_and_id();
-        $districts = District::get_name_and_id();
-        $wards = Ward::get_name_and_id();
-        $organizations = Organization::get_name_and_id();
         $titles = Title::get_name_and_id();
-        $individuals = Individual::get_name_and_id();
-        $data = compact('position','cities','districts','wards','individuals','organizations','titles');
+        $data = compact('position','titles');
         return view('individuals.positions.'.$function_name , $data);
     }
 
@@ -179,13 +156,9 @@ class PositionController extends Controller
      */
     public function get_select_ids ($request)
     {
-        $request['city_id'] = $this->check_city($request['city']);
-        $request['district_id'] = $this->check_district($request['district']);
-        $request['ward_id'] = $this->check_ward($request['ward']);
         $request['title_id'] = $this->check_title($request['title']);
         return $request;
     }
-
 
 
 }
