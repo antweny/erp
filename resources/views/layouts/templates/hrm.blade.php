@@ -10,7 +10,7 @@
             </a>
         </li>
 
-        @can('designation-read')
+        @can('department-read')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('departments.index')}}">
                     <i class="fa fa-building"></i>
