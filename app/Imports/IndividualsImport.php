@@ -8,13 +8,13 @@ use App\District;
 use App\Street;
 use App\Ward;
 use Maatwebsite\Excel\Concerns\ToModel;
-//use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+
 use Maatwebsite\Excel\Validators\Failure;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Ramsey\Uuid\Uuid;
+
 
 class IndividualsImport implements ToModel,WithValidation, WithHeadingRow, WithBatchInserts, WithChunkReading
 {

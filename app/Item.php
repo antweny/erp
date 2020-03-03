@@ -95,7 +95,7 @@ class Item extends BaseModel
      */
     static function quantity_greater_than_zero()
     {
-        $items = Item::select('id','name')->get();
+        $items = Item::select('id','name')->where('quantity','>',0)->orderBy('name','asc')->get();
 
         return $items;
     }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportRequest;
+use App\Imports\PositionImport;
 use App\Position;
 use App\Title;
 use App\Http\Requests\PositionRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PositionController extends Controller
 {
@@ -107,6 +110,24 @@ class PositionController extends Controller
             return $this->errorReturn();
         }
     }
+
+    /*
+     * Import Data from Excel
+     */
+    public function import (ImportRequest $request)
+    {
+        $this->can_create($this->model());
+        //try {
+            Excel::import(new PositionImport,request()->file('imported_file'));
+            return back()->with('success','Individual Positions imported successfully!');
+        //}
+        //catch (\Exception $e){
+          //  return redirect()->route('positions.index')->with('error',$e->getMessage());
+            //return $this->errorReturn($e);
+        //}
+    }
+
+
 
     /*
      * Check if resource exist get ID if not create and get ID

@@ -10,7 +10,7 @@
                         <h4 class="header-title">Event Categories</h4>
                     </div>
                     <div class="float-right">
-                        <a class="btn btn-primary" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
+                        <a class="btn btn-success" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
 
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                     <tr class="text-white">
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>

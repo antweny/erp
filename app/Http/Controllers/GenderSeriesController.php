@@ -14,7 +14,7 @@ class GenderSeriesController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
+        $this->middleware('auth:admin');
     }
 
     /**
@@ -24,7 +24,7 @@ class GenderSeriesController extends Controller
     {
         $this->can_read($this->model());
         try {
-            $genders = GenderSeries::with('individual','employee')->get();
+            $genders = GenderSeries::with('individual','employee')->withCount('participants')->get();
             return view('events.genderSeries.index',compact('genders'));
         }
         catch (\Exception $e) {
@@ -101,6 +101,22 @@ class GenderSeriesController extends Controller
         try {
             $this->getID($id)->delete();
             return back()->with('success','Gender Series topic has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
+
+
+    /*
+     * UpdateAdd user participation
+     */
+    public function participant_form($id)
+    {
+        $this->can_update($this->model());
+        try{
+            $genderSeries = $this->getID($id);
+            return view('participants.genderSeries.participant_form',compact('genderSeries'));
         }
         catch (\Exception $e) {
             return $this->errorReturn();

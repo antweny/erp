@@ -99,7 +99,8 @@ class ItemController extends Controller
     */
     public function import (ImportRequest $request)
     {
-        $this->can_import($this->model());
+        $this->can_create($this->model());
+
         Excel::import(new ItemsImport,request()->file('imported_file'));
         return back()->with('success','Items imported successfully!');
     }

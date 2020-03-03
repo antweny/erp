@@ -8,14 +8,14 @@
                 <h1 class="h4">Events List</h1>
             </div>
             <div class="float-right">
-                <a class="btn btn-primary" href="{{route('employee.events.create')}}" title="create"><i class="fa fa-plus"></i> New Event</a>
+                <a class="btn btn-success" href="{{route('employee.events.create')}}" title="create"><i class="fa fa-plus"></i> New Event</a>
             </div>
         </div>
         <div class="card-body">
             @include('alerts._flash')
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
-                    <thead class="text-uppercase text-center bg-blue">
+                    <thead class="text-uppercase text-center">
                         <tr class="text-white">
                             <th scope="col">Event name</th>
                             <th scope="col">Category</th>

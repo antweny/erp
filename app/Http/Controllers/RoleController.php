@@ -22,6 +22,12 @@ class RoleController extends Controller
      */
     public function index()
     {
+        /*$role = Role::where('name','superAdmin')->first();
+        $permissions = Permission::get();
+        foreach ($permissions as $permission)
+        {
+            $role->givePermissionTo($permission);
+        }*/
         try {
             return view('security.roles.index');
         }

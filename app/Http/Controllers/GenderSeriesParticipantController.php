@@ -17,13 +17,13 @@ class GenderSeriesParticipantController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
+        $this->middleware('auth:admin',['only'=> ['index','store','create','show','edit','update','destroy']]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(GenderSeriesParticipant $genderSeriesParticipant)
+    public function index()
     {
         $this->can_read($this->model());
         try {
@@ -50,7 +50,6 @@ class GenderSeriesParticipantController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -63,6 +62,21 @@ class GenderSeriesParticipantController extends Controller
         }
         catch (\Exception $e) {
             return back()->with('error','This user already attended this event')->withInput($request->input());
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function show($id)
+    {
+        $this->can_read($this->model());
+        try {
+            $genderParticipants = GenderSeriesParticipant::with('individual','organization','gender_series')->where('gender_series_id',$id)->get();
+            return view('participants.genderSeries.index', compact('genderParticipants'));
+        }
+        catch (\Exception $e) {
+            abort(404);
         }
     }
 

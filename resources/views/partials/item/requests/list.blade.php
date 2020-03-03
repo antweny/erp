@@ -1,7 +1,7 @@
 @foreach ($itemRequests as $itemRequest)
     <tr>
         <td class="text-center">{{$itemRequest->created_at}}</td>
-        <td class="text-left">{{$itemRequest->item->name}}</td>
+        <td class="text-center">{{$itemRequest->item->name}}</td>
         <td class="text-center">{{$itemRequest->required}}</td>
         <td class="text-center">{{$itemRequest->quantity}}</td>
         <td class="text-center">{!! $itemRequest->item_status!!}</td>

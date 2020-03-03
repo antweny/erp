@@ -34,9 +34,16 @@
                             <td class="text-center">{{ $gender->employee->full_name }}</td>
                             <td class="text-center">{{ $gender->individual->full_name }}</td>
                             <td class="text-center">{{ get_day_month_and_year($gender->date) }}</td>
-                            <td class="text-center">{{ $gender->gender_participant_count }}</td>
+                            <td class="text-center">
+                                <a href="{{route('genderSeriesParticipants.show',$gender->id)}}" title="View Participants">
+                                    {{ $gender->participants_count }}
+                                </a>
+                            </td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
+                                    <a class="btn btn-warning text-white btn-sm mr-2 " href="{{route('genderSeries.participants',$gender->id)}}" title="Add Participant">
+                                        <i class="fa fa-user-plus"></i>
+                                    </a>
                                     @if(checkPermission('genderSeries-update'))
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('genderSeries.edit',$gender->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>

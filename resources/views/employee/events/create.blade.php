@@ -10,7 +10,7 @@
                   <h4 class="header-title">New Event</h4>
                </div>
                <div class="float-right">
-                  <a class="btn btn-primary" href="{{route('employee.events.index')}}" title="create"><i class="fa fa-list mr-1"></i> view events</a>
+                  <a class="btn btn-warning text-white" href="{{route('employee.events.index')}}" title="create"><i class="fa fa-list mr-1"></i> view events</a>
                </div>
             </div>
             <div class="card-body">

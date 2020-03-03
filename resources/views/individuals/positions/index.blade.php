@@ -9,6 +9,7 @@
             </div>
             <div class="float-right">
                 @can('position-create')
+                    <a class="btn btn-dark mr-2 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="{{route('positions.create')}}" title="create"><i class="fa fa-plus"></i> New Position</a>
                 @endcan
             </div>
@@ -60,5 +61,38 @@
             </div>
         </div>
     </div>
+
+    @can('position-create')
+        <!-- start create new permission form modal -->
+        <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Import Positions</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{route('positions.import')}}" class="form-horizontal" enctype="multipart/form-data" >
+                        @csrf
+                        <div class="modal-body">
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 control-label">Choose file..</label>
+                                <div class="col-md-8">
+                                    <input type="file" class="form-control @error('imported_file') is-invalid @enderror" name="imported_file" value="{{old('imported_file')}}" required placeholder="name">
+                                    @error('imported_file')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end create new permission form modal -->
+    @endcan
 
 @endsection

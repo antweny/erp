@@ -15,6 +15,8 @@ class Employee extends Authenticatable
     use Uuids;
     use HasRoles;
     use LogsActivity;
+
+    protected $guard = 'employee';
     /**
      * The attributes that are mass assignable.
      */

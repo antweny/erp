@@ -202,6 +202,7 @@ Route::prefix('events/')->group(function () {
         Route::get('edit/{id}', 'GenderSeriesController@edit')->name('genderSeries.edit');
         Route::put('update/{id}', 'GenderSeriesController@update')->name('genderSeries.update');
         Route::delete('delete/{id}', 'GenderSeriesController@destroy')->name('genderSeries.destroy');
+        Route::get('participant/create/{id}', 'GenderSeriesController@participant_form')->name('genderSeries.participants');
     });
 
     // Gender series topics (GDSS) participants routes
@@ -209,6 +210,7 @@ Route::prefix('events/')->group(function () {
         Route::get('/', 'GenderSeriesParticipantController@index')->name('genderSeriesParticipants.index');
         Route::get('create', 'GenderSeriesParticipantController@create')->name('genderSeriesParticipants.create');
         Route::post('store', 'GenderSeriesParticipantController@store')->name('genderSeriesParticipants.store');
+        Route::get('show/{id}', 'GenderSeriesParticipantController@show')->name('genderSeriesParticipants.show');
         Route::get('edit/{id}', 'GenderSeriesParticipantController@edit')->name('genderSeriesParticipants.edit');
         Route::put('update/{id}', 'GenderSeriesParticipantController@update')->name('genderSeriesParticipants.update');
         Route::delete('delete/{id}', 'GenderSeriesParticipantController@destroy')->name('genderSeriesParticipants.destroy');
@@ -411,6 +413,7 @@ Route::prefix('individual')->group(function (){
         Route::get('edit/{id}', 'PositionController@edit')->name('positions.edit');
         Route::put('update/{id}', 'PositionController@update')->name('positions.update');
         Route::delete('delete/{id}', 'PositionController@destroy')->name('positions.destroy');
+        Route::post('positions/import', 'PositionController@import')->name('positions.import');
     });
 
     
@@ -463,6 +466,9 @@ Route::prefix('organization/')->group (function () {
 
 
 
+/*
+ * EMPLOYEE PORTAL
+ */
 
 
 /*
@@ -470,7 +476,16 @@ Route::prefix('organization/')->group (function () {
  */
 Route::namespace('Employee')->prefix('employee/')->name('employee.')->group (function () {
        //Item Store Request
-        Route::resource('itemRequests', 'ItemRequestController')->except('create,show');
+        Route::prefix('store/request')->group (function (){
+            Route::get('index', 'ItemRequestController@index')->name('itemRequests.index');
+            Route::post('store', 'ItemRequestController@store')->name('itemRequests.store');
+            Route::get('edit/{id}', 'ItemRequestController@edit')->name('itemRequests.edit');
+            Route::put('update/{id}', 'ItemRequestController@update')->name('itemRequests.update');
+            Route::delete('delete/{id}', 'ItemRequestController@destroy')->name('itemRequests.destroy');
+
+        });
+
+
         //Events Management Routes
         Route::resource('eventCategories', 'EventCategoryController')->except('create','show','destroy');
         Route::resource('events', 'EventController')->except('show','destroy');

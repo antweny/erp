@@ -72,7 +72,9 @@ class ItemRequestPolicy
         {
             return $employee->id === $itemRequest->employee_id;
         }
-        else { return false; }
+        else {
+            return false;
+        }
     }
 
 }

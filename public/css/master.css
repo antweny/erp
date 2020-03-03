@@ -114,7 +114,6 @@ html , body{
 /*
  * Form Styling
  */
-
 .label {
     display: block;
     position: relative;
@@ -126,7 +125,7 @@ html , body{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    line-height: 1.3rem;
+    line-height: 1.0rem;
 }
 /*required fields*/
 .star { color: red; }
@@ -267,9 +266,11 @@ main {
     font-size: 16px;
 }
 #sidebar .nav > .nav-item > .active,
-#sidebar .nav > .nav-item > .nav-link:hover {
+#sidebar .nav > .nav-item > .nav-link:hover,
+.nav-item .collapse-item:hover{
     background: #0866C6;
     color:white;
+    text-decoration: none;
 }
 #sidebar .nav > .nav-item > .nav-link i{
     font-size:16px;
@@ -277,6 +278,16 @@ main {
     margin-right: 8px;
     text-align: center;
 }
+.nav-item .collapse {
+    background: gray;
+}
+.nav-item .collapse-item {
+    display:block;
+    padding: 10px 0px 10px 40px;
+    color:#fff;
+    font-size: 12px;
+}
+
 
 /*Styling dropdowns*/
 a[data-toggle="collapse"] {

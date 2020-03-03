@@ -52,6 +52,11 @@ class GenderSeries extends BaseModel
         return $this->belongsTo(Employee::class,'coordinator')->withDefault();
     }
 
+    public function participants()
+    {
+        return $this->hasMany(GenderSeriesParticipant::class);
+    }
+
     /*
      * Get Name and ID
      */

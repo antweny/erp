@@ -56,4 +56,12 @@ class Controller extends BaseController
         return $this->authorize('import',$model);
     }
 
+    /*
+    * If user can import resources
+    */
+    public function can_manage($model,$data)
+    {
+        return $this->authorize('manage',[$model,$data]);
+    }
+
 }

@@ -13,28 +13,15 @@ class ItemRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ItemRequest $itemRequest)
+    public function index()
     {
         try {
-            $itemRequests = $itemRequest->where('employee_id',currentLogged()->id)->latest()->with('employee','item')->get();
-            return view('employee.store.index',compact('itemRequests'));
+            $itemRequests =ItemRequest::where('employee_id',currentLogged()->id)->latest()->with('employee','item')->get();
+            $items = Item::quantity_greater_than_zero(); //Get List of items
+            return view('employee.store.index',compact('itemRequests','items'));
         }
         catch (\Exception $e) {
             abort(404);
-        }
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(ItemRequest $itemRequest)
-    {
-        try {
-            return $this->populate(__FUNCTION__,$itemRequest);
-        }
-        catch (\Exception $e) {
-            return $this->errorReturn();
         }
     }
 
@@ -47,9 +34,6 @@ class ItemRequestController extends Controller
         $request['status'] = 'O';
         DB::beginTransaction();
         try {
-            //dd($request->only('employee_id'));
-            //$this->decrement_item_quantity($request);    //Reduced quantity number on item on issuee
-
             $itemRequest->create($request->all());
             DB::commit();
             return back()->with('success','Item Request has been added');
@@ -68,7 +52,7 @@ class ItemRequestController extends Controller
         try {
             $itemRequest = $this->getID($id);
 
-            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
+            $this->can_manage($this->model(),$itemRequest);   //Check Manage his ony contet
 
             return $this->populate(__FUNCTION__, $itemRequest);
         }
@@ -87,7 +71,7 @@ class ItemRequestController extends Controller
         try {
             $itemRequest = $this->getID($id); //Get delatis of updating item received
 
-            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
+            $this->can_manage($this->model(),$itemRequest);   //Check Manage his ony contet
 
             $itemRequest->update($request->all());
             DB::commit();
@@ -108,7 +92,9 @@ class ItemRequestController extends Controller
         try {
             $itemRequest = $this->getID($id);
 
-            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check User content
+            dd($itemRequest);
+
+            $this->authorize('manage',[$this->model(),$itemRequest]);   //Check Manage his ony contet
 
             //Update the Item Table
             $this->increment_item_quantity($itemRequest->item_id,$itemRequest->quantity);
@@ -196,5 +182,7 @@ class ItemRequestController extends Controller
     {
         return redirect()->route('employee.itemRequests.index')->with('error',$e->getMessage());
     }
+
+
 
 }

@@ -19,13 +19,13 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center">
                         <tr class="text-white">
-                            <th scope="col">Date Issued</th>
+                            <th scope="col">Date Requested</th>
                             <th scope="col">Item Name</th>
                             <th scope="col">Required</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Status</th>
                             <th scope="col">Request By</th>
-                            <th scope="col">Date Request</th>
+                            <th scope="col">Issued Date</th>
                             <th scope="col" >Action</th>
                         </tr>
                     </thead>

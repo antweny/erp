@@ -23,7 +23,6 @@
             <span>Events</span>
         </a>
         <div id="eventManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class=" py-2 collapse-inner ">
                 <a class="collapse-item" href="{{route('employee.eventCategories.index')}}">
                     <i class="fa fa-list-alt"></i>
                     Event Categories
@@ -32,7 +31,7 @@
                     <i class="fa fa-calendar"></i>
                     Events
                 </a>
-            </div>
+
         </div>
     </li>
 

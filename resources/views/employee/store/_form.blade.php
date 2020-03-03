@@ -30,11 +30,7 @@
 </div>
 
 
-<div class="form-group row">
-    <div class="col-md-12">
-        <input type="hidden" name="employee_id"  value="{{currentLogged()->id}}" required></input>
-    </div>
-</div>
+
 
 
 <div class="form-group row justify-content-center">
