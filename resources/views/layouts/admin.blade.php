@@ -19,7 +19,7 @@
 <body>
     @include('layouts.includes.topBar')
 
-    <div class="container-fluid pt-5" style="margin-top: 110px;">
+    <div class="container-fluid pt-5" style="margin-top: 50px;">
         <!-- Main Content Section -->
             @yield('content')
     </div>

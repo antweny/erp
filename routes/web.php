@@ -464,12 +464,39 @@ Route::prefix('organization/')->group (function () {
     
 });
 
+/*
+ * Support Management System
+ */
+Route::prefix('support/')->group (function () {
+    //Organization default
+    Route::get('/','DashboardController@support')->name('supports');
+
+//Organization Sector Fields
+    Route::prefix('ticket/categories')->group (function () {
+        Route::get('/', 'TicketCategoryController@index')->name('ticketCategories.index');
+        Route::post('store', 'TicketCategoryController@store')->name('ticketCategories.store');
+        Route::get('edit/{id}', 'TicketCategoryController@edit')->name('ticketCategories.edit');
+        Route::put('update/{id}', 'TicketCategoryController@update')->name('ticketCategories.update');
+        Route::delete('delete/{id}', 'TicketCategoryController@destroy')->name('ticketCategories.destroy');
+    });
+
+    Route::prefix('ticket/')->group (function () {
+        Route::get('/', 'TicketController@index')->name('tickets.index');
+        Route::get('create', 'TicketController@create')->name('tickets.create');
+        Route::post('store', 'TicketController@store')->name('tickets.store');
+        Route::get('edit/{id}', 'TicketController@edit')->name('tickets.edit');
+        Route::put('update/{id}', 'TicketController@update')->name('tickets.update');
+        Route::delete('delete/{id}', 'TicketController@destroy')->name('tickets.destroy');
+    });
+
+});
+
+
 
 
 /*
  * EMPLOYEE PORTAL
  */
-
 
 /*
  * Employee Web Guard Routes
@@ -484,7 +511,6 @@ Route::namespace('Employee')->prefix('employee/')->name('employee.')->group (fun
             Route::delete('delete/{id}', 'ItemRequestController@destroy')->name('itemRequests.destroy');
 
         });
-
 
         //Events Management Routes
         Route::resource('eventCategories', 'EventCategoryController')->except('create','show','destroy');

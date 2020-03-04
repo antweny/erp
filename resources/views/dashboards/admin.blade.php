@@ -77,7 +77,18 @@
                     </div>
                 </a>
             </div>
+
+            <div class="col-sm-4 col-md-3">
+                <a href="{{route('supports')}}" class="sub-menu-link bg-chocolate">
+                    <div>
+                        <i class="fa fa-headset"></i>
+                        <span>Support</span>
+                    </div>
+                </a>
+            </div>
         @endrole
+
+
 
 
     </div>

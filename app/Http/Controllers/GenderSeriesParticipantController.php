@@ -17,7 +17,7 @@ class GenderSeriesParticipantController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','show','edit','update','destroy']]);
+        $this->middleware('auth:admin');
     }
 
     /**

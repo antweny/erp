@@ -1,5 +1,5 @@
 html , body{
-    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-family:Cambria,Georgia,serif;;
     color: #212529;
     height:100%;
     background: url("../img/atmosphere.jpg");
@@ -18,6 +18,7 @@ html , body{
 .bg-pink {border-color:deeppink; background:deeppink; }
 .bg-maroon {border-color:maroon; background:maroon; }
 .bg-gray {border-color:gray; background:gray; }
+.bg-chocolate {border-color:chocolate; background:chocolate; }
 
 
 /* ====================
@@ -240,7 +241,7 @@ main {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    background:#212529;
+    background:white;
     transition: all 0.3s;
 }
 #sidebar.active {
@@ -253,7 +254,10 @@ main {
 #sidebar .nav > .nav-item {
     display: block;
     width: 100%;
-    border-top: 1px solid #282d31;
+    padding: 0.5rem 0rem;
+    margin-bottom: -1px;
+    background-color:#fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
 }
 #sidebar .nav > .nav-item > .nav-link {
     display: flex;
@@ -261,15 +265,14 @@ main {
     width: 100%;
     height: 45px;
     padding: 0 15px;
-    color: #868e96;
+    color: #2067b0;
     position: relative;
-    font-size: 16px;
+    font-size: 17px;
 }
 #sidebar .nav > .nav-item > .active,
 #sidebar .nav > .nav-item > .nav-link:hover,
 .nav-item .collapse-item:hover{
-    background: #0866C6;
-    color:white;
+    color:#0866C6;
     text-decoration: none;
 }
 #sidebar .nav > .nav-item > .nav-link i{
@@ -328,7 +331,7 @@ a[data-toggle="collapse"] {
  * Admin Dashboard Menu Navigation
  */
 .sub-menu{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .sub-menu > div {
     padding-left: 10px;
@@ -379,7 +382,7 @@ a[data-toggle="collapse"] {
  */
 .form-control, .dataTables_filter input {
     display: block;
-    padding: 0.65rem 0.75rem;
+    padding: 0.2rem 0.75rem;
     font-size: 0.875rem;
     line-height: 1.25;
     color: #495057;
