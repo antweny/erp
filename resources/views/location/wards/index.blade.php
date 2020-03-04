@@ -85,7 +85,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    @include('partials.districts.dropdown',['value' => null])
+                                    @include('partials.districts.dropdown',['old' => null])
                                 </div>
                             </div>
 

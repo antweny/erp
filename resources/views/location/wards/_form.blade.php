@@ -6,7 +6,7 @@
             @if ($errors->has('name'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('name') }}</strong></span>@endif
         </div>
         <div class="col-md-6">
-            @include('partials.districts.dropdown',['value' => $ward->district_id])
+            @include('partials.districts.dropdown',['old' => $ward->district_id])
         </div>
     </div>
     <div class="form-group row">
