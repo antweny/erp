@@ -75,6 +75,7 @@ class TitleController extends Controller
             return redirect()->route('titles.index')->with('success',' Title has been updated');
         }
         catch (\Exception $e) {
+
             return $this->errorReturn();
         }
     }

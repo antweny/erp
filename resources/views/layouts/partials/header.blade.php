@@ -6,6 +6,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -14,12 +16,14 @@
     <!-- Date Style -->
     <link href="{{ asset('vendor/gijgo/gijgo.min.css') }}" rel="stylesheet">
     <!-- DataTables -->
+    <link href="{{ asset('vendor/DataTables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/DataTables/dataTables.min.css') }}" rel="stylesheet">
+
+
     <!-- Select Dropdown -->
     <link href="{{ asset('vendor/select/select.min.css') }}" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <!-- Custom Style -->
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
 </head>

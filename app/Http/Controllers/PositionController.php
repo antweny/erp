@@ -57,7 +57,15 @@ class PositionController extends Controller
         try {
             //dd($request->all());
             $this->get_select_ids($request);
-            Position::create($request->all());
+
+            if(is_null($request->end_date))
+            {
+                Position::create($request->except('end_date'));
+            }
+            else {
+                Position::create($request->all());
+            }
+
             return back()->with('success','Individual Position has been added');
         }
         catch (\Exception $e) {
@@ -88,7 +96,14 @@ class PositionController extends Controller
         $this->can_update($this->model());
         try {
             $this->get_select_ids($request);
-            $this->getID($id)->update($request->except('city','district','ward','title'));
+
+            if(is_null($request->end_date))
+            {
+                $this->getID($id)->update($request->except('end_date'));
+            }
+            else {
+                $this->getID($id)->update($request->all());
+            }
             return redirect()->route('positions.index')->with('success','Individual Position has been added');
         }
         catch (\Exception $e) {

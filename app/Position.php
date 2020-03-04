@@ -17,6 +17,32 @@ class Position extends BaseModel
     protected static $logName = 'positions';
 
 
+    /*
+     *
+     */
+    public function getStatusAttribute ()
+    {
+        switch ($this->end_date) {
+            case '':
+                return '<span class="status  bg-success text-white">active</span>';
+                break;
+            default:
+                return $this->end_date;
+                break;
+        }
+    }
+
+    public function getDojAttribute ()
+    {
+        switch ($this->start_date) {
+            case '':
+                return '<span class="status  bg-danger text-white">NOT SET</span>';
+                break;
+            default:
+                return get_day_month_and_year($this->start_date);
+                break;
+        }
+    }
 
 
 

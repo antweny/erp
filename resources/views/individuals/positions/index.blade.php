@@ -23,6 +23,8 @@
                         <th scope="col">Fullname</th>
                         <th scope="col">Title</th>
                         <th scope="col">Organization</th>
+                        <th scope="col">JOIN DATE</th>
+                        <th scope="col">End Date</th>
                         <th scope="col">City</th>
                         <th scope="col">District</th>
                         <th scope="col">Ward</th>
@@ -35,6 +37,8 @@
                             <td class="text-left">{{ $position->individual->full_name }}</td>
                             <td class="text-center">{{ $position->title->name }}</td>
                             <td class="text-center">{{ $position->organization->name }}</td>
+                            <td class="text-center">{!! $position->doj !!}</td>
+                            <td class="text-center">{!! $position->status !!}</td>
                             <td class="text-center">{{ $position->city->name }}</td>
                             <td class="text-center">{{ $position->district->name }}</td>
                             <td class="text-center">{{ $position->ward->name }}</td>

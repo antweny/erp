@@ -33,7 +33,7 @@ class CreatePositionsTable extends Migration
 
             $table->date('start_date')->nullable();
 
-            $table->date('end_date')->nullable();
+            $table->date('end_date')->nullable()->default(null);
 
             $table->text('desc')->nullable();
 
