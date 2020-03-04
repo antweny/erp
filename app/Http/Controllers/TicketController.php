@@ -62,6 +62,53 @@ class TicketController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        //$this->can_update($this->model());
+        try{
+            $ticket = $this->getID($id);
+            return $this->populate(__FUNCTION__,$ticket);
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TicketRequest $request,$id)
+    {
+        //$this->can_update($this->model());
+        try {
+            $this->getID($id)->update($request->all()); //Get delatis of updating item received
+            return redirect()->route('tickets.index')->with('success','Ticket Has Been Updated');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        //$this->can_delete($this->model());
+        try {
+            $this->getID($id)->delete(); //Get delatis of updating item received
+            return redirect()->route('tickets.index')->with('success','Ticket has been deleted');
+        }
+        catch (\Exception $e) {
+            return $this->errorReturn();
+        }
+    }
+
+
+
 
     /*
      * Populate dropdowns values from different tables and return to forms
@@ -70,6 +117,23 @@ class TicketController extends Controller
         $categories = TicketCategory::getNameID();
         $data = compact('ticket','categories');
         return view('supports.ticket.'.$function_name , $data);
+    }
+
+    /*
+    * Get requested record ID
+    */
+    public function getID($id)
+    {
+        $data = Ticket::findOrFail($id);
+        return $data;
+    }
+
+    /*
+     * Initialize the controller model class
+     */
+    public function model ()
+    {
+        return Ticket::class;
     }
 
     /*
