@@ -1,5 +1,8 @@
-@include('layouts.includes.header')
-    <!-- Sidebar -->
+@include('layouts.partials.header')
+@include('layouts.partials.topBar')
+
+
+<!-- Sidebar -->
     <nav id="sidebar">
         <ul class="nav" id="accordionSidebar" >
             <!-- Nav Item - Dashboard -->
@@ -60,6 +63,23 @@
         </ul>
     </nav>
     <!-- end sidebar -->
-@include('layouts.includes.footer')
+
+    @include('layouts.partials.toggle')
+
+
+    <!-- Page Title -->
+
+    <div class="pagetitle-icon">
+        <i class="fa fa-store"></i>
+    </div>
+    <div class="pagetitle-title">
+        <h2>Store Management</h2>
+    </div>
+
+    <!-- end pagetitle-left-title -->
+
+
+    @include('layouts.partials.footer')
+
 
 

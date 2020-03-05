@@ -2,6 +2,6 @@
 @section('title','Human Resource Management')
 @section('content')
 
-    event dashboard management
+    event dashboard managem
 
 @endsection

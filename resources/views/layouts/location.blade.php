@@ -1,4 +1,5 @@
-@include('layouts.includes.header')
+@include('layouts.partials.header')
+@include('layouts.partials.topBar')
 
         <!-- Sidebar -->
         <nav id="sidebar">
@@ -62,6 +63,22 @@
         </nav>
         <!-- end sidebar -->
 
-@include('layouts.includes.footer')
+        @include('layouts.partials.toggle')
+
+
+        <!-- Page Title -->
+
+        <div class="pagetitle-icon">
+            <i class="fa fa-map-marked-alt"></i>
+        </div>
+        <div class="pagetitle-title">
+            <h2>Location Managemet</h2>
+        </div>
+
+        <!-- end pagetitle-left-title -->
+
+
+        @include('layouts.partials.footer')
+
 
 

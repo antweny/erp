@@ -17,7 +17,7 @@
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
 </head>
 <body>
-    @include('layouts.includes.topBar')
+    @include('layouts.partials.topBar')
 
     <div class="container-fluid pt-5" style="margin-top: 50px;">
         <!-- Main Content Section -->

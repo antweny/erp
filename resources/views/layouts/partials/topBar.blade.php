@@ -24,3 +24,7 @@
     </nav>
     <!--/.Navbar -->
 </header>
+
+<!-- Start Main Content Style -->
+<main>
+    <div class="wrapper">

@@ -1,4 +1,7 @@
-@include('layouts.includes.header')
+@include('layouts.partials.header')
+@include('layouts.partials.topBar')
+
+
 <!-- Sidebar -->
 <nav id="sidebar">
     <ul class="nav" id="accordionSidebar" >
@@ -56,11 +59,27 @@
         @endcan
 
 
-
-
     </ul>
 </nav>
-<!-- end sidebar -->
-@include('layouts.includes.footer')
+
+    @include('layouts.partials.toggle')
+
+
+    <!-- Page Title -->
+
+    <div class="pagetitle-icon">
+        <i class="fa fa-users"></i>
+    </div>
+    <div class="pagetitle-title">
+        <h2>Individuals Management</h2>
+    </div>
+
+    <!-- end pagetitle-left-title -->
+
+
+    @include('layouts.partials.footer')
+
+
+
 
 
