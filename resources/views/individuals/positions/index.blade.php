@@ -20,7 +20,8 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                     <thead class="text-uppercase text-center bg-blue">
                     <tr class="text-white">
-                        <th scope="col">Fullname</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Mobile</th>
                         <th scope="col">Title</th>
                         <th scope="col">Organization</th>
                         <th scope="col">JOIN DATE</th>
@@ -35,6 +36,7 @@
                     @foreach ($positions as $position)
                         <tr>
                             <td class="text-left">{{ $position->individual->full_name }}</td>
+                            <td class="text-left">{{ $position->individual->mobile }}</td>
                             <td class="text-center">{{ $position->title->name }}</td>
                             <td class="text-center">{{ $position->organization->name }}</td>
                             <td class="text-center">{!! $position->doj !!}</td>
