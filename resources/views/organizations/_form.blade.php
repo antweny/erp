@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-6">
         <label class="col-form-label">Contact Person Number</label>
-        <input type="number" name="contact_person_number" id="contact_person_number" class="form-control @error('contact_person_number') is-invalid @enderror" value="{{old('contact_person_number',$organization->contact_person_number)}}" />
+        <input type="text" name="contact_person_number" id="contact_person_number" class="form-control @error('contact_person_number') is-invalid @enderror" value="{{old('contact_person_number',$organization->contact_person_number)}}" />
         @error('contact_person_number')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
 
