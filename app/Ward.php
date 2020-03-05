@@ -18,15 +18,15 @@ class Ward extends BaseModel
      * ------------------------------------------*/
     protected static $logName = 'wards';
 
-    /* --------------------
-     * Route model binding
-     * --------------------*/
-    public function getRouteKeyName()
+
+    /* ------------------
+     * Mutator Functions
+     * ------------------*/
+    public function setNameAttribute($value)
     {
-        return 'slug';
+        $this->attributes['name'] = ucwords($value);
+        $this->attributes['slug'] = Str::slug($value, '-');
     }
-
-
 
 
     /* ---------------------

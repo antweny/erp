@@ -92,7 +92,7 @@ class PositionImport implements  ToModel,WithValidation, WithHeadingRow, WithBat
     public function ward($request)
     {
         $name = new Ward();
-        return $name->get_id(ucwords(strtolower($request)));
+        return $name->get_id($request);
 
     }
     public function street($request)

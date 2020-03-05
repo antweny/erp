@@ -16,8 +16,7 @@ class CreateWardsTable extends Migration
         Schema::create('wards', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
-
-
+            $table->string('slug')->unique();
             $table->uuid('district_id')->nullable();
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('set null')->onUpdate('cascade');
 
