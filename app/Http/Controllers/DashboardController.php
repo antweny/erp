@@ -19,6 +19,7 @@ class DashboardController extends Controller
      */
     public function admin()
     {
+        abort(500);
         return view('dashboards.admin');
     }
 
