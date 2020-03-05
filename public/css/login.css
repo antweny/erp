@@ -74,3 +74,22 @@ html , body{
     padding: 20px;
     background-color: #f8f9fa;
 }
+
+/*
+ * ERROR PAGES
+ */
+.error {
+    text-align: center;
+}
+.error h1 {
+    font-size: 140px;
+}
+.error h5 {
+    font-size: 25px;
+}
+.error p {
+    font-size: 16px;
+    line-height: 2rem;
+    margin-bottom: 30px;
+}
+
