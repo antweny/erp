@@ -23,6 +23,7 @@
                     <thead class="text-uppercase text-center">
                         <tr class="text-white">
                             <th scope="col">Name</th>
+                            <th scope="col">Category</th>
                             <th scope="col">City/Region</th>
                             <th scope="col">District</th>
                             <th scope="col">Ward</th>
@@ -36,6 +37,7 @@
                         @foreach($organizations as $organization)
                             <tr>
                                 <td class="text-left">{{$organization->organization_name}}</td>
+                                <td class="text-left">{{$organization->organization_category->name}}</td>
                                 <td class="text-left">{{$organization->city->name}}</td>
                                 <td class="text-center">{{$organization->district->name}}</td>
                                 <td class="text-center">{{$organization->ward->name}}</td>
