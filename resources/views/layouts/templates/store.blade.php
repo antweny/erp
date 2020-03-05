@@ -6,7 +6,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('store')}}">
                     <i class="fa fa-home"></i>
-                    <span>Store Home</span>
+                    <span>Dashboard</span>
                 </a>
             </li>
             @can('itemCategory-read')

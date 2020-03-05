@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('event')}}">
                 <i class="fa fa-home"></i>
-                <span>Event Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
         @can('eventCategory-read')

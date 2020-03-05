@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('individual')}}">
                 <i class="fa fa-home"></i>
-                <span>Individual Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
 

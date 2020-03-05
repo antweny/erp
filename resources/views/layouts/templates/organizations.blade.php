@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('organization')}}">
                 <i class="fa fa-home"></i>
-                <span>Organization Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
         

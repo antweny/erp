@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('settings')}}">
                 <i class="fa fa-home"></i>
-                <span>Settings Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
         <li class="nav-item">

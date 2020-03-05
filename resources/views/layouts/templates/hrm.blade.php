@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('hrm')}}">
                 <i class="fa fa-home"></i>
-                <span>HRM Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
 

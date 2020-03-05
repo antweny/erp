@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('security')}}">
                 <i class="fa fa-home"></i>
-                <span>Security Home</span>
+                <span>Dashboard</span>
             </a>
         </li>
 
