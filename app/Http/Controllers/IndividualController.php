@@ -120,7 +120,7 @@ class IndividualController extends Controller
      */
     public function import (ImportRequest $request)
     {
-        $this->authorize('import',$this->model());
+        $this->can_create($this->model());
         try {
             Excel::import(new IndividualsImport,request()->file('imported_file'));
             return back()->with('success','Individual imported successfully!');

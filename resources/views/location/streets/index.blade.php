@@ -8,12 +8,10 @@
                 <h4 class="header-title">List of Streets/Villages</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('street-import'))
+                @can('street-create')
                     <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
-                @endif
-                @if(checkPermission('street-create'))
                     <a class="btn btn-success" href="#newStreet" data-toggle="modal"><i class="fa fa-plus"></i> New street</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -62,7 +60,7 @@
         </div>
     </div>
 
-    @if(checkPermission('street-create'))
+    @can('street-create')
         <!-- start create new district form modal -->
         <div class="modal fade" id="newStreet" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -107,11 +105,7 @@
             </div>
         </div>
         <!-- end create new district form modal -->
-    @endif
 
-
-
-    @if(checkPermission('street-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -142,7 +136,7 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 
 

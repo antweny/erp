@@ -18,7 +18,8 @@ html , body{
 .bg-pink {border-color:deeppink; background:deeppink; }
 .bg-maroon {border-color:maroon; background:maroon; }
 .bg-gray {border-color:gray; background:gray; }
-.bg-chocolate {border-color:chocolate; background:chocolate; }
+.bg-chocolate {border-color:chocolate; background:chocolate;}
+.bg-yellow{border-color:yellow; background:yellow; }
 
 
 /* ====================

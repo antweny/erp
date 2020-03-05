@@ -9,7 +9,7 @@ class DashboardController extends Controller
      */
     function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm','individual','organization','support']]);
+        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm','individual','organization','support','library']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
         $this->middleware('auth:employee',['only'=> ['employee']]);
     }
@@ -101,6 +101,14 @@ class DashboardController extends Controller
     public function support()
     {
         return view('dashboards.supports');
+    }
+
+    /*
+     * Library Management System.
+     */
+    public function library()
+    {
+        return view('dashboards.library');
     }
 
 }

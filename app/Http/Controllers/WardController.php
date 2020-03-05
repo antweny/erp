@@ -99,7 +99,7 @@ class WardController extends Controller
      */
     public function import (ImportRequest $request)
     {
-        $this->can_import($this->model());
+        $this->can_create($this->model());
         Excel::import(new WardImport(), request()->file('imported_file'));
         return back()->with('success','Ward imported successfully!');
     }

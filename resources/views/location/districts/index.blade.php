@@ -8,12 +8,10 @@
                 <h4 class="header-title">List of Districts</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('district-import'))
+                @can('district-create')
                     <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
-                @endif
-                @if(checkPermission('district-create'))
                     <a class="btn btn-success" href="#newDistrict" data-toggle="modal"><i class="fa fa-plus"></i> New district</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -61,7 +59,7 @@
         </div>
     </div>
 
-    @if(checkPermission('district-create'))
+    @can('district-create')
         <!-- start create new city form modal -->
         <div class="modal fade" id="newDistrict" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -108,9 +106,6 @@
         </div>
         <!-- end create new city form modal -->
 
-    @endif
-
-    @if(checkPermission('district-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -141,6 +136,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 @endsection

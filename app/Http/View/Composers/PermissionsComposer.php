@@ -15,6 +15,6 @@ class PermissionsComposer
 {
     public function compose(View $view)
     {
-        $view->with('permissions',Permission::get());
+        $view->with('permissions',Permission::orderBy('name','asc')->get());
     }
 }

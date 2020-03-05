@@ -8,10 +8,8 @@
                 <h4 class="header-title">Organizations</h4>
             </div>
             <div class="float-right">
-                @can('organization-import')
-                    <a class="btn btn-dark mr-3" href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
-                @endcan
                 @can('organization-create')
+                    <a class="btn btn-dark mr-3" href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="{{route('organizations.create')}}"><i class="fa fa-plus"></i> New organization</a>
                 @endcan
             </div>
@@ -67,7 +65,7 @@
     </div>
 
 
-    @can('organization-import')
+    @can('organization-create')
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">

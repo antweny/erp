@@ -96,9 +96,9 @@ class StreetController extends Controller
     /*
      * Import Data from Excel
      */
-    public function import (ImportRequest $request, Street $street)
+    public function import (ImportRequest $request)
     {
-        $this->can_import($this->model());
+        $this->can_create($this->model());
         Excel::import(new StreetImport(), request()->file('imported_file'));
         return back()->with('success','Street imported successfully!');
     }

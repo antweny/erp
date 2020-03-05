@@ -488,6 +488,15 @@ Route::prefix('support/')->group (function () {
         Route::put('update/{id}', 'TicketController@update')->name('tickets.update');
         Route::delete('delete/{id}', 'TicketController@destroy')->name('tickets.destroy');
     });
+});
+
+
+/*
+ * Library Management System
+ */
+Route::prefix('library/')->group (function () {
+    //Organization default
+    Route::get('/','DashboardController@library')->name('library');
 
 });
 

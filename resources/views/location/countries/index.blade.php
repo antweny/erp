@@ -8,10 +8,10 @@
                 <h4 class="header-title">List of Countries</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('country-create'))
+                @can('country-create')
                     <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="#newCountry" data-toggle="modal"><i class="fa fa-plus"></i> New country</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    @if(checkPermission('country-create'))
+    @can('country-create')
         <!-- start create new country form modal -->
         <div class="modal fade" id="newCountry" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -108,6 +108,6 @@
         <!-- end create new permission form modal -->
 
 
-    @endif
+    @endcan
 
 @endsection

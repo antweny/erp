@@ -9,12 +9,10 @@
                 <h4 class="header-title">List of Wards</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('ward-import'))
+                @can('ward-create')
                     <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
-                @endif
-                @if(checkPermission('ward-create'))
                     <a class="btn btn-success" href="#newWard" data-toggle="modal"><i class="fa fa-plus"></i> New ward</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -61,7 +59,7 @@
         </div>
     </div>
 
-    @if(checkPermission('ward-create'))
+    @can('ward-create')
         <!-- start create new district form modal -->
         <div class="modal fade" id="newWard" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -106,9 +104,7 @@
             </div>
         </div>
         <!-- end create new district form modal -->
-    @endif
 
-    @if(checkPermission('ward-import'))
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -139,6 +135,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 @endsection

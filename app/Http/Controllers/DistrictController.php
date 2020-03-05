@@ -115,7 +115,7 @@ class DistrictController extends Controller
      */
     public function import (ImportRequest $request)
     {
-        $this->can_import($this->model());
+        $this->can_create($this->model());
         Excel::import(new DistrictImport(), request()->file('imported_file'));
         return back()->with('success','District imported successfully!');
     }

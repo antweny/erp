@@ -113,9 +113,9 @@ class OrganizationController extends Controller
     /*
      *  Import Organization
      */
-    public function import(ImportRequest $request, Organization $organization)
+    public function import(ImportRequest $request)
     {
-        $this->authorize('import',$organization);
+        $this->can_create($this->model());
         Excel::import(new OrganizationImport(), request()->file('imported_file'));
         return back()->with('success','Organization imported successfully!');
     }
