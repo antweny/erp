@@ -41,5 +41,17 @@ class Ward extends BaseModel
         return $this->hasMany(Street::class);
     }
 
+    /*
+    * Get record id
+    */
+    public function getID($data)
+    {
+        if ($data != null) {
+            $model = $this->firstOrCreate(['name'=>$data]);
+            return $model->id;
+        }
+        return null;
+    }
+
 
 }
