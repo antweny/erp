@@ -24,7 +24,7 @@ class Ward extends BaseModel
      * ------------------*/
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = ucwords($value);
+        $this->attributes['name'] = ucwords(strtolower($value));
         $this->attributes['slug'] = Str::slug($value, '-');
     }
 
