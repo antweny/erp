@@ -13,7 +13,7 @@
                     </nav>
                 </div>
                 <div class="float-right">
-                    <div class="bg-maroon" id="clock"></div>
+                    <div  id="clock"></div>
                 </div>
             </div>
         </div>

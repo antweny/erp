@@ -13,6 +13,42 @@
             </a>
         </li>
 
+        @can('author-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('authors.index')}}">
+                    <i class="fa fa-pen"></i>
+                    <span>Authors</span>
+                </a>
+            </li>
+        @endcan
+
+        @can('publisher-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('publishers.index')}}">
+                    <i class="fa fa-print"></i>
+                    <span>Publisher</span>
+                </a>
+            </li>
+        @endcan
+
+        @can('publicationCategory-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('publicationCategories.index')}}">
+                    <i class="fa fa-th-large"></i>
+                    <span>Publication Categories</span>
+                </a>
+            </li>
+        @endcan
+
+        @can('shelf-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('shelves.index')}}">
+                    <i class="fa fa-cabinet-filing"></i>
+                    <span>Library Shelves</span>
+                </a>
+            </li>
+        @endcan
+
     </ul>
 </nav>
 

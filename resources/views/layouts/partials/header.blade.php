@@ -12,7 +12,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- fontawesome icons-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" >
+    <link href="{{ asset('vendor/fontawesome/css/all.css') }}" rel="stylesheet">
     <!-- Date Style -->
     <link href="{{ asset('vendor/gijgo/gijgo.min.css') }}" rel="stylesheet">
     <!-- DataTables -->

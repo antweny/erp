@@ -498,6 +498,43 @@ Route::prefix('library/')->group (function () {
     //Organization default
     Route::get('/','DashboardController@library')->name('library');
 
+    //Book Authors routes
+    Route::prefix('author/')->group (function () {
+        Route::get('/', 'AuthorController@index')->name('authors.index');
+        Route::post('store', 'AuthorController@store')->name('authors.store');
+        Route::get('edit/{id}', 'AuthorController@edit')->name('authors.edit');
+        Route::put('update/{id}', 'AuthorController@update')->name('authors.update');
+        Route::delete('delete/{id}', 'AuthorController@destroy')->name('authors.destroy');
+    });
+
+    //Book Publisher routes
+    Route::prefix('publisher/')->group (function () {
+        Route::get('/', 'PublisherController@index')->name('publishers.index');
+        Route::post('store', 'PublisherController@store')->name('publishers.store');
+        Route::get('edit/{id}', 'PublisherController@edit')->name('publishers.edit');
+        Route::put('update/{id}', 'PublisherController@update')->name('publishers.update');
+        Route::delete('delete/{id}', 'PublisherController@destroy')->name('publishers.destroy');
+    });
+
+    //Publication Category
+    Route::prefix('publication/categories')->group (function () {
+        Route::get('/', 'PublicationCategoryController@index')->name('publicationCategories.index');
+        Route::post('store', 'PublicationCategoryController@store')->name('publicationCategories.store');
+        Route::get('edit/{id}', 'PublicationCategoryController@edit')->name('publicationCategories.edit');
+        Route::put('update/{id}', 'PublicationCategoryController@update')->name('publicationCategories.update');
+        Route::delete('delete/{id}', 'PublicationCategoryController@destroy')->name('publicationCategories.destroy');
+    });
+
+    //Library Shelf
+    Route::prefix('shelf')->group (function () {
+        Route::get('/', 'ShelfController@index')->name('shelves.index');
+        Route::post('store', 'ShelfController@store')->name('shelves.store');
+        Route::get('edit/{id}', 'ShelfController@edit')->name('shelves.edit');
+        Route::put('update/{id}', 'ShelfController@update')->name('shelves.update');
+        Route::delete('delete/{id}', 'ShelfController@destroy')->name('shelves.destroy');
+    });
+    
+    
 });
 
 
