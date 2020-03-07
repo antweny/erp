@@ -49,6 +49,24 @@
             </li>
         @endcan
 
+        @can('genre-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('genres.index')}}">
+                    <i class="fa fa-film"></i>
+                    <span>Genres</span>
+                </a>
+            </li>
+        @endcan
+
+        @can('publication-read')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('publications.index')}}">
+                    <i class="fas fa-books"></i>
+                    <span>Publication</span>
+                </a>
+            </li>
+        @endcan
+
     </ul>
 </nav>
 

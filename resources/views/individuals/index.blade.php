@@ -9,7 +9,7 @@
             </div>
             <div class="float-right">
                 @can('individual-create')
-                        <a class="btn btn-dark mr-2 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
+                    <a class="btn btn-dark mr-2 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="{{route('individuals.create')}}"><i class="fa fa-plus"></i> New individual</a>
                 @endcan
             </div>

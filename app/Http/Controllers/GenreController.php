@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShelfRequest;
-use App\Shelf;
+use App\Genre;
+use App\Http\Requests\GenreRequest;
 use Illuminate\Http\Request;
 
-class ShelfController extends Controller
+class GenreController extends Controller
 {
     /**
      * AdminController constructor.
@@ -23,8 +23,8 @@ class ShelfController extends Controller
     {
         $this->can_read($this->model());
         try {
-            $shelves = Shelf::get();
-            return view('library.shelves.index',compact('shelves'));
+            $genres = Genre::get();
+            return view('library.genres.index',compact('genres'));
         }
         catch (\Exception $e) {
             abort(404);
@@ -34,12 +34,12 @@ class ShelfController extends Controller
     /**
      * Store a newly created resource in storage.e
      */
-    public function store(ShelfRequest $request)
+    public function store(GenreRequest $request)
     {
         $this->can_create($this->model());
         try {
-            Shelf::create($request->all());
-            return back()->with('success','Shelf has been saved');
+            Genre::create($request->all());
+            return back()->with('success','Genre has been saved');
         }
         catch (\Exception $e) {
             return back()->with('error','something went Wrong');
@@ -53,8 +53,8 @@ class ShelfController extends Controller
     {
         $this->can_update($this->model());
         try {
-            $shelf = $this->getID($id);
-            return view('library.shelves.edit',compact('shelf'));
+            $genre = $this->getID($id);
+            return view('library.genres.edit',compact('genre'));
         }
         catch (\Exception $e) {
             return back()->with('error','something went Wrong');
@@ -64,12 +64,12 @@ class ShelfController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ShelfRequest $request, $id)
+    public function update(GenreRequest $request, $id)
     {
         $this->can_update($this->model());
         try {
             $this->getID($id)->update($request->all());
-            return redirect()->route('shelves.index')->with('success',' Shelf has been updated.');
+            return redirect()->route('genres.index')->with('success',' Genre has been updated.');
         }
         catch (\Exception $e) {
             return redirect()->route('countries.index')->with('error','something went Wrong')->withInput($request->all());
@@ -84,7 +84,7 @@ class ShelfController extends Controller
         $this->can_delete($this->model());
         try {
             $this->getID($id)->delete();
-            return back()->with('success','Shelf has been deleted');
+            return back()->with('success','Genre has been deleted');
         }
         catch (\Exception $e) {
             return back()->with('error','something went Wrong');
@@ -95,7 +95,7 @@ class ShelfController extends Controller
      */
     public function getID($id)
     {
-        $data = Shelf::findOrFail($id);
+        $data = Genre::findOrFail($id);
         return $data;
     }
 
@@ -104,7 +104,7 @@ class ShelfController extends Controller
      */
     public function model ()
     {
-        return Shelf::class;
+        return Genre::class;
     }
 
 }

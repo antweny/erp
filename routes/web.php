@@ -526,15 +526,36 @@ Route::prefix('library/')->group (function () {
     });
 
     //Library Shelf
-    Route::prefix('shelf')->group (function () {
+    Route::prefix('shelf/')->group (function () {
         Route::get('/', 'ShelfController@index')->name('shelves.index');
         Route::post('store', 'ShelfController@store')->name('shelves.store');
         Route::get('edit/{id}', 'ShelfController@edit')->name('shelves.edit');
         Route::put('update/{id}', 'ShelfController@update')->name('shelves.update');
         Route::delete('delete/{id}', 'ShelfController@destroy')->name('shelves.destroy');
     });
-    
-    
+
+    //Book Genres
+    Route::prefix('genres/')->group (function () {
+        Route::get('/', 'GenreController@index')->name('genres.index');
+        Route::post('store', 'GenreController@store')->name('genres.store');
+        Route::get('edit/{id}', 'GenreController@edit')->name('genres.edit');
+        Route::put('update/{id}', 'GenreController@update')->name('genres.update');
+        Route::delete('delete/{id}', 'GenreController@destroy')->name('genres.destroy');
+    });
+
+    //Books Publication
+    Route::prefix('publications/')->group (function () {
+        Route::get('index', 'PublicationController@index')->name('publications.index');
+        Route::get('create', 'PublicationController@create')->name('publications.create');
+        Route::post('store', 'PublicationController@store')->name('publications.store');
+        Route::get('edit/{id}', 'PublicationController@edit')->name('publications.edit');
+        Route::put('update/{id}', 'PublicationController@update')->name('publications.update');
+        Route::delete('delete/{id}', 'PublicationController@destroy')->name('publications.destroy');
+        Route::post('import', 'PublicationController@import')->name('publications.import');
+    });
+
+
+
 });
 
 
