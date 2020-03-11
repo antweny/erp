@@ -78,7 +78,6 @@ function date_difference($start_date,$end_date)
     else {
         echo $months->format('%m months');
     }
-
 }
 
 /*
@@ -89,7 +88,6 @@ function calculate_age ($date)
     if ($date != null){
         $dob = new DateTime($date);
         $today = new DateTime(date('Y-m-d'));
-
         return $today->diff($dob);
     }
     else {
@@ -97,8 +95,28 @@ function calculate_age ($date)
     }
 }
 
+/*
+ * Multiply two numbers
+ */
 function multiply_two_numbers ($num1, $num2)
 {
     return $num1 * $num2;
+}
+
+/*
+ * Remove Strings from dates
+ */
+function remove_charater_from_date ($date)
+{
+    $dt = array();
+    if(!empty($date)) {
+        foreach ($date as $tarehe){
+            $date = str_replace('"','',$tarehe);
+            $dt[] = Carbon::parse($date)->format('d M Y');
+        }
+        //dd($dt);
+        return $dt;
+    }
+
 }
 

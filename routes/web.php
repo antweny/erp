@@ -175,7 +175,7 @@ Route::prefix('location/')->group (function () {
 Route::prefix('events/')->group(function () {
 
     //Events Routes
-    Route::get('/','DashboardController@event')->name('event');
+    Route::get('/','EventDashboardController@index')->name('event');
 
     //Event categories routes
     Route::prefix('categories/')->group(function () {

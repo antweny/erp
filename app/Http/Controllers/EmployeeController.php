@@ -19,7 +19,6 @@ class EmployeeController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['employeeLogin','resetPasswordForm','update_employee_roles_form','']]);
     }
 

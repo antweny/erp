@@ -81,7 +81,4 @@
         });
     </script>
 
-
-
-
 @endsection

@@ -13,21 +13,21 @@ class IndividualDashboardController extends Controller
      */
     public function index()
     {
-        $gender = $this->get_gender();
+       $gender = $this->get_gender();
         $count_gender = $this->count_gender();
         $age_group = $this->get_age_group();
         $count_age_group = $this->count_age_group();
         return view('individuals.dashboard',compact('gender','count_gender','age_group','count_age_group'));
     }
 
-    //Get Individual Gender name
+    //Get User Gender name
     function get_gender ()
     {
         $gender = Individual::select('gender')->groupBy('gender')->orderBy('gender','desc')->pluck('gender');
         return $gender;
     }
 
-    //Count Individual by gender
+    //Count user  by gender
     function count_gender()
     {
         $gender = $this->get_gender();
@@ -36,9 +36,7 @@ class IndividualDashboardController extends Controller
                 $count[] = Individual::where('gender',$sex)->count();
             }
         }
-        //dd($count);
         return json_encode($count);
-        //return $count;
     }
 
     //Get Individuals Age Groups
@@ -57,10 +55,7 @@ class IndividualDashboardController extends Controller
                 $count[] = Individual::where('age_group',$age_group)->count();
             }
         }
-        //dd($count);
         return json_encode($count);
-        //return $count;
     }
-
 
 }
