@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class GenderSeriesParticipantPolicy
@@ -20,34 +20,34 @@ class GenderSeriesParticipantPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('genderSeriesParticipant-create');
+        return $employee->can('genderSeriesParticipant-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('genderSeriesParticipant-read');
+        return $employee->can('genderSeriesParticipant-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('genderSeriesParticipant-update');
+        return $employee->can('genderSeriesParticipant-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('genderSeriesParticipant-delete');
+        return $employee->can('genderSeriesParticipant-delete');
     }
 }

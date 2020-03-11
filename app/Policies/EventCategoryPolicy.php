@@ -20,34 +20,34 @@ class EventCategoryPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Admin $employee)
     {
-        return $admin->can('eventCategory-create');
+        return $employee->can('eventCategory-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Admin $employee)
     {
-        return $admin->can('eventCategory-read');
+        return $employee->can('eventCategory-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Admin $employee)
     {
-        return $admin->can('eventCategory-update');
+        return $employee->can('eventCategory-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Admin $employee)
     {
-        return $admin->can('eventCategory-delete');
+        return $employee->can('eventCategory-delete');
     }
 }
