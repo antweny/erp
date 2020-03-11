@@ -24,10 +24,11 @@
             data: {
                 labels: {!! $count_gdss->pluck('date') !!},
                 datasets: [{
-                    label: '# Individual By Gender',
+                    label: '# of GDSS Participants',
                     data:{!! $count_gdss->pluck('participants_count') !!},
                 }]
             },
+
             options: {
                 scales: {
                     yAxes: [{
@@ -35,6 +36,10 @@
                             beginAtZero: true,
                         }
                     }]
+                },
+                title: {
+                    display: true,
+                    text: 'GDSS Participants By Dates'
                 },
 
             }
