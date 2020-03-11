@@ -11,10 +11,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    function __construct()
+    /*
+     * Aunthentication Constructor
+     */
+    public function __construct()
     {
+        $this->middleware(['auth:admin,employee']);
     }
-
 
     /*
      * If user can read resources

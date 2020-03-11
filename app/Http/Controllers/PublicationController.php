@@ -17,14 +17,6 @@ use App\Imports\PublicationImport;
 class PublicationController extends Controller
 {
     /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy','import']]);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

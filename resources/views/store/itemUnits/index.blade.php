@@ -7,9 +7,9 @@
                 <h4 class="header-title">Item Units</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('itemUnit-create'))
+                @can('itemUnit-create')
                     <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> New Item Unit</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -32,7 +32,7 @@
     </div>
 
 
-@if(checkPermission('itemUnit-create'))
+@can('itemUnit-create')
     <!-- start create new pillar form modal -->
     <div class="modal fade" id="newRecord" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -70,6 +70,6 @@
         </div>
     </div>
     <!-- end create new pillar form modal -->
-@endif
+@endcan
 
 @endsection

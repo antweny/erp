@@ -11,14 +11,6 @@ use App\District;
 class VenueController extends Controller
 {
     /**
-     * Auth constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy','import']]);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index(Venue $venue)

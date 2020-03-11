@@ -22,7 +22,7 @@ class ParticipantController extends Controller
      */
     function __construct(ParticipantRepository $participant)
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
+        parent::__construct();
         $this->participant = $participant;
     }
 

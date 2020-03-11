@@ -34,6 +34,7 @@
                             <select name="guard_name" class="form-control @error('guard_name') is-invalid @enderror">
                                 <option value="web" {{old('guard_name',$permission->guard_name) == 'web' ? 'selected' : ''}}>web</option>
                                 <option value="admin" {{old('guard_name',$permission->guard_name) == 'admin' ? 'selected' : ''}}>admin</option>
+                                <option value="employee" {{old('guard_name',$permission->guard_name) == 'employee' ? 'selected' : ''}}>employee</option>
                             </select>
                             @error('guard_name')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                         </div>

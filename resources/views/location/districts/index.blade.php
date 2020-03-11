@@ -37,17 +37,17 @@
                                 <td class="text-left">{{$district->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('district-update'))
+                                        @can('district-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('districts.edit',$district['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('district-delete'))
+                                        @can('district-delete')
                                             <form class="form-delete" method="post" action="{{route('districts.destroy',$district['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
 
                                     </div>
                                 </td>

@@ -7,9 +7,9 @@
                 <h4 class="header-title">Items Received</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('itemReceived-create'))
+                @can('itemReceived-create')
                     <a class="btn btn-success" href="{{route('itemReceived.create')}}" ><i class="fa fa-plus"></i> Receive Item</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -42,16 +42,16 @@
                                 <td class="text-center">{{$itemReceived->remarks}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @if(checkPermission('itemReceived-update'))
+                                        @can('itemReceived-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('itemReceived.edit',$itemReceived->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('itemReceived-delete'))
+                                        @endcan
+                                        @can('itemReceived-delete')
                                             <form class="form-delete" method="post" action="{{route('itemReceived.destroy',$itemReceived->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

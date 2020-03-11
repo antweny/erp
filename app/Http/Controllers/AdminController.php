@@ -14,8 +14,9 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      */
-    function __construct()
+    public function __construct()
     {
+        parent::__construct();
         $this->middleware(['auth:admin','role:superAdmin']);
     }
 

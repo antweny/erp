@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Admin Dashboard')
+@section('title','Main Dashboard')
 @section('content')
     <div class="row sub-menu">
 
@@ -96,10 +96,24 @@
             </a>
         </div>
 
+        <div class="col-sm-4 col-md-2">
+            <a href="{{route('library')}}" class="sub-menu-link bg-slateblue">
+                <div>
+                    <i class="fa fa-project-diagram"></i>
+                    <span>Projects Management</span>
+                </div>
+            </a>
+        </div>
 
 
-
-
+        <div class="col-sm-4 col-md-2">
+            <a href="{{route('library')}}" class="sub-menu-link bg-olive">
+                <div>
+                    <i class="fa fa-book-reader"></i>
+                    <span>Monitoring & Evaluation</span>
+                </div>
+            </a>
+        </div>
 
 
     </div>

@@ -15,6 +15,7 @@ class UserController extends Controller
      */
     function __construct()
     {
+        parent::__construct();
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['index','store','create','edit','update','destroy']]);
 
     }

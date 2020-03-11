@@ -37,16 +37,19 @@
                                 <td class="text-center">{{$emphistory->end_date}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('jobHistory-update'))
+
+                                        @can('jobHistory-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('jobHistories.edit',$emphistory['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('jobHistory-update'))
+                                        @endcan
+
+                                        @can('jobHistory-update')
                                             <form class="form-delete" method="post" action="{{route('jobHistories.destroy',$emphistory['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Confirmation?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>

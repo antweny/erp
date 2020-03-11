@@ -18,13 +18,14 @@
     <!-- DataTables -->
     <link href="{{ asset('vendor/DataTables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/DataTables/dataTables.min.css') }}" rel="stylesheet">
-
-
     <!-- Select Dropdown -->
     <link href="{{ asset('vendor/select/select.min.css') }}" rel="stylesheet">
-
+    <!-- Chart JS -->
+    <link href="{{ asset('vendor/ChartJS/css/Chart.min.css') }}" rel="stylesheet">
 
     <!-- Custom Style -->
     <link href="{{ asset('css/master.css') }}" rel="stylesheet">
+
+    @stack('style')
 </head>
 <body>

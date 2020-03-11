@@ -34,16 +34,16 @@
                                 <td class="text-left">{{$educationLevel->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @if(checkPermission('educationLevel-update'))
+                                        @can('educationLevel-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('educationLevels.edit',$educationLevel->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('educationLevel-delete'))
+                                        @endcan
+                                        @can('educationLevel-delete')
                                             <form class="form-delete" method="post" action="{{route('educationLevels.destroy',$educationLevel->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure delete education level {{$educationLevel->name}}?')" title="delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

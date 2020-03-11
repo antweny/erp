@@ -16,7 +16,7 @@ class CreateIndividualsTable extends Migration
         Schema::create('individuals', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('full_name');
-            $table->enum('gender', ['M', 'F'])->nullable();
+            $table->enum('gender', ['Male', 'Female','Not Set'])->nullable()->default('Not Set');
             $table->string('age_group')->nullable();
             $table->string('occupation')->nullable();
 

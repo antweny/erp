@@ -11,13 +11,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OrganizationController extends Controller
 {
-    /**
-     * Authorization constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy','import']]);
-    }
 
     /**
      * Display a listing of the resource.

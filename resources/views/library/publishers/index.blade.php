@@ -38,16 +38,16 @@
                             <td class="text-center">{{$publisher->website}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('publisher-update'))
+                                    @can('publisher-update')
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('publishers.edit',$publisher['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endif
-                                    @if(checkPermission('publisher-delete'))
+                                    @endcan
+                                    @can('publisher-delete')
                                         <form class="form-delete" method="post" action="{{route('publishers.destroy',$publisher['id'])}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

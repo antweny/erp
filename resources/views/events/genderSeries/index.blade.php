@@ -8,9 +8,9 @@
                 <h5>Gender Series Topics (GDSS)</h5>
             </div>
             <div class="float-right">
-                @if(checkPermission('genderSeries-create'))
+                @can('genderSeries-create')
                     <a class="btn btn-success" href="{{route('genderSeries.create')}}" title="create"><i class="fa fa-plus"></i> New Topic</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -44,18 +44,18 @@
                                     <a class="btn btn-warning text-white btn-sm mr-2 " href="{{route('genderSeries.participants',$gender->id)}}" title="Add Participant">
                                         <i class="fa fa-user-plus"></i>
                                     </a>
-                                    @if(checkPermission('genderSeries-update'))
+                                    @can('genderSeries-update')
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('genderSeries.edit',$gender->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endif
-                                    @if(checkPermission('genderSeries-delete'))
+                                    @endcan
+                                    @can('genderSeries-delete')
                                         <form class="form-delete" method="post" action="{{route('genderSeries.destroy',$gender->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$gender->topic}} topic?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

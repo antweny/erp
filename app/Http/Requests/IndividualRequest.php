@@ -33,7 +33,7 @@ class IndividualRequest extends FormRequest
             case 'POST': {
                 return [
                     'full_name' => ['required','string','max:100'],
-                    'gender' => 'nullable|max:5|string',
+                    'gender' => 'nullable|max:10|string',
                     'age_group' => 'nullable|string',
                     'occupation' => ['string','nullable'],
                     'city'=>'nullable|string',
@@ -50,7 +50,7 @@ class IndividualRequest extends FormRequest
             case 'PATCH': {
                 return [
                     'full_name' => ['required','string','max:100'],
-                    'gender' => 'nullable|max:5|string',
+                    'gender' => 'nullable|max:10|string',
                     'age_group' => 'nullable|string',
                     'occupation' => ['string','nullable'],
                     'city'=>'nullable|string',

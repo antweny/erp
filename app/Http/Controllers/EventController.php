@@ -14,13 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
-    /**
-     * Authorization constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
-    }
 
     /**
      * Display a listing of the resource.

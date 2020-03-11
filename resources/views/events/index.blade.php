@@ -8,9 +8,9 @@
                 <h1 class="h4">Event</h1>
             </div>
             <div class="float-right">
-                @if(checkPermission('event-create'))
+                @can('event-create')
                     <a class="btn btn-success" href="{{route('events.create')}}" title="create"><i class="fa fa-plus"></i> New Event</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -42,18 +42,21 @@
                             <td class="text-center p-0">
 
                                 <div class="btn btn-group">
-                                    @if(checkPermission('event-update'))
+
+                                    @can('event-update')
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('events.edit',$event->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endif
-                                    @if(checkPermission('event-delete'))
+                                    @endcan
+
+                                    @can('event-delete')
                                         <form class="form-delete" method="post" action="{{route('events.destroy',$event->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$event->name}} role?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
+
                                 </div>
                             </td>
                         </tr>

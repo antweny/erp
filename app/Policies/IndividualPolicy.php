@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class IndividualPolicy
@@ -20,42 +20,42 @@ class IndividualPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('individual-create');
+        return $employee->can('individual-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('individual-read');
+        return $employee->can('individual-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('individual-update');
+        return $employee->can('individual-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('individual-delete');
+        return $employee->can('individual-delete');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function import(Admin $admin)
+    public function import(Employee $employee)
     {
-        return $admin->can('individual-import');
+        return $employee->can('individual-import');
     }
 }

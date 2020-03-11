@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class ItemReceivedController extends Controller
 {
-    /**
-     * Auth constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','create','store','edit','update','destroy']]);
-    }
 
     /**
      * Display a listing of the resource.

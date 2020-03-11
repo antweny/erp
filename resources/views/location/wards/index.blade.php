@@ -38,17 +38,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @if(checkPermission('ward-update'))
+                                        @can('ward-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('wards.edit',$ward->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('ward-delete'))
+                                        @can('ward-delete')
                                             <form class="form-delete" method="post" action="{{route('wards.destroy',$ward->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

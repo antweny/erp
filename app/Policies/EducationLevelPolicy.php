@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EducationLevelPolicy
@@ -20,34 +20,34 @@ class EducationLevelPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('educationLevel-create');
+        return $employee->can('educationLevel-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('educationLevel-read');
+        return $employee->can('educationLevel-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('educationLevel-update');
+        return $employee->can('educationLevel-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('educationLevel-delete');
+        return $employee->can('educationLevel-delete');
     }
 }

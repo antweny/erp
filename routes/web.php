@@ -339,6 +339,8 @@ Route::prefix('security/')->group(function () {
         Route::get('login/index', 'EmployeeController@employeeLogin')->name('employeeLogin');
         Route::get('reset/password/{id}', 'EmployeeController@resetPasswordForm')->name('employee.resetPasswordForm');
         Route::put('reset/password/{id}', 'EmployeeController@reset_password')->name('employee.resetPassword');
+        Route::get('role/{id}', 'EmployeeController@update_employee_roles_form')->name('employee.rolesUpdate');
+        Route::put('role/{id}', 'EmployeeController@update_employee_roles')->name('employee.updating_roles');
     });
 
     //Permissions routes
@@ -367,8 +369,7 @@ Route::prefix('security/')->group(function () {
 Route::prefix('individual')->group(function (){
 
     //Individual default
-    Route::get('/','DashboardController@individual')->name('individual');
-
+    Route::get('/','IndividualDashboardController@index')->name('individual');
     Route::get('index', 'IndividualController@index')->name('individuals.index');
     Route::get('create', 'IndividualController@create')->name('individuals.create');
     Route::post('store', 'IndividualController@store')->name('individuals.store');
@@ -376,6 +377,7 @@ Route::prefix('individual')->group(function (){
     Route::put('update/{id}', 'IndividualController@update')->name('individuals.update');
     Route::delete('delete/{id}', 'IndividualController@destroy')->name('individuals.destroy');
     Route::post('import', 'IndividualController@import')->name('individuals.import');
+
 
     //Education Levels routes
     Route::prefix('education/level')->group (function () {

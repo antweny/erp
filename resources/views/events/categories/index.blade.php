@@ -8,9 +8,9 @@
                 <h5>Event Categories</h5>
             </div>
             <div class="float-right">
-                @if(checkPermission('eventCategory-create'))
+                @can('eventCategory-create')
                     <a class="btn btn-success" href="#newEventCategory" data-toggle="modal"><i class="fa fa-plus"></i> New Event Category </a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -35,17 +35,17 @@
                                 <td class="text-left">{{$eventCategory->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('eventCategory-update'))
+                                        @can('eventCategory-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('eventCategories.edit',$eventCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('eventCategory-delete'))
+                                        @can('eventCategory-delete')
                                             <form class="form-delete" method="post" action="{{route('eventCategories.destroy',$eventCategory->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    @if(checkPermission('eventCategory-create'))
+    @can('eventCategory-create')
         <!-- start create new eventCategory form modal -->
         <div class="modal fade" id="newEventCategory" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -95,6 +95,6 @@
             </div>
         </div>
         <!-- end create new eventCategory form modal -->
-    @endif
+    @endcan
 
 @endsection

@@ -9,15 +9,6 @@ class OrganizationCategoryController extends Controller
 {
 
     /**
-     * Auth constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
-    }
-
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

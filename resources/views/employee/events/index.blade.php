@@ -39,9 +39,11 @@
                             <td class="text-center"><a href="#" title="View Participants"></a></td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    <a class="btn btn-primary btn-sm mr-2 " href="{{route('events.edit',$event->id)}}" title="Edit">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+                                    @can('event-update')
+                                        <a class="btn btn-primary btn-sm mr-2 " href="{{route('events.edit',$event->id)}}" title="Edit">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

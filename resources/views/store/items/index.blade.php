@@ -8,10 +8,10 @@
                     <h4 class="header-title">Items List</h4>
                 </div>
                 <div class="float-right">
-                    @if(checkPermission('item-create'))
+                    @can('item-create')
                         <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                         <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item</a>
-                    @endif
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -42,16 +42,16 @@
                                 <td class="text-center">{{$item->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @if(checkPermission('item-update'))
+                                        @can('item-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('items.edit',$item->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('item-delete'))
+                                        @endcan
+                                        @can('item-delete')
                                             <form class="form-delete" method="post" action="{{route('items.destroy',$item->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$item->name}} item?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
 
                                     </div>
                                 </td>
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-@if(checkPermission('item-create'))
+@can('item-create')
     <!-- start create new pillar form modal -->
     <div class="modal fade" id="newRecord" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -120,40 +120,38 @@
             </div>
         </div>
     </div>
-    <!-- end create new pillar form modal -->
-@endif
 
-        @if(checkPermission('item-create'))
-            <!-- start create new permission form modal -->
-            <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Import Items</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="POST" action="{{route('items.import')}}" class="form-horizontal" enctype="multipart/form-data" >
-                            @csrf
-                            <div class="modal-body">
 
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-4 control-label">Choose file..</label>
-                                    <div class="col-md-8">
-                                        <input type="file" class="form-control @error('imported_file') is-invalid @enderror" name="imported_file" value="{{old('imported_file')}}" required placeholder="name">
-                                        @error('imported_file')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
-                                    </div>
+        <!-- start create new permission form modal -->
+        <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Import Items</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{route('items.import')}}" class="form-horizontal" enctype="multipart/form-data" >
+                        @csrf
+                        <div class="modal-body">
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 control-label">Choose file..</label>
+                                <div class="col-md-8">
+                                    <input type="file" class="form-control @error('imported_file') is-invalid @enderror" name="imported_file" value="{{old('imported_file')}}" required placeholder="name">
+                                    @error('imported_file')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success" id="btn-save">Import</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" id="btn-save">Import</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
             <!-- end create new permission form modal -->
-        @endif
+        @endcan
 
 @endsection

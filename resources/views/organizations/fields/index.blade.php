@@ -38,17 +38,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @if(checkPermission('field-update'))
+                                        @can('field-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('fields.edit',$field->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('field-delete'))
+                                        @can('field-delete')
                                             <form class="form-delete" method="post" action="{{route('fields.destroy',$field->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this field?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

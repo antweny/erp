@@ -32,17 +32,17 @@
                             <td class="text-left">{{$shelf->desc}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('shelf-update'))
+                                    @can('shelf-update')
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('shelves.edit',$shelf->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endif
+                                    @endcan
 
-                                    @if(checkPermission('shelf-delete'))
+                                    @can('shelf-delete')
                                         <form class="form-delete" method="post" action="{{route('shelves.destroy',$shelf->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

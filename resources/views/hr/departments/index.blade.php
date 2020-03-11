@@ -31,17 +31,17 @@
                                 <td class="text-center">{{$department->desc}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        @if(checkPermission('department-update'))
+                                        @can('department-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('departments.edit',$department->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('department-delete'))
+                                        @can('department-delete')
                                             <form class="form-delete" method="post" action="{{route('departments.destroy',$department->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$department->name}} department?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
 
                                     </div>
                                 </td>

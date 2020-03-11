@@ -8,15 +8,6 @@ use App\Http\Requests\AuthorRequest;
 
 class AuthorController extends Controller
 {
-
-    /**
-     * Authentication constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
-    }
-
     /**
      * Display a listing of the resource.
      */

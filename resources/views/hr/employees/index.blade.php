@@ -39,9 +39,9 @@
                             <td class="text-center">{{$employee->department->name}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('employee-update'))
+                                    @can('employee-update')
                                         <a class="btn btn-primary btn-sm" href="{{route('employee.edit',$employee->id)}}"  ><i class="fa fa-edit"></i></a>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

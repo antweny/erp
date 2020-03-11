@@ -8,14 +8,6 @@ use App\ItemUnit;
 
 class ItemUnitController extends Controller
 {
-    /**
-     * Controller constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
-    }
-
 
     /**
      * Display a listing of the resource.

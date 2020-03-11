@@ -11,14 +11,6 @@ use App\Imports\CountryImport;
 class CountryController extends Controller
 {
     /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

@@ -28,26 +28,6 @@ class Individual extends BaseModel
         $this->attributes['full_name'] = ucwords(strtolower($value));
     }
 
-
-    /*
-     * Accessor Functions
-     */
-    public function getSexAttribute()
-    {
-        switch ($this->gender) {
-            case 'M':
-                return 'Male';
-                break;
-            case 'F':
-                return 'Female';
-                break;
-            default:
-                return null;
-                break;
-        }
-    }
-
-
     /* ---------------------
     *  MODEL RELATIONSHIPS
     * ---------------------*/
@@ -115,7 +95,7 @@ class Individual extends BaseModel
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
-            'sex' => $this->sex,
+            'gender' => $this->gender,
             'age_group' => $this->age_Group,
             'district' => $this->district->name,
             'occupation' => $this->occupation,

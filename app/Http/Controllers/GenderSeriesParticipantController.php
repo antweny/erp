@@ -13,14 +13,6 @@ use Maatwebsite\Excel\Facades\Excel;
 class GenderSeriesParticipantController extends Controller
 {
     /**
-     * Authorization constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

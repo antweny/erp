@@ -19,7 +19,8 @@ class IndividualController extends Controller
      */
     function __construct(IndividualRepository $individual)
     {
-        $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy','import']]);
+        parent::__construct();
+        $this->middleware(['auth:admin,employee']);
         $this->individual = $individual;
     }
 

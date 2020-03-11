@@ -36,16 +36,19 @@
                                 <td class="text-left">{{$ticketCategory->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('ticketCategory-update'))
+
+                                        @can('ticketCategory-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('ticketCategories.edit',$ticketCategory['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('ticketCategory-delete'))
+                                        @endcan
+
+                                        @can('ticketCategory-delete')
                                             <form class="form-delete" method="post" action="{{route('ticketCategories.destroy',$ticketCategory['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Confirmation?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>

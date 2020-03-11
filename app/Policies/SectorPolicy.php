@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SectorPolicy
@@ -19,42 +19,42 @@ class SectorPolicy
         //
     }
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('sector-create');
+        return $employee->can('sector-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('sector-read');
+        return $employee->can('sector-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('sector-update');
+        return $employee->can('sector-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('sector-delete');
+        return $employee->can('sector-delete');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function import(Admin $admin)
+    public function import(Employee $employee)
     {
-        return $admin->can('sector-import');
+        return $employee->can('sector-import');
     }
 }

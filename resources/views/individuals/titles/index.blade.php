@@ -34,17 +34,18 @@
                                 <td class="text-left">{{$title->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('title-update'))
+                                        @can('title-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('titles.edit',$title->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('title-delete'))
+                                        @can('title-delete')
                                             <form class="form-delete" method="post" action="{{route('titles.destroy',$title->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete title {{$title->name}}')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>

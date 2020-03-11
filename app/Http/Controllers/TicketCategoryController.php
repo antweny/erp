@@ -8,14 +8,6 @@ use App\TicketCategory;
 class TicketCategoryController extends Controller
 {
     /**
-     * Auth constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

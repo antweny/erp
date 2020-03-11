@@ -10,9 +10,9 @@
                         <h5> List of Participant Roles</h5>
                     </div>
                     <div class="float-right">
-                        @if(checkPermission('participantRole-create'))
+                        @can('participantRole-create')
                             <a class="btn btn-success" href="#newParticipantRole" data-toggle="modal"><i class="fa fa-plus"></i> New Participant Role</a>
-                        @endif
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -38,17 +38,18 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @if(checkPermission('participantRole-update'))
+                                        @can('participantRole-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('participantRoles.edit',$participantRole->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('participantRole-delete'))
+                                        @can('participantRole-delete')
                                             <form class="form-delete" method="post" action="{{route('participantRoles.destroy',$participantRole->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>
@@ -59,7 +60,7 @@
         </div>
     </div>
 
-    @if(checkPermission('participantRole-create'))
+    @can('participantRole-create')
         <!-- start create new participantRole form modal -->
         <div class="modal fade" id="newParticipantRole" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -98,6 +99,6 @@
             </div>
         </div>
         <!-- end create new participantRole form modal -->
-    @endif
+    @endcan
 
 @endsection

@@ -38,16 +38,19 @@
                                 <td class="text-center"><a href="{{$author->website}}" target="_blank">{{$author->website}}</a> </td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('author-update'))
+
+                                        @can('author-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('authors.edit',$author['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('author-delete'))
+                                        @endcan
+
+                                        @can('author-delete')
                                             <form class="form-delete" method="post" action="{{route('authors.destroy',$author['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>

@@ -8,9 +8,9 @@
                 <h4 class="header-title">Venues</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('venue-create'))
+                @can('venue-create'))
                     <a class="btn btn-success" href="{{route('venues.create')}}"><i class="fa fa-plus"></i> New venue</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -43,17 +43,17 @@
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
 
-                                        @if(checkPermission('venue-update'))
+                                        @can('venue-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('venues.edit',$venue->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
 
-                                        @if(checkPermission('venue-delete'))
+                                        @can('venue-delete')
                                             <form class="form-delete" method="post" action="{{route('venues.destroy',$venue->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

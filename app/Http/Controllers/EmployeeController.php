@@ -8,6 +8,7 @@ use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\PasswordResetRequest;
 use Illuminate\Http\Request;
 use App\Department;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -15,10 +16,11 @@ class EmployeeController extends Controller
     /**
      * Authorization constructor.
      */
-    function __construct()
+    public function __construct()
     {
+        parent::__construct();
         $this->middleware('auth:admin',['only'=> ['index','store','create','edit','update','destroy']]);
-        $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['employeeLogin','resetPasswordForm']]);
+        $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['employeeLogin','resetPasswordForm','update_employee_roles_form','']]);
     }
 
     /**
@@ -42,11 +44,14 @@ class EmployeeController extends Controller
     public function create()
     {
         $this->can_create($this->model());
+
         try {
             $employee = new Employee();
+            DB::commit();
             return $this->populate(__FUNCTION__,$employee);
         }
         catch (\Exception $e) {
+            DB::rollBack();
             return $this->errorReturn();
         }
     }
@@ -57,12 +62,16 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $this->can_create($this->model());
+        DB::beginTransaction();
         try {
             $this->generatePassword($request);
-            Employee::create($request->all());
+            $employee = Employee::create($request->all());
+            $employee->assignRole('employee');
+            DB::commit();
             return back()->with('success','Employee has been saved!');
         }
         catch (\Exception $e) {
+            DB::rollBack();
             return back()->with('error',$e->getMessage())->withInput($request->input());
         }
     }
@@ -203,6 +212,47 @@ class EmployeeController extends Controller
     {
         $request['password'] = Hash::make($request['password']);
         return $request;
+    }
+
+    /*
+     * Get form to update Employee Roles
+     */
+    protected function update_employee_roles_form($id) {
+        try{
+            $employee = $this->getID($id);
+            return view('security.employee.edit')->with(compact('employee'));
+        }
+        catch (\Exception $e) {
+            return redirect()->route('employeeLogin')->with('error','Something went wrong');
+        }
+    }
+
+    /*
+     * Get form to update Employee Roles
+     */
+    protected function update_employee_roles(Request $request, $id)
+    {
+        $this->validate($request, [
+            'roles' => 'required',
+        ]);
+
+        $roles = $request->roles; //Get all assign roles
+        DB::beginTransaction();
+        try {
+            $employee = $this->getID($id);
+            if (isset($roles)) {
+                $employee->roles()->sync($roles);  //If one or more role is selected associate user to roles
+            }
+            else {
+                $employee->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+            }
+            DB::commit();
+            return redirect()->route('employeeLogin')->with('success','Employee Roles Updated');
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+            return $this->errorReturn();
+        }
     }
 
 

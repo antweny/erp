@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Individual;
+
 class DashboardController extends Controller
 {
     /**
      * AdminController constructor.
      */
-    function __construct()
+    public function __construct()
     {
-        $this->middleware('auth:admin',['only'=> ['admin','location','store','event','hrm','individual','organization','support','library']]);
+        parent::__construct();
+        $this->middleware(['auth:admin,employee'],['only'=> ['admin','location','store','event','hrm','organization','support','library','employee']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
-        $this->middleware('auth:employee',['only'=> ['employee']]);
     }
 
     /*
@@ -19,7 +21,7 @@ class DashboardController extends Controller
      */
     public function admin()
     {
-        return view('dashboards.admin');
+        return view('dashboards.dashboard');
     }
 
     /*
@@ -27,7 +29,7 @@ class DashboardController extends Controller
     */
     public function employee()
     {
-        return view('employee.dashboard');
+        return view('dashboards.admin');
     }
 
   /*
@@ -77,14 +79,6 @@ class DashboardController extends Controller
     public function security()
     {
         return view('dashboards.security');
-    }
-
-    /*
-     * System Securities.
-     */
-    public function individual()
-    {
-        return view('dashboards.individuals');
     }
 
     /*

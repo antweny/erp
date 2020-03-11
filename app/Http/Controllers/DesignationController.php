@@ -7,13 +7,6 @@ use App\Designation;
 
 class DesignationController extends Controller
 {
-    /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy','import']]);
-    }
 
     /**
      * Display a listing of the resource.

@@ -9,14 +9,6 @@ use Illuminate\Http\Request;
 class EventCategoryController extends Controller
 {
     /**
-     * Authorization constructor.
-     */
-    function __construct()
-    {
-        $this->middleware('auth:admin',['only'=> ['index','store','edit','update','destroy']]);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

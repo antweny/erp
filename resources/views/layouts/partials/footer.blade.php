@@ -13,6 +13,7 @@
         </div>
     </main><!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('vendor/ChartJS/js/Chart.min.js') }}" ></script>
 <script src="{{ asset('vendor/gijgo/gijgo.min.js') }}" ></script>
 <script src="{{ asset('vendor/DataTables/dataTables.min.js') }}" ></script>
 <script src="{{ asset('vendor/select/select.min.js') }}" ></script>
@@ -98,6 +99,6 @@
 
 
 </script>
-
+@yield('scripts')
 </body>
 </html>

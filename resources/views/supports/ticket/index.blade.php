@@ -46,16 +46,16 @@
                             <td class="text-center">{!!$ticket->stat!!}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('ticket-update'))
+                                    @can('ticket-update')
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('tickets.edit',$ticket['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endif
-                                    @if(checkPermission('ticket-delete'))
+                                    @endcan
+                                    @can('ticket-delete')
                                         <form class="form-delete" method="post" action="{{route('tickets.destroy',$ticket['id'])}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Confirmation?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JobHistoryPolicy
@@ -20,42 +20,42 @@ class JobHistoryPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('jobHistory-create');
+        return $employee->can('jobHistory-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('jobHistory-read');
+        return $employee->can('jobHistory-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('jobHistory-update');
+        return $employee->can('jobHistory-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('jobHistory-delete');
+        return $employee->can('jobHistory-delete');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function import(Admin $admin)
+    public function import(Employee $employee)
     {
-        return $admin->can('jobHistory-import');
+        return $employee->can('jobHistory-import');
     }
 }

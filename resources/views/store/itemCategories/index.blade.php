@@ -8,9 +8,9 @@
                 <h4 class="header-title">Item Categories</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('itemCategory-create'))
+                @can('itemCategory-create')
                     <a class="btn btn-success" href="#newRecord" data-toggle="modal"><i class="fa fa-plus"></i> Add Item Category</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    @if(checkPermission('itemCategory-create'))
+    @can('itemCategory-create')
     <!-- start create new pillar form modal -->
     <div class="modal fade" id="newRecord" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -74,7 +74,7 @@
         </div>
     </div>
     <!-- end create new pillar form modal -->
-    @endif
+    @endcan
 
 
 @endsection

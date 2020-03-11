@@ -8,10 +8,10 @@
                 <h1 class="h4">Gender Series (GDSS) Participants</h1>
             </div>
             <div class="float-right">
-                @if(checkPermission('genderSeriesParticipant-create'))
+                @can('genderSeriesParticipant-create')
                     <a class="btn btn-dark mr-3 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="{{route('genderSeriesParticipants.create')}}" title="create"><i class="fa fa-plus"></i> GDSS Participant</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -40,18 +40,18 @@
                             <td class="text-center">{{ $genderParticipant->ward->name }}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('genderSeriesParticipant-update'))
+                                    @can('genderSeriesParticipant-update')
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('genderSeriesParticipants.edit',$genderParticipant->id)}}" title="view">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endif
-                                    @if(checkPermission('genderSeriesParticipant-delete'))
+                                    @endcan
+                                    @can('genderSeriesParticipant-delete')
                                         <form class="form-delete" method="post" action="{{route('genderSeriesParticipants.destroy',$genderParticipant->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Participant?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -63,7 +63,7 @@
     </div>
 
 
-    @if(checkPermission('genderSeriesParticipant-create'))
+    @can('genderSeriesParticipant-create')
         <!-- start create new permission form modal -->
         <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -94,7 +94,7 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 
 

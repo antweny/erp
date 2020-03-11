@@ -36,16 +36,16 @@
                                 <td class="text-left">{{$designation->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('designation-update'))
+                                        @can('designation-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('designations.edit',$designation['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('designation-delete'))
+                                        @endcan
+                                        @can('designation-delete')
                                             <form class="form-delete" method="post" action="{{route('designations.destroy',$designation['id'])}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete Confirmation?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

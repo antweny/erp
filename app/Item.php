@@ -2,9 +2,6 @@
 
 namespace App;
 
-
-
-
 class Item extends BaseModel
 {
     /**

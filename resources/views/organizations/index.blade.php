@@ -44,16 +44,16 @@
                                 <td class="text-center">{{$organization->contact_person_number}}</td>
                                 <th class="text-center p-0" >
                                     <div class=" btn btn-group">
-                                        @if(checkPermission('organization-update'))
+                                        @can('organization-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('organizations.edit',$organization->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('organization-delete'))
+                                        @endcan
+                                        @can('organization-delete')
                                             <form class="form-delete" method="post" action="{{route('organizations.destroy',$organization->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this organization {{$organization->organization_name}}?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </th>
                             </tr>

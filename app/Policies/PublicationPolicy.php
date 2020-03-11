@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Admin;
+use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PublicationPolicy
@@ -20,42 +20,42 @@ class PublicationPolicy
     }
 
     /**
-     * Determine whether the admin can create new resource.
+     * Determine whether the employee can create new resource.
      */
-    public function create(Admin $admin)
+    public function create(Employee $employee)
     {
-        return $admin->can('publication-create');
+        return $employee->can('publication-create');
     }
 
     /**
-     * Determine whether the admin can view the resources.
+     * Determine whether the employee can view the resources.
      */
-    public function read(Admin $admin)
+    public function read(Employee $employee)
     {
-        return $admin->can('publication-read');
+        return $employee->can('publication-read');
     }
 
     /**
-     * Determine whether the admin can update the question.
+     * Determine whether the employee can update the question.
      */
-    public function update(Admin $admin)
+    public function update(Employee $employee)
     {
-        return $admin->can('publication-update');
+        return $employee->can('publication-update');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function delete(Admin $admin)
+    public function delete(Employee $employee)
     {
-        return $admin->can('publication-delete');
+        return $employee->can('publication-delete');
     }
 
     /**
-     * Determine whether the admin can delete the question.
+     * Determine whether the employee can delete the question.
      */
-    public function import(Admin $admin)
+    public function import(Employee $employee)
     {
-        return $admin->can('publication-import');
+        return $employee->can('publication-import');
     }
 }

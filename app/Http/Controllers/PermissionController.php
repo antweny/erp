@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\DB;
 class PermissionController extends Controller
 {
     /**
-     * AdminController constructor.
-     */
-    function __construct()
-    {
-        $this->middleware(['auth:admin','role:superAdmin']);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()

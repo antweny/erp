@@ -8,9 +8,9 @@
     <div class="col-md-6">
         <label class="col-form-label">Gender</label>
         <select class="form-control @error('gender') is-invalid @enderror" name="gender">
-            <option value="">Select...</option>
-            <option value="M" {{old('gender',$individual->gender) == 'M' ? 'selected' : ''}}>Male</option>
-            <option value="F" {{old('gender',$individual->gender) == 'F' ? 'selected' : ''}}>Female</option>
+            <option value="Not Set">Select...</option>
+            <option value="Male" {{old('gender',$individual->gender) == 'Male' ? 'selected' : ''}}>Male</option>
+            <option value="Female" {{old('gender',$individual->gender) == 'Female' ? 'selected' : ''}}>Female</option>
         </select>
         @error('gender')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
     </div>
@@ -78,7 +78,7 @@
 <div class="form-group row">
     <div class="col-md-12">
         <label class="col-form-label">Address</label>
-        <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" rows="1">{{old('address',$individual->address)}}</textarea>
+        <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{old('address',$individual->address)}}</textarea>
         @error('address')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
         @if ($errors->has('address'))<span class="invalid-feedback" role="alert"> <strong>{{ $errors->first('address') }}</strong></span>@endif
     </div>

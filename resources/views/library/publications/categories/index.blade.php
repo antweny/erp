@@ -32,17 +32,19 @@
                             <td class="text-left">{{$publicationCategory->desc}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('publicationCategory-update'))
-                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('publicationCategories.edit',$publicationCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endif
 
-                                    @if(checkPermission('publicationCategory-delete'))
+                                    @can('publicationCategory-update')
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{route('publicationCategories.edit',$publicationCategory->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
+                                    @endcan
+
+                                    @can('publicationCategory-delete')
                                         <form class="form-delete" method="post" action="{{route('publicationCategories.destroy',$publicationCategory->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
+
                                 </div>
                             </td>
                         </tr>

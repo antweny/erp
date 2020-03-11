@@ -8,10 +8,10 @@
                 <h4 class="header-title">List of Cities</h4>
             </div>
             <div class="float-right">
-                @if (checkPermission('city-create'))
+                @can('city-create')
                     <a class="btn btn-dark mr-4 " href="#import" data-toggle="modal"><i class="fa fa-upload"></i> Import</a>
                     <a class="btn btn-success" href="#newCity" data-toggle="modal"><i class="fa fa-plus"></i> New city</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">
@@ -38,17 +38,17 @@
                             <td class="text-left">{{$city->desc}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
-                                    @if(checkPermission('city-update'))
+                                    @can('city-update')
                                         <a class="btn btn-primary btn-sm mr-2" href="{{route('cities.edit',$city['id'])}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                    @endif
+                                    @endcan
 
-                                    @if(checkPermission('city-delete'))
+                                    @can('city-delete')
                                         <form class="form-delete" method="post" action="{{route('cities.destroy',$city['id'])}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
 
                                 </div>
                             </td>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    @if(checkPermission('city-create'))
+    @can('city-create')
         <!-- start create new city form modal -->
         <div class="modal fade" id="newCity" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -137,6 +137,6 @@
             </div>
         </div>
         <!-- end create new permission form modal -->
-    @endif
+    @endcan
 
 @endsection

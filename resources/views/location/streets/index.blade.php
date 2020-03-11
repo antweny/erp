@@ -38,16 +38,16 @@
                                 <td class="text-center p-0">
                                     <div class=" btn btn-group">
 
-                                        @if(checkPermission('street-update'))
+                                        @can('street-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('streets.edit',$street->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('street-delete'))
+                                        @endcan
+                                        @can('street-delete')
                                             <form class="form-delete" method="post" action="{{route('streets.destroy',$street->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
 
 
                                     </div>

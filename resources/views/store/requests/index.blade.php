@@ -8,9 +8,9 @@
                 <h4 class="header-title">Item Requests</h4>
             </div>
             <div class="float-right">
-                @if(checkPermission('itemRequest-create'))
+                @can('itemRequest-create')
                     <a class="btn btn-success" href="{{route('itemRequests.create')}}" ><i class="fa fa-plus"></i> Request Item</a>
-                @endif
+                @endcan
             </div>
         </div>
         <div class="card-body">

@@ -44,20 +44,22 @@
                             <td class="text-center">{{ $publication->genre->name  }}</td>
                             <td class="text-center">{{ $publication->class_number  }}</td>
                             <td class="text-center p-0">
-
                                 <div class="btn btn-group">
-                                    @if(checkPermission('publication-update'))
+
+                                    @can('publication-update')
                                         <a class="btn btn-primary btn-sm mr-2 " href="{{route('publications.edit',$publication->id)}}" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    @endif
-                                    @if(checkPermission('publication-delete'))
+                                    @endcan
+
+                                    @can('publication-delete')
                                         <form class="form-delete" method="post" action="{{route('publications.destroy',$publication->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{$publication->name}} role?')" title="Delete"><i class="fa fa-trash-alt"></i></button>
                                         </form>
-                                    @endif
+                                    @endcan
+
                                 </div>
                             </td>
                         </tr>

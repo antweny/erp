@@ -28,6 +28,7 @@
                             <td class="text-center">{{$employee->email}}</td>
                             <td class="text-center p-0">
                                 <div class="btn btn-group">
+                                    <a class="btn btn-primary btn-sm mr-2" href="{{route('employee.rolesUpdate',$employee)}}" title="Update Roles"><i class="fa fa-user-edit"></i></a>
                                     <a class="btn btn-outline-secondary btn-sm" href="{{route('employee.resetPasswordForm',$employee)}}" title="Reset Password"><i class="fa fa-key"></i></a>
                                 </div>
                             </td>

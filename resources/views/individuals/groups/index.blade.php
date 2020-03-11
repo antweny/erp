@@ -38,16 +38,19 @@
                                 <td class="text-left">{{$group->desc}}</td>
                                 <td class="text-center p-0">
                                     <div class="btn btn-group">
-                                        @if(checkPermission('group-update'))
+
+                                        @can('group-update')
                                             <a class="btn btn-primary btn-sm mr-2" href="{{route('groups.edit',$group->id)}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                        @endif
-                                        @if(checkPermission('group-delete'))
+                                        @endcan
+
+                                        @can('group-delete')
                                             <form class="form-delete" method="post" action="{{route('groups.destroy',$group->id)}}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete group {{$group->name}}')"><i class="fa fa-trash-alt"></i></button>
                                             </form>
-                                        @endif
+                                        @endcan
+
                                     </div>
                                 </td>
                             </tr>
@@ -58,7 +61,7 @@
         </div>
     </div>
 
-    @if(checkPermission('group-create'))
+    @can('group-create')
         <!-- start create new group form modal -->
         <div class="modal fade" id="newGroup" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -99,6 +102,6 @@
             </div>
         </div>
         <!-- end create new group form modal -->
-    @endif
+    @endcan
 
 @endsection
