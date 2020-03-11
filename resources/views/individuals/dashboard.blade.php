@@ -5,39 +5,68 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <canvas id="myChart" width="100%" height="80"></canvas>
+                    <canvas id="genderCount" width="100%" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="ageGroup" width="100%" height="80"></canvas>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
 
     <script>
-
-        var ctx = document.getElementById('myChart');
+        //Show graph of individuals count by gender
+        var ctx = document.getElementById('genderCount');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'doughnut',
             data: {
-                labels: {!! $name_gender !!},
+                labels: {!! $gender !!},
                 datasets: [{
                     label: '# Individual By Gender',
                     data: {!! $count_gender !!},
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
+                        'pink',
+                        'blue',
+                        'gray',
                     ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 206, 86, 1)',
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        }
+                    }]
+                },
+
+            }
+        });
+
+        //Show graph of individuals count by age group
+        var ageGroup = document.getElementById('ageGroup');
+        var myChart = new Chart(ageGroup, {
+            type: 'bar',
+            data: {
+                labels: {!! $age_group !!},
+                datasets: [{
+                    label: '# Individual By Age',
+                    data: {!! $count_age_group !!},
+                    backgroundColor: [
+                        'red',
+                        'green',
+                        'orange',
+                        'purple',
+                        'olive',
+                        'maroon'
                     ],
-                    borderWidth: 1
                 }]
             },
             options: {
@@ -50,10 +79,6 @@
                 }
             }
         });
-
-
-
-
     </script>
 
 

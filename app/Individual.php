@@ -96,7 +96,7 @@ class Individual extends BaseModel
             'id' => $this->id,
             'full_name' => $this->full_name,
             'gender' => $this->gender,
-            'age_group' => $this->age_Group,
+            'age_group' => $this->age_group,
             'district' => $this->district->name,
             'occupation' => $this->occupation,
             'education' => $this->education_level->name,
