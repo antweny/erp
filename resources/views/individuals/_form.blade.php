@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <label class="col-form-label">Gender</label>
         <select class="form-control @error('gender') is-invalid @enderror" name="gender">
-            <option value="Not Set">Select...</option>
+            <option value="">Select...</option>
             <option value="Male" {{old('gender',$individual->gender) == 'Male' ? 'selected' : ''}}>Male</option>
             <option value="Female" {{old('gender',$individual->gender) == 'Female' ? 'selected' : ''}}>Female</option>
         </select>
