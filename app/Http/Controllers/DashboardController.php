@@ -12,7 +12,6 @@ class DashboardController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->middleware(['auth:admin,employee'],['only'=> ['admin','location','store','event','hrm','organization','support','library','employee']]);
         $this->middleware(['auth:admin','role:superAdmin'],['only'=> ['setting','security']]);
     }
 
@@ -29,7 +28,7 @@ class DashboardController extends Controller
     */
     public function employee()
     {
-        return view('dashboards.admin');
+        return view('dashboards.dashboard');
     }
 
   /*
