@@ -13,10 +13,17 @@
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i> {{auth()->user()->name ? : auth()->user()->full_name }}</a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                        <a class="dropdown-item logout" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        @if(auth()->guard('employee')->check())
+                        <a class="dropdown-item logout" href="{{ route('employee.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fa fa-power-off"></i> Logout
                         </a>
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;"> @csrf</form>
+                        <form id="logout-form" action="{{ route('employee.logout') }}" method="POST" style="display: none;"> @csrf</form>
+                        @elseif(auth()->guard('admin')->check())
+                            <a class="dropdown-item logout" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;"> @csrf</form>
+                        @endif
                     </div>
                 </li>
             </ul>
